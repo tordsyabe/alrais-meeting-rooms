@@ -1,20 +1,20 @@
-import React, {useContext} from 'react'
-import { Redirect, Route } from 'react-router';
-import { AuthContext } from '../../contexts/AuthContext';
+import React, { useContext } from "react";
+import { Redirect, Route } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext";
 
-export default function Public({component: Component, restricted, ...rest }) {
+export default function Public({ component: Component, restricted, ...rest }) {
   const { currentUser } = useContext(AuthContext);
 
-    return (
-      <Route
+  return (
+    <Route
       {...rest}
       render={(props) => {
         return currentUser && restricted ? (
-          <Redirect to='/' />
+          <Redirect to='/app/bookings' />
         ) : (
           <Component {...props} />
         );
       }}
     ></Route>
-    )
+  );
 }
