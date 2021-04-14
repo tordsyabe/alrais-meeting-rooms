@@ -11,6 +11,7 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -28,11 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Room({ room }) {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <Card className={classes.card}>
-      <CardActionArea>
+      <CardActionArea onClick={() => history.push(`/${room.id}`)}>
         <CardContent>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} alignItems='center'>
             <Grid item xs={10}>
               <Typography variant='h5'>{room.name}</Typography>
               <Box pt={2}>

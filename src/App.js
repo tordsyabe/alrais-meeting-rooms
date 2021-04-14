@@ -8,6 +8,7 @@ import AuthContextProvider from "./contexts/AuthContext";
 import Home from "./components/pages/Home";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { ThemeContext } from "./contexts/ThemeContext";
+import Meetings from "./components/meetings";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -18,7 +19,8 @@ function App() {
         <Switch>
           <Private exact path='/' component={Home} />
           <Private path='/app' component={Home} />
-          <Public restricted={true} exact path='/login' component={Singin} />
+          <Public restricted={true} path='/login' component={Singin} />
+          <Private path='/:id' component={Meetings} />
         </Switch>
       </AuthContextProvider>
     </ThemeProvider>
