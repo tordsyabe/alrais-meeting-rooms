@@ -1,4 +1,13 @@
-import { Box, Fab, makeStyles, Typography } from "@material-ui/core";
+import {
+  Box,
+  ButtonBase,
+  Card,
+  CardContent,
+  Fab,
+  Grid,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
 import Room from "./Room";
 
@@ -24,10 +33,17 @@ export default function Rooms() {
     <React.Fragment>
       <Typography variant='h4'>Meeting Rooms</Typography>
       <Box py={3}>
-        {rooms.map((room) => (
-          <Room key={room.id} room={room} />
-        ))}
+        <Grid container spacing={2}>
+          {rooms.map((room) => (
+            <React.Fragment>
+              <Grid item xs={7}>
+                <Room key={room.id} room={room} />
+              </Grid>
+            </React.Fragment>
+          ))}
+        </Grid>
       </Box>
+
       <Fab color='primary' aria-label='add' className={classes.fab}>
         <AddIcon />
       </Fab>
