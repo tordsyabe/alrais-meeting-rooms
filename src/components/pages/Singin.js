@@ -20,6 +20,7 @@ import { useHistory } from "react-router-dom";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import CloseIcon from '@material-ui/icons/Close';
 import { signInValidation } from "../../utils/validationSchema";
+import { login } from "../../services/AuthService";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -54,19 +55,19 @@ export default function Singin() {
                 initialValues={{ email: "", password: "" }}
                 validationSchema={signInValidation}
                 onSubmit={(data, { setSubmitting }) => {
-                  // setSubmitting(true);
-                  // setError(null);
-                  // login(data.email, data.password)
-                  //   .then(() => {
-                  //     setSubmitting(false);
-                  //     history.push("/dashboard");
-                  //   })
-                  //   .catch((error) => {
-                  //     console.log(error);
-                  //     setError("Invalid username and password");
-                  //     setSnackBarError(true);
-                  //     setSubmitting(false);
-                  //   });
+                  setSubmitting(true);
+                  setError(null);
+                  login(data.email, data.password)
+                    .then(() => {
+                      setSubmitting(false);
+                      history.push("/");
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                      setError("Invalid username and password");
+                      setSnackBarError(true);
+                      setSubmitting(false);
+                    });
                 }}
               >
                 {({ values, errors, isSubmitting, isValid, dirty }) => (
