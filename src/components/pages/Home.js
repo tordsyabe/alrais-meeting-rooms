@@ -21,7 +21,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness5Icon from "@material-ui/icons/Brightness5";
 import { Route, Switch } from "react-router";
-import Bookings from "../bookings/index";
+import Meetings from "../meetings/index";
 import Rooms from "../rooms/index";
 
 import { useHistory } from "react-router-dom";
@@ -186,11 +186,11 @@ export default function Home() {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => history.push("/app/bookings")}>
+          <ListItem button onClick={() => history.push("/app/meetings")}>
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
-            <ListItemText primary="Bookings" />
+            <ListItemText primary="Meetings" />
           </ListItem>
 
           <ListItem button onClick={() => history.push("/app/rooms")}>
@@ -205,7 +205,7 @@ export default function Home() {
         <div className={classes.toolbar} />
         <RoomsContextProvider>
           <Switch>
-            <Route path="/app/bookings" component={Bookings} />
+            <Route path="/app/meetings" component={Meetings} />
             <Route path="/app/rooms" component={Rooms} />
           </Switch>
         </RoomsContextProvider>
