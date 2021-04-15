@@ -8,20 +8,21 @@ import {
   CardContent,
 } from "@material-ui/core";
 import React from "react";
+import Booking from "../bookings/Booking";
 
 export default function Meetings() {
   return (
     <div>
-      <AppBar position='static' style={{ background: "black" }}>
+      {/* <AppBar position='static' style={{ background: "black" }}>
         <Toolbar>
           <Typography variant='h6' color='default'>
             Meeting Room 1
           </Typography>
         </Toolbar>
-      </AppBar>
-      <Grid container>
-        <Grid item xs={7} style={{ height: "100%" }}>
-          <Box
+      </AppBar> */}
+      <Grid container style={{height: "100vh"}}>
+        <Grid item xs={7}>
+          <div
             style={{
               background:
                 "url('https://www.avepoint.com/blog/wp-content/uploads/2018/10/iStock-887882750.jpg')",
@@ -30,8 +31,8 @@ export default function Meetings() {
               height: "100%",
             }}
           >
-            <div style={{ background: "rgb(213, 0, 0, 0.8)", height: "100vh" }}>
-              <Box p={5}>
+            <div style={{ background: "rgb(0, 154, 83, 0.9)", height: "100%" }}>
+              <Box p={6}>
                 <Grid
                   container
                   spacing={7}
@@ -80,7 +81,7 @@ export default function Meetings() {
                 </Grid>
               </Box>
             </div>
-          </Box>
+          </div>
         </Grid>
         <Grid item xs={5}>
           <Box p={3}>
@@ -89,22 +90,10 @@ export default function Meetings() {
                 <Typography>Today</Typography>
               </Grid>
               <Grid item xs={12}>
-                <Card>
-                  <CardContent>
-                    <Typography>13:00 - 14:00</Typography>
-                    <Typography>Accounts meeting with IT</Typography>
-                    <Typography>Donato</Typography>
-                  </CardContent>
-                </Card>
+              <Booking />
               </Grid>
               <Grid item xs={12}>
-                <Card>
-                  <CardContent>
-                    <Typography>13:00 - 14:00</Typography>
-                    <Typography>Accounts meeting with IT</Typography>
-                    <Typography>Donato</Typography>
-                  </CardContent>
-                </Card>
+                <Booking />
               </Grid>
             </Grid>
           </Box>
