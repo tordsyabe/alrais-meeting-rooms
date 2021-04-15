@@ -27,6 +27,7 @@ import Rooms from "../rooms/index";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import RoomsContextProvider from "../../contexts/RoomsContext";
 
 const drawerWidth = 240;
 
@@ -99,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const history = useHistory();
 
@@ -117,52 +118,52 @@ export default function Home() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position='fixed'
+        position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar variant="dense">
           <IconButton
-            color='inherit'
-            aria-label='open drawer'
+            color="inherit"
+            aria-label="open drawer"
             onClick={handleDrawerOpen}
-            edge='start'
+            edge="start"
             className={clsx(classes.menuButton, {
               [classes.hide]: open,
             })}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6' noWrap className={classes.title}>
+          <Typography variant="h6" noWrap className={classes.title}>
             Alrais Meeting Rooms
           </Typography>
           <IconButton
-            aria-label='display more actions'
-            edge='end'
-            color='inherit'
+            aria-label="display more actions"
+            edge="end"
+            color="inherit"
             onClick={toggleTheme}
             className={classes.menuButton}
           >
             {isDark ? (
-              <Brightness5Icon fontSize='small' />
+              <Brightness5Icon fontSize="small" />
             ) : (
-              <Brightness7Icon fontSize='small' />
+              <Brightness7Icon fontSize="small" />
             )}
           </IconButton>
           <IconButton
-            aria-label='display more actions'
-            edge='end'
-            color='inherit'
+            aria-label="display more actions"
+            edge="end"
+            color="inherit"
             onClick={handleLogout}
             className={classes.menuButton}
           >
-            <ExitToAppIcon fontSize='small' />
+            <ExitToAppIcon fontSize="small" />
           </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
-        variant='permanent'
+        variant="permanent"
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
           [classes.drawerClose]: !open,
@@ -189,23 +190,25 @@ export default function Home() {
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
-            <ListItemText primary='Bookings' />
+            <ListItemText primary="Bookings" />
           </ListItem>
 
           <ListItem button onClick={() => history.push("/app/rooms")}>
             <ListItemIcon>
               <MeetingRoomIcon />
             </ListItemIcon>
-            <ListItemText primary='Rooms' />
+            <ListItemText primary="Rooms" />
           </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Switch>
-          <Route path='/app/bookings' component={Bookings} />
-          <Route path='/app/rooms' component={Rooms} />
-        </Switch>
+        <RoomsContextProvider>
+          <Switch>
+            <Route path="/app/bookings" component={Bookings} />
+            <Route path="/app/rooms" component={Rooms} />
+          </Switch>
+        </RoomsContextProvider>
       </main>
     </div>
   );

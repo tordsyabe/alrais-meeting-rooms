@@ -1,5 +1,4 @@
 import {
-  Paper,
   AppBar,
   Box,
   Grid,

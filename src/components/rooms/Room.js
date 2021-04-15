@@ -46,12 +46,12 @@ export default function Room({ room }) {
               </Box>
             </Grid>
             <Grid item xs={2}>
-              <IconButton>
+              {/* <IconButton>
                 <EditIcon fontSize='small' />
               </IconButton>
               <IconButton>
                 <DeleteIcon fontSize='small' />
-              </IconButton>
+              </IconButton> */}
             </Grid>
           </Grid>
         </CardContent>

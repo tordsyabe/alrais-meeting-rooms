@@ -14,8 +14,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const database = {
-  patients: firebase.firestore().collection("rooms"),
-  complaints: firebase.firestore().collection("bookings"),
+  rooms: firebase.firestore().collection("rooms"),
+  bookings: firebase.firestore().collection("bookings"),
 };
 
 export default firebase;
