@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 
 export const database = {
   rooms: firebase.firestore().collection("rooms"),
-  bookings: firebase.firestore().collection("bookings"),
+  meetings: firebase.firestore().collection("meetings"),
 };
 
 export default firebase;

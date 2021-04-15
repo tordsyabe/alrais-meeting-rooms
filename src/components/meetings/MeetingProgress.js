@@ -7,19 +7,16 @@ import {
   Card,
   CardContent,
 } from "@material-ui/core";
-import React from "react";
+import React, {useContext} from "react";
+import { MeetingsContext } from "../../contexts/MeetingsContext";
 import Meeting from "../meetings/Meeting";
 
 export default function MeetingProgress() {
+
+  const {meetings, loading } = useContext(MeetingsContext)
   return (
     <div>
-      {/* <AppBar position='static' style={{ background: "black" }}>
-        <Toolbar>
-          <Typography variant='h6' color='default'>
-            Meeting Room 1
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
+
       <Grid container style={{ height: "100vh" }}>
         <Grid item xs={7}>
           <div
@@ -89,12 +86,12 @@ export default function MeetingProgress() {
               <Grid item xs={12}>
                 <Typography>Today</Typography>
               </Grid>
-              <Grid item xs={12}>
-                <Meeting />
+              {meetings.map(meeting => (
+                <Grid item xs={12} key={meeting.id}>
+                <Meeting meeting={meeting}/>
               </Grid>
-              <Grid item xs={12}>
-                <Meeting />
-              </Grid>
+              ))}
+              
             </Grid>
           </Box>
         </Grid>

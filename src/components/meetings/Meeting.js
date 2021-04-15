@@ -14,19 +14,19 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import DoneIcon from "@material-ui/icons/Done";
 import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 
-export default function Booking({booking}) {
+export default function Meeting({meeting}) {
   return (
     <Card>
       <CardContent>
         <Grid container>
           <Grid item xs={12}>
             <Typography variant="body1">
-              Meeting Name
+              {meeting.name}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="caption" color="textSecondary">
-              10:00 - 11:00
+              {meeting.startDate.seconds} - {meeting.endDate.seconds}
             </Typography>
           </Grid>
         </Grid>
@@ -46,7 +46,7 @@ export default function Booking({booking}) {
             <Grid item xs={4}>
               <Chip
                 avatar={<Avatar>{<DoneIcon />}</Avatar>}
-                label="On Going"
+                label={meeting.status}
               />
             </Grid>
           </Grid>

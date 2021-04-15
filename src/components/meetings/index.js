@@ -1,11 +1,18 @@
-import { Fab, Grid, IconButton, makeStyles, Typography } from "@material-ui/core";
-import React from "react";
+import {
+  Fab,
+  Grid,
+  IconButton,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
+import React, { useContext } from "react";
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 import AddIcon from "@material-ui/icons/Add";
 import Meeting from "./Meeting";
+import { MeetingsContext } from "../../contexts/MeetingsContext";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -17,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Meetings() {
   const classes = useStyles();
+
+  const { meetings, loading } = useContext(MeetingsContext);
   return (
     <React.Fragment>
       <Grid container spacing={3}>
@@ -42,18 +51,11 @@ export default function Meetings() {
 
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            <Grid item xs={4}>
-            <Meeting />
-
-            </Grid>
-            <Grid item xs={4}>
-            <Meeting />
-
-            </Grid>
-            <Grid item xs={4} >
-            <Meeting />
-
-            </Grid>
+            {meetings.map((meeting) => (
+              <Grid item xs={4} key={meeting.id}>
+                <Meeting meeting={meeting} />
+              </Grid>
+            ))}
           </Grid>
         </Grid>
       </Grid>

@@ -28,6 +28,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import RoomsContextProvider from "../../contexts/RoomsContext";
+import MeetingsContextProvider from "../../contexts/MeetingsContext";
 
 const drawerWidth = 240;
 
@@ -204,10 +205,12 @@ export default function Home() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <RoomsContextProvider>
-          <Switch>
-            <Route path="/app/meetings" component={Meetings} />
-            <Route path="/app/rooms" component={Rooms} />
-          </Switch>
+          <MeetingsContextProvider>
+            <Switch>
+              <Route path="/app/meetings" component={Meetings} />
+              <Route path="/app/rooms" component={Rooms} />
+            </Switch>
+          </MeetingsContextProvider>
         </RoomsContextProvider>
       </main>
     </div>
