@@ -8,7 +8,7 @@ import AuthContextProvider from "./contexts/AuthContext";
 import Home from "./components/pages/Home";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { ThemeContext } from "./contexts/ThemeContext";
-import MeetingProgress from "./components/meetings/MeetingProgress";
+import MeetingProgress from "./components/pages/MeetingProgress";
 import MeetingsContextProvider from "./contexts/MeetingsContext";
 
 function App() {
@@ -19,10 +19,10 @@ function App() {
       <AuthContextProvider>
         <MeetingsContextProvider>
           <Switch>
-            <Private exact path="/" component={Home} />
-            <Private path="/app" component={Home} />
-            <Public restricted={true} path="/login" component={Singin} />
-            <Private path="/:id" component={MeetingProgress} />
+            <Private exact path='/' component={Home} />
+            <Private path='/app' component={Home} />
+            <Public restricted={true} path='/login' component={Singin} />
+            <Private path='/:id' component={MeetingProgress} />
           </Switch>
         </MeetingsContextProvider>
       </AuthContextProvider>

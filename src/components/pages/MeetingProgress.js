@@ -1,22 +1,15 @@
-import {
-  AppBar,
-  Box,
-  Grid,
-  Toolbar,
-  Typography,
-  Card,
-  CardContent,
-} from "@material-ui/core";
-import React, {useContext} from "react";
+import { Box, Grid, Typography } from "@material-ui/core";
+import React, { useContext, useState } from "react";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import Meeting from "../meetings/Meeting";
+import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
+import Timer from "../utils/Timer";
 
 export default function MeetingProgress() {
+  const { meetings, loading, selectedMeeting } = useContext(MeetingsContext);
 
-  const {meetings, loading } = useContext(MeetingsContext)
   return (
     <div>
-
       <Grid container style={{ height: "100vh" }}>
         <Grid item xs={7}>
           <div
@@ -29,50 +22,48 @@ export default function MeetingProgress() {
             }}
           >
             <div style={{ background: "rgb(0, 154, 83, 0.9)", height: "100%" }}>
-              <Box p={6}>
+              <Box p={6} height='100%'>
                 <Grid
                   container
                   spacing={7}
-                  direction="column"
-                  alignItems="center"
-                  justify="center"
+                  alignItems='center'
+                  justify='center'
+                  style={{ height: "100%" }}
                 >
                   <Grid item xs={12}>
-                    <Typography style={{ color: "white" }} align="center">
-                      19:31 Wednesday, April 12th
-                    </Typography>
                     <Typography
                       style={{ color: "white" }}
-                      variant="h2"
-                      align="center"
+                      align='center'
+                      variant='h6'
                     >
-                      ON GOING
+                      "CLOCK"
+                    </Typography>
+                    <br></br>
+                    <Typography
+                      style={{ color: "white" }}
+                      variant='h3'
+                      align='center'
+                    >
+                      {selectedMeeting.status}
                     </Typography>
                   </Grid>
 
                   <Grid item xs={12}>
                     <Typography
                       style={{ color: "white" }}
-                      variant="h1"
-                      align="center"
+                      variant='h1'
+                      align='center'
                     >
-                      60:00
+                      <Timer meeting={selectedMeeting} />
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Typography
                       style={{ color: "white" }}
-                      variant="body1"
-                      align="center"
+                      variant='h5'
+                      align='center'
                     >
-                      Accounts meeting with IT
-                    </Typography>
-                    <Typography
-                      style={{ color: "white" }}
-                      variant="subtitle"
-                      align="center"
-                    >
-                      Organizer: Donato
+                      {selectedMeeting.title}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -86,12 +77,23 @@ export default function MeetingProgress() {
               <Grid item xs={12}>
                 <Typography>Today</Typography>
               </Grid>
-              {meetings.map(meeting => (
-                <Grid item xs={12} key={meeting.id}>
-                <Meeting meeting={meeting}/>
-              </Grid>
-              ))}
-              
+              {loading ? (
+                <MeetingsSkeleton />
+              ) : (
+                <Grid container spacing={2}>
+                  {meetings.length > 0 ? (
+                    meetings.map((meeting) => (
+                      <Grid item xs={12} key={meeting.id}>
+                        <Meeting meeting={meeting} />
+                      </Grid>
+                    ))
+                  ) : (
+                    <Grid item xs={12}>
+                      <Typography variant='h5'>No Meetings</Typography>
+                    </Grid>
+                  )}
+                </Grid>
+              )}
             </Grid>
           </Box>
         </Grid>
