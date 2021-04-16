@@ -29,6 +29,7 @@ export default function MeetingForm({
         startDate: new Date(),
         status: "BOOKED",
         meetingDate: new Date(),
+        isStarted: false,
       }}
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {

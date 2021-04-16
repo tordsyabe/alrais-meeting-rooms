@@ -54,7 +54,7 @@ export default function MeetingProgress() {
                       variant='h1'
                       align='center'
                     >
-                      <Timer meeting={selectedMeeting} />
+                      <Timer />
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>

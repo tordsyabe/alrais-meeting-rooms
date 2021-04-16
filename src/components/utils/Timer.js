@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { updateDuration } from "../../services/MeetingService";
 
-export default function Timer({ meeting }) {
+export default function Timer() {
+  const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
   const [second, setSecond] = useState("00");
   const [minute, setMinute] = useState("00");
   const [isActive, setIsActive] = useState(false);
-  const [counter, setCounter] = useState(parseInt(meeting.duration));
+  const [counter, setCounter] = useState(selectedMeeting.duration);
 
   function stopTimer() {
     setIsActive(false);
+    updateDuration(selectedMeeting.id).update({
+      isStarted: false,
+    });
     setCounter(0);
     setSecond("00");
     setMinute("00");
@@ -35,12 +40,14 @@ export default function Timer({ meeting }) {
         setMinute(computedMinute);
 
         setCounter((counter) => counter + 1);
-        updateDuration(meeting.id).update({ duration: meeting.duration + 1 });
+        updateDuration(selectedMeeting.id).update({ duration: counter });
       }, 1000);
+    } else {
+      setCounter(selectedMeeting.duration);
     }
 
     return () => clearInterval(intervalId);
-  }, [isActive, counter]);
+  }, [isActive, counter, selectedMeeting]);
   return (
     <div className='container'>
       <div className='time'>
