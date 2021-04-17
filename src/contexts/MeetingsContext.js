@@ -8,7 +8,10 @@ export const MeetingsContext = createContext();
 export default function MeetingsContextProvider({ children }) {
   const [meetings, setMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedMeeting, setSelectedMeeting] = useState({});
+  const [selectedMeeting, setSelectedMeeting] = useState({
+    title: "FREE",
+    
+  });
 
   useEffect(() => {
     return getMeetings().onSnapshot((snapShot) => {

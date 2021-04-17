@@ -10,7 +10,7 @@ import PauseIcon from "@material-ui/icons/Pause";
 import { startMeeting, stopMeeting } from "../../services/MeetingService";
 
 export default function Timer({ isActive, setIsActive }) {
-  const { selectedMeeting } = useContext(MeetingsContext);
+  const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
   const [second, setSecond] = useState("00");
   const [minute, setMinute] = useState("00");
 
@@ -30,9 +30,6 @@ export default function Timer({ isActive, setIsActive }) {
 
   useEffect(() => {
     let intervalId;
-
-    console.log("CALLED FROM TIMER USEEFFECT");
-
     if (isActive) {
       intervalId = setInterval(() => {
         const secondCounter = counter % 60;
@@ -89,6 +86,7 @@ export default function Timer({ isActive, setIsActive }) {
             onClick={() => {
               stopMeeting(selectedMeeting.id);
               stopTimer();
+              setSelectedMeeting({title: "FREE"})
             }}
           >
             <DoneIcon />

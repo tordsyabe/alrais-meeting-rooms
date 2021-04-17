@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   selectedCard: {
     borderColor: theme.palette.primary.main,
     borderWidth: "2px",
-    borderStyle: "solid"
+    borderStyle: "solid",
   },
 }));
 
@@ -42,7 +42,10 @@ export default function Meeting({ meeting }) {
   };
   return (
     <React.Fragment>
-      <Card className={meeting.id === selectedMeeting.id ? classes.selectedCard : undefined}
+      <Card
+        className={
+          meeting.id === selectedMeeting.id ? classes.selectedCard : undefined
+        }
         onClick={() => {
           setSelectedMeeting(meeting);
           console.log(meeting);
@@ -91,14 +94,15 @@ export default function Meeting({ meeting }) {
           </Grid>
 
           <CardActions>
-            <Grid container>
-              <Grid item xs={8}></Grid>
+            <Grid container alignItems="center">
+              <Grid item xs={8}>
+                {meeting.duration}
+              </Grid>
               <Grid item xs={4}>
                 <Chip
                   avatar={<Avatar>{<DoneIcon />}</Avatar>}
                   label={meeting.status}
                 />
-                {meeting.duration}
               </Grid>
             </Grid>
           </CardActions>
