@@ -11,16 +11,6 @@ export default function MeetingsContextProvider({ children }) {
   const [selectedMeeting, setSelectedMeeting] = useState({});
 
   useEffect(() => {
-    let intervalId = window.setInterval(() => {
-      // updateDuration(selectedMeeting.id).update({
-      //   duration: selectedMeeting.duration + 1,
-      // });
-    }, 1000);
-
-    return () => window.clearInterval(intervalId);
-  }, [selectedMeeting]);
-
-  useEffect(() => {
     return getMeetings().onSnapshot((snapShot) => {
       const newMeetings = snapShot.docs.map((doc) => ({
         id: doc.id,
@@ -28,7 +18,6 @@ export default function MeetingsContextProvider({ children }) {
       }));
       setLoading(false);
       setMeetings(newMeetings);
-      setSelectedMeeting(newMeetings[0]);
       console.log(meetings);
     });
   }, []);

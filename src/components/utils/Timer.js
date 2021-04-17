@@ -22,6 +22,8 @@ export default function Timer() {
   useEffect(() => {
     let intervalId;
 
+    console.log("CALLED FROM TIMER USEEFFECT");
+
     if (isActive) {
       intervalId = setInterval(() => {
         const secondCounter = counter % 60;
