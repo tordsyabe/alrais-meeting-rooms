@@ -7,111 +7,100 @@ import {
   Chip,
   Grid,
   IconButton,
+  makeStyles,
   Snackbar,
   Typography,
 } from "@material-ui/core";
 import React, { useState, useContext } from "react";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import DoneIcon from "@material-ui/icons/Done";
-import CancelIcon from "@material-ui/icons/Cancel";
 import CloseIcon from "@material-ui/icons/Close";
+
+import CancelIcon from "@material-ui/icons/Cancel";
 
 import {
   cancelMeeting,
   undoCancelledMeeting,
-  startMeeting,
-  stopMeeting,
 } from "../../services/MeetingService";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 
+const useStyles = makeStyles((theme) => ({
+  selectedCard: {
+    borderColor: theme.palette.primary.main,
+    borderWidth: "2px",
+    borderStyle: "solid"
+  },
+}));
+
 export default function Meeting({ meeting }) {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
-  const { setSelectedMeeting } = useContext(MeetingsContext);
+  const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
+
+  const classes = useStyles();
 
   const handleCloseSnackbar = () => {
     setSnackBarOpen(false);
   };
   return (
     <React.Fragment>
-      <Card
+      <Card className={meeting.id === selectedMeeting.id ? classes.selectedCard : undefined}
         onClick={() => {
           setSelectedMeeting(meeting);
           console.log(meeting);
         }}
       >
         <CardContent>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant='body1'>{meeting.title}</Typography>
+          <Grid container alignItems="center" justify="center">
+            <Grid item xs={11}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography variant="body1">{meeting.title}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="caption" color="textSecondary">
+                    {new Date(meeting.startDate.seconds * 1000).toLocaleString(
+                      [],
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}{" "}
+                    -{" "}
+                    {new Date(meeting.endDate.seconds * 1000).toLocaleString(
+                      [],
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant='caption' color='textSecondary'>
-                {new Date(meeting.startDate.seconds * 1000).toLocaleString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}{" "}
-                -{" "}
-                {new Date(meeting.endDate.seconds * 1000).toLocaleString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </Typography>
+
+            <Grid item xs={1}>
+              <IconButton
+                onClick={() =>
+                  cancelMeeting(meeting.id).then(() => {
+                    setSnackBarOpen(true);
+                  })
+                }
+              >
+                <CancelIcon />
+              </IconButton>
             </Grid>
           </Grid>
 
           <CardActions>
-            <Grid container alignItems='center' justify='center'>
-              <Grid item xs={2}>
-                <IconButton
-                  onClick={() => startMeeting(meeting.id)}
-                  disabled={
-                    meeting.status === "CANCELLED" ||
-                    meeting.status === "ON_GOING" ||
-                    meeting.status === "FINISHED"
-                  }
-                >
-                  <PlayCircleFilledIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid item xs={2}>
-                <IconButton
-                  onClick={() =>
-                    cancelMeeting(meeting.id).then(() => {
-                      setSnackBarOpen(true);
-                    })
-                  }
-                  disabled={
-                    meeting.status === "CANCELLED" ||
-                    meeting.status === "ON_GOING" ||
-                    meeting.status === "FINISHED"
-                  }
-                >
-                  <CancelIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid item xs={4}>
-                <IconButton
-                  onClick={() => stopMeeting(meeting.id)}
-                  disabled={
-                    meeting.status === "BOOKED" ||
-                    meeting.status === "CANCELLED" ||
-                    meeting.status === "FINISHED"
-                  }
-                >
-                  <DoneIcon />
-                </IconButton>
-              </Grid>
-
+            <Grid container>
+              <Grid item xs={8}></Grid>
               <Grid item xs={4}>
                 <Chip
                   avatar={<Avatar>{<DoneIcon />}</Avatar>}
                   label={meeting.status}
                 />
+                {meeting.duration}
               </Grid>
             </Grid>
-            {meeting.duration}
           </CardActions>
         </CardContent>
       </Card>
@@ -124,12 +113,12 @@ export default function Meeting({ meeting }) {
         open={snackBarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message='Cancelled Meeting'
+        message="Cancelled Meeting"
         action={
           <React.Fragment>
             <Button
-              color='primary'
-              size='small'
+              color="primary"
+              size="small"
               onClick={() =>
                 undoCancelledMeeting(meeting.id).then(() => {
                   setSnackBarOpen(false);
@@ -139,12 +128,12 @@ export default function Meeting({ meeting }) {
               UNDO
             </Button>
             <IconButton
-              size='small'
-              aria-label='close'
-              color='inherit'
+              size="small"
+              aria-label="close"
+              color="inherit"
               onClick={handleCloseSnackbar}
             >
-              <CloseIcon fontSize='small' />
+              <CloseIcon fontSize="small" />
             </IconButton>
           </React.Fragment>
         }

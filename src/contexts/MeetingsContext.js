@@ -18,9 +18,13 @@ export default function MeetingsContextProvider({ children }) {
       }));
       setLoading(false);
       setMeetings(newMeetings);
-      console.log(meetings);
+      // setSelectedMeeting(newMeetings[0])
     });
   }, []);
+
+  // useEffect(() => {
+  //   setSelectedMeeting(meetings[0]);
+  // }, [loading])
 
   const values = { meetings, loading, selectedMeeting, setSelectedMeeting };
   return (

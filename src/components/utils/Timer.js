@@ -1,13 +1,22 @@
+import { Avatar, Chip, Grid, IconButton, Typography } from "@material-ui/core";
 import React, { useState, useEffect, useContext } from "react";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
-import { updateDuration } from "../../services/MeetingService";
+import { pauseMeeting, updateDuration } from "../../services/MeetingService";
 
-export default function Timer() {
-  const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
+import DoneIcon from "@material-ui/icons/Done";
+import PauseIcon from "@material-ui/icons/Pause";
+
+import { startMeeting, stopMeeting } from "../../services/MeetingService";
+
+export default function Timer({ isActive, setIsActive }) {
+  const { selectedMeeting } = useContext(MeetingsContext);
   const [second, setSecond] = useState("00");
   const [minute, setMinute] = useState("00");
-  const [isActive, setIsActive] = useState(false);
+
   const [counter, setCounter] = useState(selectedMeeting.duration);
+
+  useEffect(() => {}, [selectedMeeting]);
 
   function stopTimer() {
     setIsActive(false);
@@ -51,20 +60,46 @@ export default function Timer() {
     return () => clearInterval(intervalId);
   }, [isActive, counter, selectedMeeting]);
   return (
-    <div className='container'>
-      <div className='time'>
-        <span className='minute'>{minute}</span>
-        <span>:</span>
-        <span className='second'>{second}</span>
-      </div>
-      <div className='buttons'>
-        <button onClick={() => setIsActive(!isActive)} className='start'>
-          {isActive ? "Pause" : "Start"}
-        </button>
-        <button onClick={stopTimer} className='reset'>
-          Reset
-        </button>
-      </div>
-    </div>
+    <React.Fragment>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h1">
+            {minute} : {second}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <IconButton
+            onClick={() => {
+              startMeeting(selectedMeeting.id);
+              setIsActive(true);
+            }}
+          >
+            <PlayCircleFilledIcon fontSize="large" />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              pauseMeeting(selectedMeeting.id);
+              setIsActive(false);
+            }}
+          >
+            <PauseIcon fontSize="large" />
+          </IconButton>
+
+          <IconButton
+            onClick={() => {
+              stopMeeting(selectedMeeting.id);
+              stopTimer();
+            }}
+          >
+            <DoneIcon />
+          </IconButton>
+
+          {/* <Chip
+            avatar={<Avatar>{<DoneIcon />}</Avatar>}
+            label={selectedMeeting.status}
+          /> */}
+        </Grid>
+      </Grid>
+    </React.Fragment>
   );
 }

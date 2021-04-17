@@ -32,6 +32,12 @@ export function stopMeeting(meetingId) {
   });
 }
 
+export function pauseMeeting(meetingId) {
+  return database.meetings.doc(meetingId).update({
+    status: "PAUSED",
+  });
+}
+
 export function updateDuration(meetingId) {
   return database.meetings.doc(meetingId);
 }
