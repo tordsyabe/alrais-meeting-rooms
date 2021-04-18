@@ -14,7 +14,7 @@ export default function MeetingsContextProvider({ children }) {
   });
 
   useEffect(() => {
-    return getMeetings().onSnapshot((snapShot) => {
+    return getMeetings().orderBy("startDate").onSnapshot((snapShot) => {
       const newMeetings = [];
 
       snapShot.docs.forEach((meeting) => {

@@ -93,10 +93,11 @@ export default function Meeting({ meeting }) {
             </Grid>
           </Grid>
 
-          <CardActions>
             <Grid container alignItems="center">
               <Grid item xs={8}>
-                {meeting.duration}
+                <Typography variant="caption">
+                  Meeting Duration: {meeting.duration}
+                </Typography>
               </Grid>
               <Grid item xs={4}>
                 <Chip
@@ -105,7 +106,6 @@ export default function Meeting({ meeting }) {
                 />
               </Grid>
             </Grid>
-          </CardActions>
         </CardContent>
       </Card>
 
