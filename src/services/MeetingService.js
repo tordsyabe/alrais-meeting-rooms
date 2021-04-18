@@ -41,3 +41,7 @@ export function pauseMeeting(meetingId) {
 export function updateDuration(meetingId) {
   return database.meetings.doc(meetingId);
 }
+
+export function getMeetingsByDate() {
+  return database.meetings.where("startDate", "<", new Date(Date.now() - 60 * 60 * 1000));
+}

@@ -69,6 +69,7 @@ export default function MeetingForm({
                   component={DateTimePicker}
                   label='Start Time'
                   name='startDate'
+                  minutesStep={30}
                 />
               </Grid>
 
@@ -77,6 +78,7 @@ export default function MeetingForm({
                   component={DateTimePicker}
                   label='End Time'
                   name='endDate'
+                  minutesStep={30}
                 />
               </Grid>
 
