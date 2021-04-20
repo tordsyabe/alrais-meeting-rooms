@@ -1,15 +1,26 @@
 import { Avatar, Chip, Grid, IconButton, Typography } from "@material-ui/core";
 import React, { useState, useEffect, useContext } from "react";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
-import { pauseMeeting, updateDuration } from "../../services/MeetingService";
+import {
+  cancelMeeting,
+  pauseMeeting,
+  updateDuration,
+} from "../../services/MeetingService";
 
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import DoneIcon from "@material-ui/icons/Done";
+import CancelIcon from "@material-ui/icons/Cancel";
+
 import PauseIcon from "@material-ui/icons/Pause";
 
 import { startMeeting, stopMeeting } from "../../services/MeetingService";
 
-export default function Timer({ isActive, setIsActive, selectedCardMeeting }) {
+export default function Timer({
+  isActive,
+  setIsActive,
+  selectedCardMeeting,
+  setSelectedCardMeeting,
+}) {
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
   const [second, setSecond] = useState("00");
   const [minute, setMinute] = useState("00");
@@ -70,7 +81,12 @@ export default function Timer({ isActive, setIsActive, selectedCardMeeting }) {
               startMeeting(selectedMeeting.id);
               setIsActive(true);
             }}
-            disabled={selectedCardMeeting === ""}
+            disabled={
+              selectedCardMeeting === "" ||
+              isActive ||
+              selectedMeeting.status === "FINISHED" ||
+              selectedMeeting.status === "CANCELLED"
+            }
           >
             <PlayCircleFilledIcon fontSize="large" />
           </IconButton>
@@ -79,7 +95,12 @@ export default function Timer({ isActive, setIsActive, selectedCardMeeting }) {
               pauseMeeting(selectedMeeting.id);
               setIsActive(false);
             }}
-            disabled={selectedCardMeeting === ""}
+            disabled={
+              selectedCardMeeting === "" ||
+              !isActive ||
+              selectedMeeting.status === "FINISHED" ||
+              selectedMeeting.status === "CANCELLED"
+            }
           >
             <PauseIcon fontSize="large" />
           </IconButton>
@@ -88,17 +109,33 @@ export default function Timer({ isActive, setIsActive, selectedCardMeeting }) {
             onClick={() => {
               stopMeeting(selectedMeeting.id);
               stopTimer();
-              setSelectedMeeting({title: "FREE"})
+              setSelectedMeeting({ title: "FREE" });
+              setSelectedCardMeeting("");
             }}
-            disabled={selectedCardMeeting === ""}
+            disabled={
+              selectedCardMeeting === "" ||
+              selectedMeeting.status === "FINISHED" ||
+              selectedMeeting.status === "CANCELLED"
+            }
           >
             <DoneIcon />
           </IconButton>
 
-          {/* <Chip
-            avatar={<Avatar>{<DoneIcon />}</Avatar>}
-            label={selectedMeeting.status}
-          /> */}
+          <IconButton
+            onClick={() =>
+              cancelMeeting(selectedMeeting.id).then(() => {
+                setSelectedCardMeeting("")
+              })
+            }
+            disabled={
+              selectedCardMeeting === "" ||
+              isActive ||
+              selectedMeeting.status === "FINISHED" ||
+              selectedMeeting.status === "CANCELLED"
+            }
+          >
+            <CancelIcon />
+          </IconButton>
         </Grid>
       </Grid>
     </React.Fragment>

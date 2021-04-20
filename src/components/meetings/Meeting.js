@@ -2,7 +2,6 @@ import {
   Avatar,
   Button,
   Card,
-  CardActions,
   CardContent,
   Chip,
   Grid,
@@ -15,10 +14,8 @@ import React, { useState, useContext } from "react";
 import DoneIcon from "@material-ui/icons/Done";
 import CloseIcon from "@material-ui/icons/Close";
 
-import CancelIcon from "@material-ui/icons/Cancel";
 
 import {
-  cancelMeeting,
   undoCancelledMeeting,
 } from "../../services/MeetingService";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
@@ -51,7 +48,11 @@ export default function Meeting({
   return (
     <React.Fragment>
       <Card
-        className={isActive && selectedCardMeeting !== meeting.id ? classes.notSelectedCard : classes.card}
+        className={
+          isActive && selectedCardMeeting !== meeting.id
+            ? classes.notSelectedCard
+            : classes.card
+        }
         raised={meeting.id === selectedMeeting.id ? true : false}
         onClick={() => {
           setSelectedMeeting(meeting);
@@ -60,10 +61,19 @@ export default function Meeting({
       >
         <CardContent>
           <Grid container alignItems="center" justify="center">
-            <Grid item xs={11}>
+            <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12}>
-                  <Typography variant="body1">{meeting.title}</Typography>
+                  <Typography
+                    variant="body1"
+                    color={
+                      isActive && selectedCardMeeting !== meeting.id
+                        ? "textSecondary"
+                        : undefined
+                    }
+                  >
+                    {meeting.title}
+                  </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant="caption" color="textSecondary">
@@ -86,23 +96,11 @@ export default function Meeting({
                 </Grid>
               </Grid>
             </Grid>
-
-            <Grid item xs={1}>
-              <IconButton
-                onClick={() =>
-                  cancelMeeting(meeting.id).then(() => {
-                    setSnackBarOpen(true);
-                  })
-                }
-              >
-                <CancelIcon />
-              </IconButton>
-            </Grid>
           </Grid>
 
           <Grid container alignItems="center">
             <Grid item xs={8}>
-              <Typography variant="caption">
+              <Typography variant="caption" color="textSecondary">
                 Meeting Duration: {meeting.duration}
               </Typography>
             </Grid>
