@@ -20,6 +20,7 @@ import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness5Icon from "@material-ui/icons/Brightness5";
+import EventSeatIcon from "@material-ui/icons/EventSeat";
 import { Route, Switch } from "react-router";
 import Meetings from "../meetings/index";
 import Rooms from "../rooms/index";
@@ -29,6 +30,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import RoomsContextProvider from "../../contexts/RoomsContext";
 import MeetingsContextProvider from "../../contexts/MeetingsContext";
+import { Badge } from "@material-ui/core";
+import Approvals from "../approvals";
 
 const drawerWidth = 240;
 
@@ -200,6 +203,15 @@ export default function Home() {
             </ListItemIcon>
             <ListItemText primary="Rooms" />
           </ListItem>
+
+          <ListItem button onClick={() => history.push("/app/approvals")}>
+            <ListItemIcon>
+              <Badge badgeContent={4} color="secondary">
+                <EventSeatIcon />
+              </Badge>
+            </ListItemIcon>
+            <ListItemText primary="Approvals" />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
@@ -209,6 +221,7 @@ export default function Home() {
             <Switch>
               <Route path="/app/meetings" component={Meetings} />
               <Route path="/app/rooms" component={Rooms} />
+              <Route path="/app/approvals" component={Approvals} />
             </Switch>
           </MeetingsContextProvider>
         </RoomsContextProvider>
