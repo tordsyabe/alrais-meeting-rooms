@@ -6,11 +6,12 @@ import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
 import Timer from "../utils/Timer";
 
 export default function MeetingProgress() {
-  const { meetings, loading, selectedMeeting, setSelectedMeeting } = useContext(
+  const { meetings, loading, selectedMeeting } = useContext(
     MeetingsContext
   );
   const [isActive, setIsActive] = useState(false);
 
+  const [selectedCardMeeting, setSelectedCardMeeting] = useState("");
 
   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
@@ -75,7 +76,7 @@ export default function MeetingProgress() {
                       variant="h1"
                       align="center"
                     >
-                      <Timer isActive={isActive} setIsActive={setIsActive} />
+                      <Timer isActive={isActive} setIsActive={setIsActive} selectedCardMeeting={selectedCardMeeting}/>
                     </Typography>
                   </Grid>
                 </Grid>
@@ -87,7 +88,7 @@ export default function MeetingProgress() {
           <Box p={3}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography>Today</Typography>
+                <Typography>Scheduled Meeting Today</Typography>
               </Grid>
               {loading ? (
                 <MeetingsSkeleton />
@@ -96,7 +97,12 @@ export default function MeetingProgress() {
                   {meetings.length > 0 ? (
                     meetings.map((meeting) => (
                       <Grid item xs={12} key={meeting.id}>
-                        <Meeting meeting={meeting} />
+                        <Meeting
+                          meeting={meeting}
+                          isActive={isActive}
+                          selectedCardMeeting={selectedCardMeeting}
+                          setSelectedCardMeeting={setSelectedCardMeeting}
+                        />
                       </Grid>
                     ))
                   ) : (

@@ -24,14 +24,22 @@ import {
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 
 const useStyles = makeStyles((theme) => ({
-  selectedCard: {
-    borderColor: theme.palette.primary.main,
-    borderWidth: "2px",
-    borderStyle: "solid",
+  card: {
+    cursor: "pointer",
+  },
+
+  notSelectedCard: {
+    pointerEvents: "none",
+    cursor: "default",
   },
 }));
 
-export default function Meeting({ meeting }) {
+export default function Meeting({
+  meeting,
+  isActive,
+  selectedCardMeeting,
+  setSelectedCardMeeting,
+}) {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
 
@@ -43,12 +51,11 @@ export default function Meeting({ meeting }) {
   return (
     <React.Fragment>
       <Card
-        className={
-          meeting.id === selectedMeeting.id ? classes.selectedCard : undefined
-        }
+        className={isActive && selectedCardMeeting !== meeting.id ? classes.notSelectedCard : classes.card}
+        raised={meeting.id === selectedMeeting.id ? true : false}
         onClick={() => {
           setSelectedMeeting(meeting);
-          console.log(meeting);
+          setSelectedCardMeeting(meeting.id);
         }}
       >
         <CardContent>
@@ -93,19 +100,19 @@ export default function Meeting({ meeting }) {
             </Grid>
           </Grid>
 
-            <Grid container alignItems="center">
-              <Grid item xs={8}>
-                <Typography variant="caption">
-                  Meeting Duration: {meeting.duration}
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Chip
-                  avatar={<Avatar>{<DoneIcon />}</Avatar>}
-                  label={meeting.status}
-                />
-              </Grid>
+          <Grid container alignItems="center">
+            <Grid item xs={8}>
+              <Typography variant="caption">
+                Meeting Duration: {meeting.duration}
+              </Typography>
             </Grid>
+            <Grid item xs={4}>
+              <Chip
+                avatar={<Avatar>{<DoneIcon />}</Avatar>}
+                label={meeting.status}
+              />
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
 

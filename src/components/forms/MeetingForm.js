@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Grid, MenuItem } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
 import { DateTimePicker } from "formik-material-ui-pickers";
@@ -17,6 +17,8 @@ export default function MeetingForm({
   setSnackBarMessage,
 }) {
   const { rooms } = useContext(RoomsContext);
+
+  const [endTime, setEndTime] = useState(new Date())
 
   return (
     <Formik
@@ -77,7 +79,7 @@ export default function MeetingForm({
                 <Field
                   component={DateTimePicker}
                   label='End Time'
-                  name='endDate'
+                  name='endDate'  
                   minutesStep={30}
                 />
               </Grid>

@@ -9,7 +9,7 @@ import PauseIcon from "@material-ui/icons/Pause";
 
 import { startMeeting, stopMeeting } from "../../services/MeetingService";
 
-export default function Timer({ isActive, setIsActive }) {
+export default function Timer({ isActive, setIsActive, selectedCardMeeting }) {
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
   const [second, setSecond] = useState("00");
   const [minute, setMinute] = useState("00");
@@ -70,6 +70,7 @@ export default function Timer({ isActive, setIsActive }) {
               startMeeting(selectedMeeting.id);
               setIsActive(true);
             }}
+            disabled={selectedCardMeeting === ""}
           >
             <PlayCircleFilledIcon fontSize="large" />
           </IconButton>
@@ -78,6 +79,7 @@ export default function Timer({ isActive, setIsActive }) {
               pauseMeeting(selectedMeeting.id);
               setIsActive(false);
             }}
+            disabled={selectedCardMeeting === ""}
           >
             <PauseIcon fontSize="large" />
           </IconButton>
@@ -88,6 +90,7 @@ export default function Timer({ isActive, setIsActive }) {
               stopTimer();
               setSelectedMeeting({title: "FREE"})
             }}
+            disabled={selectedCardMeeting === ""}
           >
             <DoneIcon />
           </IconButton>
