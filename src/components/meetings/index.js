@@ -41,6 +41,7 @@ export default function Meetings() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [selectedCardMeeting, setSelectedCardMeeting] = useState("");
 
   const handleCloseSnackbar = () => {
     setSnackBarOpen(false);
@@ -49,14 +50,14 @@ export default function Meetings() {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Grid container alignItems='center' justify='center'>
+          <Grid container alignItems="center" justify="center">
             <Grid item xs={1}>
               <IconButton>
                 <ArrowBackIcon />
               </IconButton>
             </Grid>
             <Grid item xs={10}>
-              <Typography variant='h5' align='center'>
+              <Typography variant="h5" align="center">
                 Today
               </Typography>
             </Grid>
@@ -76,12 +77,17 @@ export default function Meetings() {
               {meetings.length > 0 ? (
                 meetings.map((meeting) => (
                   <Grid item xs={4} key={meeting.id}>
-                    <Meeting meeting={meeting} />
+                    <Meeting
+                      meeting={meeting}
+                      onDashboard={true}
+                      selectedCardMeeting={selectedCardMeeting}
+                      setSelectedCardMeeting={setSelectedCardMeeting}
+                    />
                   </Grid>
                 ))
               ) : (
                 <Grid item xs={12}>
-                  <Typography variant='h5'>No Meetings</Typography>
+                  <Typography variant="h5">No Meetings</Typography>
                 </Grid>
               )}
             </Grid>
@@ -89,8 +95,8 @@ export default function Meetings() {
         </Grid>
       </Grid>
       <Fab
-        color='primary'
-        aria-label='add'
+        color="primary"
+        aria-label="add"
         className={classes.fab}
         onClick={() => setOpenForm(true)}
       >
@@ -98,7 +104,7 @@ export default function Meetings() {
       </Fab>
 
       <Dialog open={openForm} onClose={() => {}}>
-        <DialogTitle id='form-dialog-title'>New Meeting</DialogTitle>
+        <DialogTitle id="form-dialog-title">New Meeting</DialogTitle>
         <DialogContent style={{ overflow: "hidden" }}>
           <DialogContentText>
             Please provide meeting information.
@@ -110,7 +116,7 @@ export default function Meetings() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenForm(false)} color='primary'>
+          <Button onClick={() => setOpenForm(false)} color="primary">
             Cancel
           </Button>
         </DialogActions>

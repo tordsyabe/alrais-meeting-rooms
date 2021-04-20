@@ -2,6 +2,7 @@ import {
   Avatar,
   Button,
   Card,
+  CardActions,
   CardContent,
   Chip,
   Grid,
@@ -14,10 +15,7 @@ import React, { useState, useContext } from "react";
 import DoneIcon from "@material-ui/icons/Done";
 import CloseIcon from "@material-ui/icons/Close";
 
-
-import {
-  undoCancelledMeeting,
-} from "../../services/MeetingService";
+import { undoCancelledMeeting } from "../../services/MeetingService";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,16 +27,22 @@ const useStyles = makeStyles((theme) => ({
     pointerEvents: "none",
     cursor: "default",
   },
+
+  hideCardActions: {
+    display: "none",
+  },
 }));
 
 export default function Meeting({
   meeting,
   isActive,
+  onDashboard,
   selectedCardMeeting,
   setSelectedCardMeeting,
 }) {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
+  
 
   const classes = useStyles();
 
@@ -54,12 +58,13 @@ export default function Meeting({
             : classes.card
         }
         raised={meeting.id === selectedMeeting.id ? true : false}
-        onClick={() => {
-          setSelectedMeeting(meeting);
-          setSelectedCardMeeting(meeting.id);
-        }}
       >
-        <CardContent>
+        <CardContent
+          onClick={() => {
+            setSelectedMeeting(meeting);
+            setSelectedCardMeeting(meeting.id);
+          }}
+        >
           <Grid container alignItems="center" justify="center">
             <Grid item xs={12}>
               <Grid container>
@@ -112,6 +117,12 @@ export default function Meeting({
             </Grid>
           </Grid>
         </CardContent>
+        <CardActions
+          className={onDashboard && selectedCardMeeting === meeting.id ? undefined : classes.hideCardActions}
+        >
+          <Button>EDIT</Button>
+          <Button>DELETE</Button>
+        </CardActions>
       </Card>
 
       <Snackbar

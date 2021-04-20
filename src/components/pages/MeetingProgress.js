@@ -103,6 +103,7 @@ export default function MeetingProgress() {
                     meetings.map((meeting) => (
                       <Grid item xs={12} key={meeting.id}>
                         <Meeting
+                          onDashboard={false}
                           meeting={meeting}
                           isActive={isActive}
                           selectedCardMeeting={selectedCardMeeting}
