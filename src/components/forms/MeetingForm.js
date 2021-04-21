@@ -105,6 +105,17 @@ export default function MeetingForm({
                   ))}
                 </Field>
               </Grid>
+
+              <Grid item xs={12}>
+                <Field
+                  fullWidth
+                  required
+                  name='organizer'
+                  component={TextField}
+                  label='Provide your email'
+                ></Field>
+              </Grid>
+
               <Grid item xs={12}>
                 <Button
                   disabled={isSubmitting || !isValid || !dirty}
