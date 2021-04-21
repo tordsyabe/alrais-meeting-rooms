@@ -27,18 +27,30 @@ export default function FillUpPage() {
     <Grid container className={classes.root}>
       <Grid item xs={5}>
         <Box p={5}>
-          <Grid container spacing={3}>
+          <Grid container spacing={6}>
             <Grid item xs={12}>
               <Typography variant='h4'>
-                Fill up the form to book your meeting.
+                Fill up the form to book your meeting
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{ flexGrow: 1 }}>
               <Card>
                 <CardContent>
+                  <Typography component='h5' variant='h5'>
+                    Provide meeting information
+                  </Typography>
+                  <br></br>
                   <MeetingForm />
                 </CardContent>
               </Card>
+            </Grid>
+
+            <Grid item xs={12} alignSelf='flex-end'>
+              <Typography variant='body2' color='textSecondary' align='center'>
+                {"Alrais Meeting Room Booking System Copyright © "}
+                {new Date().getFullYear()}
+                {"."}
+              </Typography>
             </Grid>
           </Grid>
         </Box>
