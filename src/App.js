@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./App.css";
-import { Redirect, Switch } from "react-router";
+import { Redirect, Route, Router, Switch } from "react-router";
 import Private from "./components/routes/Private";
 import Public from "./components/routes/Public";
 import Singin from "./components/pages/Singin";
@@ -22,11 +22,15 @@ function App() {
         <RoomsContextProvider>
           <MeetingsContextProvider>
             <Switch>
+              <Public
+                exact
+                restricted={true}
+                path='/login'
+                component={Singin}
+              />
+              <Route exact path='/book' component={FillUpPage} />
               <Private exact path='/' component={Home} />
               <Private path='/app' component={Home} />
-              <Public restricted={true} path='/login' component={Singin} />
-              <Public exact path='/book' component={FillUpPage} />
-
               <Private path='/:id' component={MeetingProgress} />
             </Switch>
           </MeetingsContextProvider>

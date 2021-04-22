@@ -18,7 +18,7 @@ export default function MeetingForm({
 }) {
   const { rooms } = useContext(RoomsContext);
 
-  const [endTime, setEndTime] = useState(new Date())
+  const [endTime, setEndTime] = useState(new Date());
 
   return (
     <Formik
@@ -32,6 +32,8 @@ export default function MeetingForm({
         status: "BOOKED",
         meetingDate: new Date(),
         isStarted: false,
+        isVerified: false,
+        isApproved: false,
       }}
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {
@@ -63,6 +65,7 @@ export default function MeetingForm({
                   name='title'
                   component={TextField}
                   label='Title'
+                  variant='outlined'
                 ></Field>
               </Grid>
 
@@ -72,6 +75,7 @@ export default function MeetingForm({
                   label='Start Time'
                   name='startDate'
                   minutesStep={30}
+                  variant='outlined'
                 />
               </Grid>
 
@@ -79,8 +83,9 @@ export default function MeetingForm({
                 <Field
                   component={DateTimePicker}
                   label='End Time'
-                  name='endDate'  
+                  name='endDate'
                   minutesStep={30}
+                  variant='outlined'
                 />
               </Grid>
 
@@ -91,9 +96,10 @@ export default function MeetingForm({
                   name='roomId'
                   label='Select Meeting Room'
                   select
-                  //   InputLabelProps={{
-                  //     shrink: true,
-                  //   }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant='outlined'
                   value={values.roomId}
                   fullWidth
                   required
@@ -113,6 +119,7 @@ export default function MeetingForm({
                   name='organizer'
                   component={TextField}
                   label='Provide your email'
+                  variant='outlined'
                 ></Field>
               </Grid>
 

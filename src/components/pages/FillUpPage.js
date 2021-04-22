@@ -18,6 +18,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundPosition: "right center",
   },
+
+  quote: {
+    borderLeft: ".9rem solid #dc4a4a",
+    paddingLeft: "2rem",
+    fontWeight: "bold",
+  },
+
+  inspire: {
+    height: "100%",
+    width: "90%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  },
 }));
 
 export default function FillUpPage() {
@@ -26,7 +40,7 @@ export default function FillUpPage() {
   return (
     <Grid container className={classes.root}>
       <Grid item xs={5}>
-        <Box p={5}>
+        <Box p={6}>
           <Grid container spacing={6}>
             <Grid item xs={12}>
               <Typography variant='h4'>
@@ -34,15 +48,13 @@ export default function FillUpPage() {
               </Typography>
             </Grid>
             <Grid item xs={12} style={{ flexGrow: 1 }}>
-              <Card>
-                <CardContent>
-                  <Typography component='h5' variant='h5'>
-                    Provide meeting information
-                  </Typography>
-                  <br></br>
-                  <MeetingForm />
-                </CardContent>
-              </Card>
+              <Box>
+                <Typography variant='h5' color='textSecondary'>
+                  Provide meeting information
+                </Typography>
+                <br></br>
+                <MeetingForm />
+              </Box>
             </Grid>
 
             <Grid item xs={12} alignSelf='flex-end'>
@@ -55,7 +67,18 @@ export default function FillUpPage() {
           </Grid>
         </Box>
       </Grid>
-      <Grid item xs={7} className={classes.bg}></Grid>
+      <Grid item xs={7} className={classes.bg}>
+        <Box p={5} fontWeight='bold' className={classes.inspire}>
+          <Typography variant='h2' className={classes.quote}>
+            "Whoever is happy will make others happy too."
+          </Typography>
+          <br></br>
+          <br></br>
+          <Typography variant='h5' align='right' color='textSecondary'>
+            - Anne Frank
+          </Typography>
+        </Box>
+      </Grid>
     </Grid>
   );
 }
