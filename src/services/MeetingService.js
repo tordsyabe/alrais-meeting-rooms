@@ -43,5 +43,15 @@ export function updateDuration(meetingId) {
 }
 
 export function getMeetingsByDate() {
-  return database.meetings.where("startDate", "<", new Date(Date.now() - 60 * 60 * 1000));
+  return database.meetings.where(
+    "startDate",
+    "<",
+    new Date(Date.now() - 60 * 60 * 1000)
+  );
+}
+
+export function verifyMeeting(meetingId) {
+  return database.meetings.doc(meetingId).update({
+    isVerified: true,
+  });
 }

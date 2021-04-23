@@ -4,9 +4,10 @@ import {
   CardContent,
   Grid,
   makeStyles,
+  Snackbar,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import MeetingForm from "../forms/MeetingForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,48 +38,74 @@ const useStyles = makeStyles((theme) => ({
 export default function FillUpPage() {
   const classes = useStyles();
 
-  return (
-    <Grid container className={classes.root}>
-      <Grid item xs={5}>
-        <Box p={6}>
-          <Grid container spacing={6}>
-            <Grid item xs={12}>
-              <Typography variant='h4'>
-                Fill up the form to book your meeting
-              </Typography>
-            </Grid>
-            <Grid item xs={12} style={{ flexGrow: 1 }}>
-              <Box>
-                <Typography variant='h5' color='textSecondary'>
-                  Provide meeting information
-                </Typography>
-                <br></br>
-                <MeetingForm />
-              </Box>
-            </Grid>
+  const [openForm, setOpenForm] = React.useState(false);
 
-            <Grid item xs={12} alignSelf='flex-end'>
-              <Typography variant='body2' color='textSecondary' align='center'>
-                {"Alrais Meeting Room Booking System Copyright © "}
-                {new Date().getFullYear()}
-                {"."}
-              </Typography>
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+
+  const [snackBarMessage, setSnackBarMessage] = useState("");
+
+  const handleCloseSnackbar = () => {
+    setSnackBarOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Grid container className={classes.root}>
+        <Grid item xs={5}>
+          <Box p={6}>
+            <Grid container spacing={6}>
+              <Grid item xs={12}>
+                <Typography variant='h4'>
+                  Fill up the form to book your meeting
+                </Typography>
+              </Grid>
+              <Grid item xs={12} style={{ flexGrow: 1 }}>
+                <Box>
+                  <Typography variant='h5' color='textSecondary'>
+                    Provide meeting information
+                  </Typography>
+                  <br></br>
+                  <MeetingForm
+                    setSnackBarOpen={setSnackBarOpen}
+                    setOpenForm={setOpenForm}
+                    setSnackBarMessage={setSnackBarMessage}
+                  />
+                </Box>
+              </Grid>
+
+              <Grid item xs={12} alignSelf='flex-end'>
+                <Typography
+                  variant='body2'
+                  color='textSecondary'
+                  align='center'
+                >
+                  {"Alrais Meeting Room Booking System Copyright © "}
+                  {new Date().getFullYear()}
+                  {"."}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={7} className={classes.bg}>
+          <Box p={5} fontWeight='bold' className={classes.inspire}>
+            <Typography variant='h2' className={classes.quote}>
+              "Whoever is happy will make others happy too."
+            </Typography>
+            <br></br>
+            <br></br>
+            <Typography variant='h5' align='right' color='textSecondary'>
+              - Anne Frank
+            </Typography>
+          </Box>
+        </Grid>
       </Grid>
-      <Grid item xs={7} className={classes.bg}>
-        <Box p={5} fontWeight='bold' className={classes.inspire}>
-          <Typography variant='h2' className={classes.quote}>
-            "Whoever is happy will make others happy too."
-          </Typography>
-          <br></br>
-          <br></br>
-          <Typography variant='h5' align='right' color='textSecondary'>
-            - Anne Frank
-          </Typography>
-        </Box>
-      </Grid>
-    </Grid>
+
+      <Snackbar
+        open={snackBarOpen}
+        onClose={handleCloseSnackbar}
+        message={snackBarMessage}
+      />
+    </React.Fragment>
   );
 }

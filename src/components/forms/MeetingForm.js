@@ -43,7 +43,9 @@ export default function MeetingForm({
           .then((docRef) => {
             setSubmitting(false);
             setOpenForm(false);
-            setSnackBarMessage("Meeting saved successfully");
+            setSnackBarMessage(
+              "Please check your email to verify your booking"
+            );
             setSnackBarOpen(true);
             docRef.get().then((doc) => {
               const meeting = {

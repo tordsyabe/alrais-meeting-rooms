@@ -12,6 +12,7 @@ import MeetingProgress from "./components/pages/MeetingProgress";
 import MeetingsContextProvider from "./contexts/MeetingsContext";
 import FillUpPage from "./components/pages/FillUpPage";
 import RoomsContextProvider from "./contexts/RoomsContext";
+import Verify from "./components/pages/Verify";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -29,6 +30,7 @@ function App() {
                 component={Singin}
               />
               <Route exact path='/book' component={FillUpPage} />
+              <Route exact path='/verify' component={Verify} />
               <Private exact path='/' component={Home} />
               <Private path='/app' component={Home} />
               <Private path='/:id' component={MeetingProgress} />
