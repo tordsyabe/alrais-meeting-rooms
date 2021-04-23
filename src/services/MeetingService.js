@@ -4,6 +4,21 @@ export function getMeetings() {
   return database.meetings;
 }
 
+export function getForApprovalMeetings() {
+  return database.meetings
+    .where("isVerified", "==", true)
+    .where("isApproved", "==", false)
+    .orderBy("meetingDate");
+}
+
+export function getApprovedMeetings() {
+  return database.meetings
+    .where("isVerified", "==", true)
+    .where("isApproved", "==", true)
+    .where("meetingDateString", "==", new Date().toLocaleDateString())
+    .orderBy("startTime");
+}
+
 export function saveMeeting(meeting) {
   return database.meetings.add(meeting);
 }

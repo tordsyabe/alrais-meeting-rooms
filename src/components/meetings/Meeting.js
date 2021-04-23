@@ -42,7 +42,6 @@ export default function Meeting({
 }) {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
-  
 
   const classes = useStyles();
 
@@ -65,12 +64,12 @@ export default function Meeting({
             setSelectedCardMeeting(meeting.id);
           }}
         >
-          <Grid container alignItems="center" justify="center">
+          <Grid container alignItems='center' justify='center'>
             <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12}>
                   <Typography
-                    variant="body1"
+                    variant='body1'
                     color={
                       isActive && selectedCardMeeting !== meeting.id
                         ? "textSecondary"
@@ -81,8 +80,8 @@ export default function Meeting({
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    {new Date(meeting.startDate.seconds * 1000).toLocaleString(
+                  <Typography variant='caption' color='textSecondary'>
+                    {new Date(meeting.startTime.seconds * 1000).toLocaleString(
                       [],
                       {
                         hour: "2-digit",
@@ -90,7 +89,7 @@ export default function Meeting({
                       }
                     )}{" "}
                     -{" "}
-                    {new Date(meeting.endDate.seconds * 1000).toLocaleString(
+                    {new Date(meeting.endTime.seconds * 1000).toLocaleString(
                       [],
                       {
                         hour: "2-digit",
@@ -103,9 +102,9 @@ export default function Meeting({
             </Grid>
           </Grid>
 
-          <Grid container alignItems="center">
+          <Grid container alignItems='center'>
             <Grid item xs={8}>
-              <Typography variant="caption" color="textSecondary">
+              <Typography variant='caption' color='textSecondary'>
                 Meeting Duration: {meeting.duration}
               </Typography>
             </Grid>
@@ -118,7 +117,11 @@ export default function Meeting({
           </Grid>
         </CardContent>
         <CardActions
-          className={onDashboard && selectedCardMeeting === meeting.id ? undefined : classes.hideCardActions}
+          className={
+            onDashboard && selectedCardMeeting === meeting.id
+              ? undefined
+              : classes.hideCardActions
+          }
         >
           <Button>EDIT</Button>
           <Button>DELETE</Button>
@@ -133,12 +136,12 @@ export default function Meeting({
         open={snackBarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        message="Cancelled Meeting"
+        message='Cancelled Meeting'
         action={
           <React.Fragment>
             <Button
-              color="primary"
-              size="small"
+              color='primary'
+              size='small'
               onClick={() =>
                 undoCancelledMeeting(meeting.id).then(() => {
                   setSnackBarOpen(false);
@@ -148,12 +151,12 @@ export default function Meeting({
               UNDO
             </Button>
             <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
+              size='small'
+              aria-label='close'
+              color='inherit'
               onClick={handleCloseSnackbar}
             >
-              <CloseIcon fontSize="small" />
+              <CloseIcon fontSize='small' />
             </IconButton>
           </React.Fragment>
         }

@@ -4,7 +4,11 @@ import { TextField } from "formik-material-ui";
 import React, { useContext, useState } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
-import { DateTimePicker } from "formik-material-ui-pickers";
+import {
+  DatePicker,
+  DateTimePicker,
+  TimePicker,
+} from "formik-material-ui-pickers";
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -19,27 +23,31 @@ export default function MeetingForm({
 }) {
   const { rooms } = useContext(RoomsContext);
 
-  const [endTime, setEndTime] = useState(new Date());
-
   return (
     <Formik
       initialValues={{
         createdAt: new Date(),
         duration: 0,
-        endDate: new Date(),
         title: "",
         roomId: "",
-        startDate: new Date(),
-        status: "BOOKED",
         meetingDate: new Date(),
+        endTime: new Date(),
+        startTime: new Date(),
+        status: "BOOKED",
         isStarted: false,
         isVerified: false,
         isApproved: false,
+        organizer: "",
       }}
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {
+        const meetingToSave = {
+          meetingDateString: data.meetingDate.toLocaleDateString(),
+          ...data,
+        };
+
         setSubmitting(true);
-        saveMeeting(data)
+        saveMeeting(meetingToSave)
           .then((docRef) => {
             setSubmitting(false);
             setOpenForm(false);
@@ -79,23 +87,35 @@ export default function MeetingForm({
                 ></Field>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Field
-                  component={DateTimePicker}
-                  label='Start Time'
-                  name='startDate'
-                  minutesStep={30}
-                  variant='outlined'
+                  component={DatePicker}
+                  label='Meeting Date'
+                  name='meetingDate'
+                  inputVariant='outlined'
+                  autoOk
                 />
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Field
-                  component={DateTimePicker}
-                  label='End Time'
-                  name='endDate'
+                  component={TimePicker}
+                  autoOk
+                  label='Start'
+                  name='startTime'
                   minutesStep={30}
-                  variant='outlined'
+                  inputVariant='outlined'
+                />
+              </Grid>
+
+              <Grid item xs={4}>
+                <Field
+                  component={TimePicker}
+                  autoOk
+                  label='End'
+                  name='endTime'
+                  minutesStep={30}
+                  inputVariant='outlined'
                 />
               </Grid>
 

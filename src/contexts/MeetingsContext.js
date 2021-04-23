@@ -1,6 +1,11 @@
 import { ContactSupportOutlined } from "@material-ui/icons";
 import React, { createContext, useState, useEffect } from "react";
-import { getMeetings, getMeetingsByDate } from "../services/MeetingService";
+import {
+  getApprovedMeetings,
+  getForApprovalMeetings,
+  getMeetings,
+  getMeetingsByDate,
+} from "../services/MeetingService";
 import { getRooms } from "../services/RoomService";
 import firebase from "../firebase";
 
@@ -13,34 +18,41 @@ export default function MeetingsContextProvider({ children }) {
     title: "FREE",
   });
 
+  const [forApprovals, setForApprovals] = useState([]);
+
   useEffect(() => {
-    return getMeetings().orderBy("startDate").onSnapshot((snapShot) => {
+    return getApprovedMeetings().onSnapshot((snapShot) => {
       const newMeetings = [];
 
       snapShot.docs.forEach((meeting) => {
-        if(new Date(meeting.data().startDate.seconds * 1000).toLocaleDateString() === new Date(Date.now() - 60 * 60 * 1000).toLocaleDateString()) {
-          newMeetings.push({id: meeting.id, ...meeting.data()});
-
-        }
+        newMeetings.push({ id: meeting.id, ...meeting.data() });
       });
 
-      // const newMeetings = snapShot.docs.map((doc) => ({
-      //   id: doc.id,
-      //   ...doc.data(),
-      // }));
       setLoading(false);
       setMeetings(newMeetings);
-      // console.log(new Date(newMeetings[0].startDate.seconds * 1000).toLocaleDateString());
-      // console.log(new Date(Date.now() - 60 * 60 * 1000).toLocaleDateString())
-      // setSelectedMeeting(newMeetings[0])
     });
   }, []);
 
-  // useEffect(() => {
-  //   setSelectedMeeting(meetings[0]);
-  // }, [loading])
+  useEffect(() => {
+    getForApprovalMeetings().onSnapshot((snapShot) => {
+      const newForApproval = [];
 
-  const values = { meetings, loading, selectedMeeting, setSelectedMeeting };
+      snapShot.docs.forEach((meeting) => {
+        newForApproval.push({ id: meeting.id, ...meeting.data() });
+      });
+
+      setLoading(false);
+      setForApprovals(newForApproval);
+    });
+  }, []);
+
+  const values = {
+    meetings,
+    loading,
+    selectedMeeting,
+    setSelectedMeeting,
+    forApprovals,
+  };
   return (
     <MeetingsContext.Provider value={values}>
       {children}
