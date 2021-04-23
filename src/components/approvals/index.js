@@ -5,10 +5,12 @@ import { getForApprovalMeetings } from "../../services/MeetingService";
 export default function Approvals() {
   const { forApprovals } = useContext(MeetingsContext);
 
+  console.log(forApprovals);
+
   return (
     <div>
       {forApprovals.map((approval) => (
-        <div>{approval.title}</div>
+        <div key={approval.id}>{approval.title}</div>
       ))}
     </div>
   );
