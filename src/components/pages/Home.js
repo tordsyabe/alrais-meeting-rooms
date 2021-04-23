@@ -29,7 +29,9 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import RoomsContextProvider from "../../contexts/RoomsContext";
-import MeetingsContextProvider from "../../contexts/MeetingsContext";
+import MeetingsContextProvider, {
+  MeetingsContext,
+} from "../../contexts/MeetingsContext";
 import { Badge } from "@material-ui/core";
 import Approvals from "../approvals";
 
@@ -110,6 +112,7 @@ export default function Home() {
 
   const { handleLogout } = useContext(AuthContext);
   const { toggleTheme, isDark } = useContext(ThemeContext);
+  const { forApprovals } = useContext(MeetingsContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -206,7 +209,7 @@ export default function Home() {
 
           <ListItem button onClick={() => history.push("/app/approvals")}>
             <ListItemIcon>
-              <Badge badgeContent={4} color='secondary'>
+              <Badge badgeContent={forApprovals.length} color='secondary'>
                 <EventSeatIcon />
               </Badge>
             </ListItemIcon>
