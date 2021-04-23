@@ -10,6 +10,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { RoomsContext } from "../../contexts/RoomsContext";
 import { saveMeeting } from "../../services/MeetingService";
+import { sendEmailVerification } from "../../services/SendEmailVerificationService";
 
 export default function MeetingForm({
   setOpenForm,
@@ -39,11 +40,19 @@ export default function MeetingForm({
       onSubmit={(data, { setSubmitting }) => {
         setSubmitting(true);
         saveMeeting(data)
-          .then(() => {
+          .then((docRef) => {
             setSubmitting(false);
             setOpenForm(false);
             setSnackBarMessage("Meeting saved successfully");
             setSnackBarOpen(true);
+            docRef.get().then((doc) => {
+              const meeting = {
+                id: docRef.id,
+                ...doc.data(),
+              };
+
+              sendEmailVerification(meeting);
+            });
           })
           .catch((error) => {
             console.log(error);
@@ -51,7 +60,6 @@ export default function MeetingForm({
             setSnackBarOpen(true);
             setSubmitting(false);
           });
-        console.log(data);
       }}
     >
       {({ values, errors, isSubmitting, isValid, dirty }) => (
