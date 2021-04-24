@@ -120,7 +120,7 @@ export default function Home() {
 
   const { handleLogout } = useContext(AuthContext);
   const { toggleTheme, isDark } = useContext(ThemeContext);
-  const { forApprovals } = useContext(MeetingsContext);
+  const { forApprovals, unverified } = useContext(MeetingsContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -242,7 +242,7 @@ export default function Home() {
             onClick={() => history.push(UNVERIFIED_LINK)}
           >
             <ListItemIcon>
-              <Badge badgeContent={6} color='secondary'>
+              <Badge badgeContent={unverified.length} color='secondary'>
                 <AssignmentLateIcon />
               </Badge>
             </ListItemIcon>
