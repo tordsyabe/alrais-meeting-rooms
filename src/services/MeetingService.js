@@ -4,6 +4,10 @@ export function getMeetings() {
   return database.meetings;
 }
 
+export function deleteMeeting(meetingId) {
+  return database.meetings.doc(meetingId).delete();
+}
+
 export function getForApprovalMeetings() {
   return database.meetings
     .where("isVerified", "==", true)
@@ -17,6 +21,13 @@ export function getApprovedMeetings() {
     .where("isApproved", "==", true)
     .where("meetingDateString", "==", new Date().toLocaleDateString())
     .orderBy("startTime");
+}
+
+export function getUnverifiedMeetings() {
+  return database.meetings
+    .where("isVerified", "==", false)
+    .where("isApproved", "==", false)
+    .orderBy("meetingDate");
 }
 
 export function saveMeeting(meeting) {

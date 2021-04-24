@@ -21,6 +21,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness5Icon from "@material-ui/icons/Brightness5";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
+import AssignmentLateIcon from "@material-ui/icons/AssignmentLate";
 import { Route, Switch } from "react-router";
 import Meetings from "../meetings/index";
 import Rooms from "../rooms/index";
@@ -200,7 +201,11 @@ export default function Home() {
             <ListItemText primary='Meetings' />
           </ListItem>
 
-          <ListItem button onClick={() => history.push("/app/rooms")}>
+          <ListItem
+            selected={true}
+            button
+            onClick={() => history.push("/app/rooms")}
+          >
             <ListItemIcon>
               <MeetingRoomIcon />
             </ListItemIcon>
@@ -213,7 +218,16 @@ export default function Home() {
                 <EventSeatIcon />
               </Badge>
             </ListItemIcon>
-            <ListItemText primary='Approvals' />
+            <ListItemText primary='For Approvals' />
+          </ListItem>
+
+          <ListItem button onClick={() => history.push("/app/approvals")}>
+            <ListItemIcon>
+              <Badge badgeContent={6} color='secondary'>
+                <AssignmentLateIcon />
+              </Badge>
+            </ListItemIcon>
+            <ListItemText primary='Unverified' />
           </ListItem>
         </List>
       </Drawer>
