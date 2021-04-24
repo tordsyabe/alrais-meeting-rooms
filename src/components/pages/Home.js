@@ -26,15 +26,13 @@ import { Route, Switch } from "react-router";
 import Meetings from "../meetings/index";
 import Rooms from "../rooms/index";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import RoomsContextProvider from "../../contexts/RoomsContext";
-import MeetingsContextProvider, {
-  MeetingsContext,
-} from "../../contexts/MeetingsContext";
+import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { Badge } from "@material-ui/core";
 import Approvals from "../approvals";
+import Unverified from "../unverified";
 
 const drawerWidth = 240;
 
@@ -110,6 +108,7 @@ export default function Home() {
   const [open, setOpen] = React.useState(true);
 
   const history = useHistory();
+  const location = useLocation();
 
   const { handleLogout } = useContext(AuthContext);
   const { toggleTheme, isDark } = useContext(ThemeContext);
@@ -194,7 +193,11 @@ export default function Home() {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => history.push("/app/meetings")}>
+          <ListItem
+            selected={location.pathname === "/app/meetings"}
+            button
+            onClick={() => history.push("/app/meetings")}
+          >
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
@@ -202,7 +205,7 @@ export default function Home() {
           </ListItem>
 
           <ListItem
-            selected={true}
+            selected={location.pathname === "/app/rooms"}
             button
             onClick={() => history.push("/app/rooms")}
           >
@@ -212,7 +215,11 @@ export default function Home() {
             <ListItemText primary='Rooms' />
           </ListItem>
 
-          <ListItem button onClick={() => history.push("/app/approvals")}>
+          <ListItem
+            selected={location.pathname === "/app/approvals"}
+            button
+            onClick={() => history.push("/app/approvals")}
+          >
             <ListItemIcon>
               <Badge badgeContent={forApprovals.length} color='secondary'>
                 <EventSeatIcon />
@@ -221,7 +228,11 @@ export default function Home() {
             <ListItemText primary='For Approvals' />
           </ListItem>
 
-          <ListItem button onClick={() => history.push("/app/approvals")}>
+          <ListItem
+            selected={location.pathname === "/app/unverified"}
+            button
+            onClick={() => history.push("/app/unverified")}
+          >
             <ListItemIcon>
               <Badge badgeContent={6} color='secondary'>
                 <AssignmentLateIcon />
@@ -237,6 +248,7 @@ export default function Home() {
           <Route path='/app/meetings' component={Meetings} />
           <Route path='/app/rooms' component={Rooms} />
           <Route path='/app/approvals' component={Approvals} />
+          <Route path='/app/unverified' component={Unverified} />
         </Switch>
       </main>
     </div>
