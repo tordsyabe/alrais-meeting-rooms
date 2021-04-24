@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import {
+  getApprovedMeetings,
   getForApprovalMeetings,
   getMeetings,
   getUnverifiedMeetings,
@@ -18,7 +19,7 @@ export default function MeetingsContextProvider({ children }) {
   const [unverified, setUnverified] = useState([]);
 
   useEffect(() => {
-    return getMeetings().onSnapshot((snapShot) => {
+    return getApprovedMeetings().onSnapshot((snapShot) => {
       const newMeetings = [];
 
       snapShot.docs.forEach((meeting) => {
