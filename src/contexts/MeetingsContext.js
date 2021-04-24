@@ -1,13 +1,9 @@
-import { ContactSupportOutlined } from "@material-ui/icons";
 import React, { createContext, useState, useEffect } from "react";
 import {
-  getApprovedMeetings,
   getForApprovalMeetings,
   getMeetings,
-  getMeetingsByDate,
+  getUnverifiedMeetings,
 } from "../services/MeetingService";
-import { getRooms } from "../services/RoomService";
-import firebase from "../firebase";
 
 export const MeetingsContext = createContext();
 
@@ -19,6 +15,7 @@ export default function MeetingsContextProvider({ children }) {
   });
 
   const [forApprovals, setForApprovals] = useState([]);
+  const [unverified, setUnverified] = useState([]);
 
   useEffect(() => {
     return getMeetings().onSnapshot((snapShot) => {
@@ -30,6 +27,19 @@ export default function MeetingsContextProvider({ children }) {
 
       setLoading(false);
       setMeetings(newMeetings);
+    });
+  }, []);
+
+  useEffect(() => {
+    return getUnverifiedMeetings().onSnapshot((snapShot) => {
+      const newUnverified = [];
+
+      snapShot.docs.forEach((meeting) => {
+        newUnverified.push({ id: meeting.id, ...meeting.data() });
+      });
+
+      setLoading(false);
+      setUnverified(newUnverified);
     });
   }, []);
 
@@ -52,6 +62,7 @@ export default function MeetingsContextProvider({ children }) {
     selectedMeeting,
     setSelectedMeeting,
     forApprovals,
+    unverified,
   };
   return (
     <MeetingsContext.Provider value={values}>

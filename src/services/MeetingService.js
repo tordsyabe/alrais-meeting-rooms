@@ -31,6 +31,9 @@ export function getUnverifiedMeetings() {
 }
 
 export function saveMeeting(meeting) {
+  if (meeting.isVerified === true) {
+    meeting.isApproved = true;
+  }
   return database.meetings.add(meeting);
 }
 

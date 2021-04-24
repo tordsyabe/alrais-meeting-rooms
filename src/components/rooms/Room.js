@@ -1,20 +1,14 @@
 import React from "react";
 
 import {
-  Box,
   Card,
   CardActionArea,
   CardContent,
-  Chip,
   Grid,
-  IconButton,
   makeStyles,
   Typography,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -40,14 +34,6 @@ export default function Room({ room }) {
               <Typography variant='caption' color='textSecondary'>
                 Room Capacity: {room.capacity}
               </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              {/* <IconButton>
-                <EditIcon fontSize='small' />
-              </IconButton>
-              <IconButton>
-                <DeleteIcon fontSize='small' />
-              </IconButton> */}
             </Grid>
           </Grid>
         </CardContent>

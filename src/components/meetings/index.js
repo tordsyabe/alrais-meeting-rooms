@@ -155,11 +155,17 @@ export default function Meetings() {
           </Button>
           <Button
             onClick={() =>
-              deleteMeeting(meetingToDelete.id).then(() => {
-                setSnackBarMessage("Successfully deleted meeting");
-                setSnackBarOpen(true);
-                setOpenDeleteDialog(false);
-              })
+              deleteMeeting(meetingToDelete.id)
+                .then(() => {
+                  setSnackBarMessage("Successfully deleted meeting");
+                  setSnackBarOpen(true);
+                  setOpenDeleteDialog(false);
+                })
+                .catch(() => {
+                  setSnackBarMessage("Failed to delete meeting");
+                  setSnackBarOpen(true);
+                  setOpenDeleteDialog(false);
+                })
             }
             color='primary'
             autoFocus

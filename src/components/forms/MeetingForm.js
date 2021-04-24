@@ -1,6 +1,6 @@
 import { Button, CircularProgress, Grid, MenuItem } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
-import { TextField } from "formik-material-ui";
+import { CheckboxWithLabel, TextField } from "formik-material-ui";
 import React, { useContext, useState } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
@@ -15,6 +15,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { RoomsContext } from "../../contexts/RoomsContext";
 import { saveMeeting } from "../../services/MeetingService";
 import { sendEmailVerification } from "../../services/SendEmailVerificationService";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function MeetingForm({
   setOpenForm,
@@ -22,6 +23,7 @@ export default function MeetingForm({
   setSnackBarMessage,
 }) {
   const { rooms } = useContext(RoomsContext);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <Formik
@@ -33,7 +35,7 @@ export default function MeetingForm({
         meetingDate: new Date(),
         endTime: new Date(),
         startTime: new Date(),
-        status: "BOOKED",
+        status: "UNVERIFIED",
         isStarted: false,
         isVerified: false,
         isApproved: false,
@@ -152,6 +154,16 @@ export default function MeetingForm({
                   variant='outlined'
                 ></Field>
               </Grid>
+              {currentUser && (
+                <Grid item xs={12}>
+                  <Field
+                    component={CheckboxWithLabel}
+                    type='checkbox'
+                    name='isVerified'
+                    Label={{ label: "Verify and approve this meeting" }}
+                  />
+                </Grid>
+              )}
 
               <Grid item xs={12}>
                 <Button
