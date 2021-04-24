@@ -37,13 +37,9 @@ export default function Room({ room }) {
           <Grid container spacing={2} alignItems='center'>
             <Grid item xs={10}>
               <Typography variant='h5'>{room.name}</Typography>
-              <Box pt={2}>
-                <Chip
-                  label={`Room capacity: ${room.capacity}`}
-                  color='default'
-                  size='small'
-                />
-              </Box>
+              <Typography variant='caption' color='textSecondary'>
+                Room Capacity: {room.capacity}
+              </Typography>
             </Grid>
             <Grid item xs={2}>
               {/* <IconButton>

@@ -33,6 +33,7 @@ import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { Badge } from "@material-ui/core";
 import Approvals from "../approvals";
 import Unverified from "../unverified";
+import { constants } from "../../utils/constants";
 
 const drawerWidth = 240;
 
@@ -109,6 +110,13 @@ export default function Home() {
 
   const history = useHistory();
   const location = useLocation();
+
+  const {
+    APPROVAL_LINK,
+    MEETINGS_LINK,
+    ROOMS_LINK,
+    UNVERIFIED_LINK,
+  } = constants;
 
   const { handleLogout } = useContext(AuthContext);
   const { toggleTheme, isDark } = useContext(ThemeContext);
@@ -194,9 +202,9 @@ export default function Home() {
         <Divider />
         <List>
           <ListItem
-            selected={location.pathname === "/app/meetings"}
+            selected={location.pathname === MEETINGS_LINK}
             button
-            onClick={() => history.push("/app/meetings")}
+            onClick={() => history.push(MEETINGS_LINK)}
           >
             <ListItemIcon>
               <MenuBookIcon />
@@ -205,9 +213,9 @@ export default function Home() {
           </ListItem>
 
           <ListItem
-            selected={location.pathname === "/app/rooms"}
+            selected={location.pathname === ROOMS_LINK}
             button
-            onClick={() => history.push("/app/rooms")}
+            onClick={() => history.push(ROOMS_LINK)}
           >
             <ListItemIcon>
               <MeetingRoomIcon />
@@ -216,9 +224,9 @@ export default function Home() {
           </ListItem>
 
           <ListItem
-            selected={location.pathname === "/app/approvals"}
+            selected={location.pathname === APPROVAL_LINK}
             button
-            onClick={() => history.push("/app/approvals")}
+            onClick={() => history.push(APPROVAL_LINK)}
           >
             <ListItemIcon>
               <Badge badgeContent={forApprovals.length} color='secondary'>
@@ -229,9 +237,9 @@ export default function Home() {
           </ListItem>
 
           <ListItem
-            selected={location.pathname === "/app/unverified"}
+            selected={location.pathname === UNVERIFIED_LINK}
             button
-            onClick={() => history.push("/app/unverified")}
+            onClick={() => history.push(UNVERIFIED_LINK)}
           >
             <ListItemIcon>
               <Badge badgeContent={6} color='secondary'>
@@ -245,10 +253,10 @@ export default function Home() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route path='/app/meetings' component={Meetings} />
-          <Route path='/app/rooms' component={Rooms} />
-          <Route path='/app/approvals' component={Approvals} />
-          <Route path='/app/unverified' component={Unverified} />
+          <Route path={MEETINGS_LINK} component={Meetings} />
+          <Route path={ROOMS_LINK} component={Rooms} />
+          <Route path={APPROVAL_LINK} component={Approvals} />
+          <Route path={UNVERIFIED_LINK} component={Unverified} />
         </Switch>
       </main>
     </div>
