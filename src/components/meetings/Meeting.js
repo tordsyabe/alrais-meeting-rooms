@@ -10,11 +10,13 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import DoneIcon from "@material-ui/icons/Done";
-import CloseIcon from "@material-ui/icons/Close";
+import { useLocation } from "react-router-dom";
+import { constants } from "../../utils/constants";
 
 import { MeetingsContext } from "../../contexts/MeetingsContext";
+import { verifyMeeting, approveMeeting } from "../../services/MeetingService";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -41,6 +43,8 @@ export default function Meeting({
   setMeetingToDelete,
 }) {
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
+  const location = useLocation();
+  const { UNVERIFIED_LINK, APPROVAL_LINK } = constants;
 
   const classes = useStyles();
   return (
@@ -128,6 +132,12 @@ export default function Meeting({
           >
             DELETE
           </Button>
+          {location.pathname === UNVERIFIED_LINK && (
+            <Button onClick={() => verifyMeeting(meeting.id)}>VERIFY</Button>
+          )}
+          {location.pathname === APPROVAL_LINK && (
+            <Button onClick={() => approveMeeting(meeting.id)}>APPROVE</Button>
+          )}
         </CardActions>
       </Card>
       {/* UNDO CANNCELLING OF MEETING */}
