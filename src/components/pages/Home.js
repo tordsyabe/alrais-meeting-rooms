@@ -34,6 +34,7 @@ import { Badge } from "@material-ui/core";
 import Approvals from "../approvals";
 import Unverified from "../unverified";
 import { constants } from "../../utils/constants";
+import MeetingCalendar from "../meeting-calendar";
 
 const drawerWidth = 240;
 
@@ -257,6 +258,7 @@ export default function Home() {
           <Route path={ROOMS_LINK} component={Rooms} />
           <Route path={APPROVAL_LINK} component={Approvals} />
           <Route path={UNVERIFIED_LINK} component={Unverified} />
+          <Route path={"/app/calendar"} component={MeetingCalendar} />
         </Switch>
       </main>
     </div>
