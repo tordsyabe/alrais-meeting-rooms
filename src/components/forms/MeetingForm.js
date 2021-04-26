@@ -40,6 +40,7 @@ export default function MeetingForm({
       return selectedMeeting;
     } else {
       return {
+        id: "",
         createdAt: new Date(),
         duration: 0,
         title: "",
@@ -96,6 +97,7 @@ export default function MeetingForm({
     >
       {({ values, errors, isSubmitting, isValid, dirty }) => (
         <Form autoComplete="off">
+          <Field type="hidden" name="id"></Field>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={8}>

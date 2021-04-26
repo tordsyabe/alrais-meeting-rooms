@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Drawer,
   Grid,
   Snackbar,
   Typography,
@@ -15,12 +17,12 @@ import Meeting from "../Meeting";
 import MeetingsSkeleton from "../../skeletons/MeetingsSkeleton";
 import { deleteMeeting } from "../../../services/MeetingService";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
+import MeetingForm from "../../forms/MeetingForm";
 
 export default function Unverified() {
   const { unverified, loading } = useContext(MeetingsContext);
-  const [meetingToDelete, setMeetingToDelete] = useState({});
-
   const [openForm, setOpenForm] = useState(false);
+  const [meetingToDelete, setMeetingToDelete] = useState({});
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
@@ -60,6 +62,7 @@ export default function Unverified() {
                       setSnackBarOpen={setSnackBarOpen}
                       setOpenDeleteDialog={setOpenDeleteDialog}
                       setMeetingToDelete={setMeetingToDelete}
+                      setOpenForm={setOpenForm}
                     />
                   </Grid>
                 ))
@@ -72,6 +75,20 @@ export default function Unverified() {
           )}
         </Grid>
       </Grid>
+
+      <Drawer anchor="right" open={openForm}>
+        <div style={{ width: 700 }}>
+          <Box p={4}>
+            <MeetingForm
+              setSnackBarOpen={setSnackBarOpen}
+              setOpenForm={setOpenForm}
+              setSnackBarMessage={setSnackBarMessage}
+              setOpenDeleteDialog={setOpenDeleteDialog}
+              setMeetingToDelete={setMeetingToDelete}
+            />
+          </Box>
+        </div>
+      </Drawer>
 
       {/* DIALOG DELETE MEETING CONFIRMATION */}
       <Dialog
