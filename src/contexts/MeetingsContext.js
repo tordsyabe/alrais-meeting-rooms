@@ -23,11 +23,17 @@ export default function MeetingsContextProvider({ children }) {
       const newMeetings = [];
 
       snapShot.docs.forEach((meeting) => {
-        newMeetings.push({ id: meeting.id, ...meeting.data() });
+        newMeetings.push({
+          id: meeting.id,
+          ...meeting.data(),
+          startTime: meeting.data().startTime.toDate(),
+          endTime: meeting.data().endTime.toDate(),
+        });
       });
 
       setLoading(false);
       setMeetings(newMeetings);
+      console.log(newMeetings);
     });
   }, []);
 
@@ -36,7 +42,10 @@ export default function MeetingsContextProvider({ children }) {
       const newUnverified = [];
 
       snapShot.docs.forEach((meeting) => {
-        newUnverified.push({ id: meeting.id, ...meeting.data() });
+        newUnverified.push({
+          id: meeting.id,
+          ...meeting.data(),
+        });
       });
 
       setLoading(false);

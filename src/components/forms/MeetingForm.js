@@ -31,10 +31,13 @@ export default function MeetingForm({
 }) {
   const { rooms } = useContext(RoomsContext);
   const { currentUser } = useContext(AuthContext);
+  const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
 
-  return (
-    <Formik
-      initialValues={{
+  function initialValues() {
+    if (selectedMeeting.startTime) {
+      return selectedMeeting;
+    } else {
+      return {
         createdAt: new Date(),
         duration: 0,
         title: "",
@@ -49,7 +52,13 @@ export default function MeetingForm({
         organizer: "",
         isWholeDay: false,
         isEveryWeek: false,
-      }}
+      };
+    }
+  }
+
+  return (
+    <Formik
+      initialValues={initialValues()}
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {
         const meetingToSave = {
@@ -88,7 +97,12 @@ export default function MeetingForm({
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={8}>
-                <IconButton onClick={() => setOpenForm(false)}>
+                <IconButton
+                  onClick={() => {
+                    setOpenForm(false);
+                    setSelectedMeeting({});
+                  }}
+                >
                   <CloseIcon />
                 </IconButton>
               </Grid>
@@ -114,6 +128,8 @@ export default function MeetingForm({
                 </Button>
               </Grid>
               <Grid item xs={12}>
+                <Typography variant="h6">Details</Typography>
+                <br></br>
                 <Field
                   fullWidth
                   required

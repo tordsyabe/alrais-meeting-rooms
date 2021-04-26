@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useContext } from "react";
-import DoneIcon from "@material-ui/icons/Done";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { useLocation } from "react-router-dom";
 import { constants } from "../../utils/constants";
 
@@ -19,17 +19,11 @@ import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { verifyMeeting, approveMeeting } from "../../services/MeetingService";
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    cursor: "pointer",
-  },
+  card: {},
 
   notSelectedCard: {
     pointerEvents: "none",
     cursor: "default",
-  },
-
-  hideCardActions: {
-    display: "none",
   },
 }));
 
@@ -47,6 +41,10 @@ export default function Meeting({
   const location = useLocation();
   const { UNVERIFIED_LINK, APPROVAL_LINK } = constants;
 
+  const handleOpenForm = () => {
+    location.pathname.includes("/app") ? setOpenForm(true) : console.log();
+  };
+
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -63,83 +61,85 @@ export default function Meeting({
             onClick={() => {
               setSelectedMeeting(meeting);
               setSelectedCardMeeting(meeting.id);
+              handleOpenForm();
             }}
           >
             <Grid container alignItems="center" justify="center">
               <Grid item xs={12}>
-                <Grid container>
+                <Grid container alignItems="center">
                   <Grid item xs={12}>
-                    <Typography
-                      variant="body1"
-                      color={
-                        isActive && selectedCardMeeting !== meeting.id
-                          ? "textSecondary"
-                          : undefined
-                      }
-                    >
-                      {meeting.title}
-                    </Typography>
+                    <Typography variant="h6">{meeting.title}</Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="caption" color="textSecondary">
-                      {new Date(
-                        meeting.startTime.seconds * 1000
-                      ).toLocaleString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}{" "}
-                      -{" "}
-                      {new Date(meeting.endTime.seconds * 1000).toLocaleString(
-                        [],
-                        {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        }
-                      )}
+                    <Typography variant="caption">
+                      {new Date().toLocaleDateString(undefined, {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </Typography>
                   </Grid>
+
+                  {
+                    <Grid item xs={12}>
+                      <Typography color="textSecondary" variant="caption">
+                        <Grid container alignItems="center" spacing={1}>
+                          <Grid item>
+                            <AccessTimeIcon fontSize="small" />
+                          </Grid>
+                          <Grid item>
+                            {new Date(meeting.startTime).toLocaleString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}{" "}
+                            -{" "}
+                            {new Date(meeting.endTime).toLocaleString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </Grid>
+                        </Grid>
+                      </Typography>
+                    </Grid>
+                  }
                 </Grid>
               </Grid>
             </Grid>
 
-            <Grid container alignItems="center">
-              <Grid item xs={8}>
-                <Typography variant="caption" color="textSecondary">
-                  Meeting Duration: {meeting.duration}
-                </Typography>
+            <Grid container alignItems="center" spacing={1}>
+              <Grid item xs={12}>
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                ></Typography>
               </Grid>
-              <Grid item xs={4}>
-                <Chip
-                  avatar={<Avatar>{<DoneIcon />}</Avatar>}
-                  label={meeting.status}
-                />
+              <Grid item xs={12}>
+                <Typography>{meeting.status}</Typography>
               </Grid>
             </Grid>
           </CardContent>
         </CardActionArea>
-        <CardActions
-          className={
-            onDashboard && selectedCardMeeting === meeting.id
-              ? undefined
-              : classes.hideCardActions
-          }
-        >
-          <Button onClick={() => setOpenForm(true)}>EDIT</Button>
-          <Button
-            onClick={() => {
-              setMeetingToDelete(meeting);
-              setOpenDeleteDialog(true);
-            }}
-          >
-            DELETE
-          </Button>
-          {location.pathname === UNVERIFIED_LINK && (
-            <Button onClick={() => verifyMeeting(meeting.id)}>VERIFY</Button>
-          )}
-          {location.pathname === APPROVAL_LINK && (
-            <Button onClick={() => approveMeeting(meeting.id)}>APPROVE</Button>
-          )}
-        </CardActions>
+        {/* {location.pathname.includes("/app") && (
+          <CardActions>
+            <Button
+              onClick={() => {
+                setMeetingToDelete(meeting);
+                setOpenDeleteDialog(true);
+              }}
+            >
+              DELETE
+            </Button>
+            {location.pathname === UNVERIFIED_LINK && (
+              <Button onClick={() => verifyMeeting(meeting.id)}>VERIFY</Button>
+            )}
+            {location.pathname === APPROVAL_LINK && (
+              <Button onClick={() => approveMeeting(meeting.id)}>
+                APPROVE
+              </Button>
+            )}
+          </CardActions>
+        )} */}
       </Card>
     </React.Fragment>
   );

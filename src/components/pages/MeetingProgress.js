@@ -6,7 +6,9 @@ import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
 import Timer from "../utils/Timer";
 
 export default function MeetingProgress() {
-  const { meetings, loading, selectedMeeting } = useContext(MeetingsContext);
+  const { meetings, loading, selectedMeeting, setSelectedMeeting } = useContext(
+    MeetingsContext
+  );
   const [isActive, setIsActive] = useState(false);
 
   const [selectedCardMeeting, setSelectedCardMeeting] = useState("");
@@ -21,6 +23,10 @@ export default function MeetingProgress() {
     }, 1000);
     return () => clearInterval(intervalId);
   }, [time]);
+
+  useEffect(() => {
+    setSelectedMeeting({ title: "FREE" });
+  }, []);
 
   return (
     <div>
