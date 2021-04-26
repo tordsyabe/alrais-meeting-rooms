@@ -22,6 +22,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { MeetingsContext } from "../../contexts/MeetingsContext";
 
 export default function MeetingForm({
   setOpenForm,

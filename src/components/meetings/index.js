@@ -99,6 +99,7 @@ export default function Meetings() {
                       setSnackBarOpen={setSnackBarOpen}
                       setOpenDeleteDialog={setOpenDeleteDialog}
                       setMeetingToDelete={setMeetingToDelete}
+                      setOpenForm={setOpenForm}
                     />
                   </Grid>
                 ))

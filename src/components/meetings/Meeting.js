@@ -41,6 +41,7 @@ export default function Meeting({
   setSelectedCardMeeting,
   setOpenDeleteDialog,
   setMeetingToDelete,
+  setOpenForm,
 }) {
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
   const location = useLocation();
@@ -64,12 +65,12 @@ export default function Meeting({
               setSelectedCardMeeting(meeting.id);
             }}
           >
-            <Grid container alignItems='center' justify='center'>
+            <Grid container alignItems="center" justify="center">
               <Grid item xs={12}>
                 <Grid container>
                   <Grid item xs={12}>
                     <Typography
-                      variant='body1'
+                      variant="body1"
                       color={
                         isActive && selectedCardMeeting !== meeting.id
                           ? "textSecondary"
@@ -80,7 +81,7 @@ export default function Meeting({
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant='caption' color='textSecondary'>
+                    <Typography variant="caption" color="textSecondary">
                       {new Date(
                         meeting.startTime.seconds * 1000
                       ).toLocaleString([], {
@@ -101,9 +102,9 @@ export default function Meeting({
               </Grid>
             </Grid>
 
-            <Grid container alignItems='center'>
+            <Grid container alignItems="center">
               <Grid item xs={8}>
-                <Typography variant='caption' color='textSecondary'>
+                <Typography variant="caption" color="textSecondary">
                   Meeting Duration: {meeting.duration}
                 </Typography>
               </Grid>
@@ -123,7 +124,7 @@ export default function Meeting({
               : classes.hideCardActions
           }
         >
-          <Button>EDIT</Button>
+          <Button onClick={() => setOpenForm(true)}>EDIT</Button>
           <Button
             onClick={() => {
               setMeetingToDelete(meeting);
@@ -140,40 +141,6 @@ export default function Meeting({
           )}
         </CardActions>
       </Card>
-      {/* UNDO CANNCELLING OF MEETING */}
-      {/* <Snackbar
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={snackBarOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        message={snackBarMessage}
-        action={
-          <React.Fragment>
-            <Button
-              color='primary'
-              size='small'
-              onClick={() =>
-                undoCancelledMeeting(meeting.id).then(() => {
-                  setSnackBarOpen(false);
-                })
-              }
-            >
-              UNDO
-            </Button>
-            <IconButton
-              size='small'
-              aria-label='close'
-              color='inherit'
-              onClick={handleCloseSnackbar}
-            >
-              <CloseIcon fontSize='small' />
-            </IconButton>
-          </React.Fragment>
-        }
-      /> */}
     </React.Fragment>
   );
 }
