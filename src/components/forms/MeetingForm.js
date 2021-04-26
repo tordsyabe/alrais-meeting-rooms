@@ -2,6 +2,7 @@ import {
   Button,
   CircularProgress,
   Grid,
+  IconButton,
   MenuItem,
   Typography,
 } from "@material-ui/core";
@@ -10,11 +11,7 @@ import { CheckboxWithLabel, TextField } from "formik-material-ui";
 import React, { useContext, useState } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
-import {
-  DatePicker,
-  DateTimePicker,
-  TimePicker,
-} from "formik-material-ui-pickers";
+import { KeyboardDateTimePicker } from "formik-material-ui-pickers";
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -22,6 +19,9 @@ import { RoomsContext } from "../../contexts/RoomsContext";
 import { saveMeeting } from "../../services/MeetingService";
 import { sendEmailVerification } from "../../services/SendEmailVerificationService";
 import { AuthContext } from "../../contexts/AuthContext";
+
+import CloseIcon from "@material-ui/icons/Close";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 export default function MeetingForm({
   setOpenForm,
@@ -46,11 +46,13 @@ export default function MeetingForm({
         isVerified: false,
         isApproved: false,
         organizer: "",
+        isWholeDay: false,
+        isEveryWeek: false,
       }}
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {
         const meetingToSave = {
-          meetingDateString: data.meetingDate.toLocaleDateString(),
+          meetingDateString: data.startTime.toLocaleDateString(),
           ...data,
         };
 
@@ -83,7 +85,33 @@ export default function MeetingForm({
       {({ values, errors, isSubmitting, isValid, dirty }) => (
         <Form autoComplete="off">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs={8}>
+                <IconButton onClick={() => setOpenForm(false)}>
+                  <CloseIcon />
+                </IconButton>
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton>
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+              <Grid item xs={3}>
+                <Button
+                  disabled={isSubmitting || !isValid || !dirty}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  startIcon={
+                    isSubmitting ? (
+                      <CircularProgress size="0.9rem" />
+                    ) : undefined
+                  }
+                >
+                  {isSubmitting ? "Saving" : "Save"}
+                </Button>
+              </Grid>
               <Grid item xs={12}>
                 <Field
                   fullWidth
@@ -95,19 +123,10 @@ export default function MeetingForm({
                 ></Field>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <Field
-                  component={DatePicker}
-                  label="Meeting Date"
-                  name="meetingDate"
-                  inputVariant="outlined"
-                  autoOk
-                />
-              </Grid>
-
-              <Grid item xs={4}>
-                <Field
-                  component={TimePicker}
+                  component={KeyboardDateTimePicker}
+                  format="yyyy/MM/dd hh:mm a"
                   autoOk
                   label="Start"
                   name="startTime"
@@ -116,14 +135,33 @@ export default function MeetingForm({
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <Field
-                  component={TimePicker}
+                  component={KeyboardDateTimePicker}
+                  format="yyyy/MM/dd hh:mm a"
                   autoOk
                   label="End"
                   name="endTime"
                   minutesStep={30}
                   inputVariant="outlined"
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <Field
+                  component={CheckboxWithLabel}
+                  type="checkbox"
+                  name="isWholeDay"
+                  Label={{ label: "Make the whole day" }}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <Field
+                  component={CheckboxWithLabel}
+                  type="checkbox"
+                  name="isEveryWeek"
+                  Label={{ label: "Repeat everyweek" }}
                 />
               </Grid>
 
@@ -173,22 +211,7 @@ export default function MeetingForm({
                 </Grid>
               )}
 
-              <Grid item xs={12}>
-                <Button
-                  disabled={isSubmitting || !isValid || !dirty}
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  startIcon={
-                    isSubmitting ? (
-                      <CircularProgress size="0.9rem" />
-                    ) : undefined
-                  }
-                >
-                  {isSubmitting ? "Saving" : "Save"}
-                </Button>
-              </Grid>
+              <Grid item xs={12}></Grid>
             </Grid>
           </MuiPickersUtilsProvider>
         </Form>

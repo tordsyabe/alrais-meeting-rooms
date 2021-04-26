@@ -1,10 +1,12 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Drawer,
   Fab,
   Grid,
   IconButton,
@@ -29,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
+  },
+  drawer: {
+    width: "600px",
   },
 }));
 
@@ -114,25 +119,18 @@ export default function Meetings() {
       >
         <AddIcon />
       </Fab>
-      {/* DIALOG MEETING FORM */}
-      <Dialog open={openForm} onClose={() => {}}>
-        <DialogTitle id="form-dialog-title">New Meeting</DialogTitle>
-        <DialogContent style={{ overflow: "hidden" }}>
-          {/* <DialogContentText>
-            Please provide meeting information.
-          </DialogContentText> */}
-          <MeetingForm
-            setSnackBarOpen={setSnackBarOpen}
-            setOpenForm={setOpenForm}
-            setSnackBarMessage={setSnackBarMessage}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenForm(false)} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+      <Drawer anchor="right" open={openForm}>
+        <div style={{ width: 700 }}>
+          <Box p={4}>
+            <MeetingForm
+              setSnackBarOpen={setSnackBarOpen}
+              setOpenForm={setOpenForm}
+              setSnackBarMessage={setSnackBarMessage}
+            />
+          </Box>
+        </div>
+      </Drawer>
 
       {/* DIALOG DELETE MEETING CONFIRMATION */}
       <Dialog
