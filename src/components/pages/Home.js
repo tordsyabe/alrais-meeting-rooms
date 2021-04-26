@@ -31,10 +31,11 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { Badge } from "@material-ui/core";
-import Approvals from "../approvals";
-import Unverified from "../unverified";
+
 import { constants } from "../../utils/constants";
-import MeetingCalendar from "../meeting-calendar";
+import Approvals from "../meetings/approvals";
+import Unverified from "../meetings/unverified";
+import MeetingCalendar from "../meetings/meeting-calendar";
 
 const drawerWidth = 240;
 

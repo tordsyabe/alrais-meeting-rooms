@@ -11,11 +11,10 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import Meeting from "../meetings/Meeting";
-import { MeetingsContext } from "../../contexts/MeetingsContext";
-import MeetingForm from "../forms/MeetingForm";
-import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
-import { deleteMeeting } from "../../services/MeetingService";
+import Meeting from "../Meeting";
+import { MeetingsContext } from "../../../contexts/MeetingsContext";
+import MeetingsSkeleton from "../../skeletons/MeetingsSkeleton";
+import { deleteMeeting } from "../../../services/MeetingService";
 
 export default function Approvals() {
   const { forApprovals, loading } = useContext(MeetingsContext);
