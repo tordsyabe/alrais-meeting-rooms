@@ -4,6 +4,10 @@ export function getMeetings() {
   return database.meetings;
 }
 
+export function getMeeting(meetingId) {
+  return database.meetings.doc(meetingId).get();
+}
+
 export function deleteMeeting(meetingId) {
   return database.meetings.doc(meetingId).delete();
 }

@@ -16,7 +16,11 @@ import { KeyboardDateTimePicker } from "formik-material-ui-pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { RoomsContext } from "../../contexts/RoomsContext";
-import { deleteMeeting, saveMeeting } from "../../services/MeetingService";
+import {
+  deleteMeeting,
+  getMeeting,
+  saveMeeting,
+} from "../../services/MeetingService";
 import { sendEmailVerification } from "../../services/SendEmailVerificationService";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -70,7 +74,18 @@ export default function MeetingForm({
 
         setSubmitting(true);
         saveMeeting(meetingToSave)
-          .then(() => {
+          .then((docRef) => {
+            if (docRef) {
+              docRef.get().then((doc) => {
+                const meeting = {
+                  id: docRef.id,
+                  ...doc.data(),
+                };
+                console.log("RETURNED", meeting);
+                // sendEmailVerification(meeting);
+              });
+            }
+
             setSubmitting(false);
             setOpenForm(false);
             setSnackBarMessage(
