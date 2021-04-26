@@ -42,7 +42,7 @@ export default function Approvals() {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant='h4'>For Approvals</Typography>
+          <Typography variant="h4">For Approvals</Typography>
         </Grid>
         <Grid item xs={12}>
           {loading ? (
@@ -66,7 +66,7 @@ export default function Approvals() {
                 ))
               ) : (
                 <Grid item xs={12}>
-                  <Typography variant='h5'>No Unverified Meetings</Typography>
+                  <Typography variant="h5">No for approval meetings</Typography>
                 </Grid>
               )}
             </Grid>
@@ -74,43 +74,23 @@ export default function Approvals() {
         </Grid>
       </Grid>
 
-      {/* DIALOG MEETING FORM */}
-      <Dialog open={openForm} onClose={() => {}}>
-        <DialogTitle id='form-dialog-title'>New Meeting</DialogTitle>
-        <DialogContent style={{ overflow: "hidden" }}>
-          <DialogContentText>
-            Please provide meeting information.
-          </DialogContentText>
-          <MeetingForm
-            setSnackBarOpen={setSnackBarOpen}
-            setOpenForm={setOpenForm}
-            setSnackBarMessage={setSnackBarMessage}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenForm(false)} color='primary'>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-
       {/* DIALOG DELETE MEETING CONFIRMATION */}
       <Dialog
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id='alert-dialog-title'>
+        <DialogTitle id="alert-dialog-title">
           {`Delete meeting "${meetingToDelete.title}"`}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this meeting?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color='primary'>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
             Cancel
           </Button>
           <Button
@@ -127,7 +107,7 @@ export default function Approvals() {
                   setOpenDeleteDialog(false);
                 })
             }
-            color='primary'
+            color="primary"
             autoFocus
           >
             Delete

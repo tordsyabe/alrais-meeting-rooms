@@ -58,14 +58,14 @@ export default function Meetings() {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Grid container alignItems='center' justify='center'>
+          <Grid container alignItems="center" justify="center">
             <Grid item xs={1}>
               <IconButton>
                 <ArrowBackIcon />
               </IconButton>
             </Grid>
             <Grid item xs={10}>
-              <Typography variant='h5' align='center'>
+              <Typography variant="h5" align="center">
                 Today
               </Typography>
             </Grid>
@@ -99,7 +99,7 @@ export default function Meetings() {
                 ))
               ) : (
                 <Grid item xs={12}>
-                  <Typography variant='h5'>No Meetings</Typography>
+                  <Typography variant="h5">No Meetings</Typography>
                 </Grid>
               )}
             </Grid>
@@ -107,8 +107,8 @@ export default function Meetings() {
         </Grid>
       </Grid>
       <Fab
-        color='primary'
-        aria-label='add'
+        color="primary"
+        aria-label="add"
         className={classes.fab}
         onClick={() => setOpenForm(true)}
       >
@@ -116,11 +116,11 @@ export default function Meetings() {
       </Fab>
       {/* DIALOG MEETING FORM */}
       <Dialog open={openForm} onClose={() => {}}>
-        <DialogTitle id='form-dialog-title'>New Meeting</DialogTitle>
+        <DialogTitle id="form-dialog-title">New Meeting</DialogTitle>
         <DialogContent style={{ overflow: "hidden" }}>
-          <DialogContentText>
+          {/* <DialogContentText>
             Please provide meeting information.
-          </DialogContentText>
+          </DialogContentText> */}
           <MeetingForm
             setSnackBarOpen={setSnackBarOpen}
             setOpenForm={setOpenForm}
@@ -128,7 +128,7 @@ export default function Meetings() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenForm(false)} color='primary'>
+          <Button onClick={() => setOpenForm(false)} color="primary">
             Cancel
           </Button>
         </DialogActions>
@@ -138,19 +138,19 @@ export default function Meetings() {
       <Dialog
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id='alert-dialog-title'>
+        <DialogTitle id="alert-dialog-title">
           {`Delete meeting "${meetingToDelete.title}"`}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this meeting?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color='primary'>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
             Cancel
           </Button>
           <Button
@@ -167,7 +167,7 @@ export default function Meetings() {
                   setOpenDeleteDialog(false);
                 })
             }
-            color='primary'
+            color="primary"
             autoFocus
           >
             Delete

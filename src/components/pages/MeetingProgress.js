@@ -28,14 +28,14 @@ export default function MeetingProgress() {
         <Grid item xs={7}>
           <div
             style={{
-              background:
-                "url('https://www.avepoint.com/blog/wp-content/uploads/2018/10/iStock-887882750.jpg')",
+              background: `linear-gradient(to left, rgba(245, 246, 252, 0.8), rgba(117, 19, 93, 0.9)), url("https://images.unsplash.com/photo-1568992688065-536aad8a12f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80")`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               height: "100vh",
+              backgroundPosition: "80% center",
             }}
           >
-            <div style={{ background: "rgb(0, 154, 83, 0.9)", height: "100%" }}>
+            <div style={{ height: "100%" }}>
               <Box p={6} height="100%">
                 <Grid
                   container
