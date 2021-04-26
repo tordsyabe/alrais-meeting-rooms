@@ -40,7 +40,6 @@ export default function MeetingForm({
       return selectedMeeting;
     } else {
       return {
-        id: "",
         createdAt: new Date(),
         duration: 0,
         title: "",
@@ -71,21 +70,14 @@ export default function MeetingForm({
 
         setSubmitting(true);
         saveMeeting(meetingToSave)
-          .then((docRef) => {
+          .then(() => {
             setSubmitting(false);
             setOpenForm(false);
             setSnackBarMessage(
               "Please check your email to verify your booking"
             );
+            setSelectedMeeting({});
             setSnackBarOpen(true);
-            docRef.get().then((doc) => {
-              const meeting = {
-                id: docRef.id,
-                ...doc.data(),
-              };
-
-              // sendEmailVerification(meeting);
-            });
           })
           .catch((error) => {
             console.log(error);
@@ -96,10 +88,10 @@ export default function MeetingForm({
       }}
     >
       {({ values, errors, isSubmitting, isValid, dirty }) => (
-        <Form autoComplete="off">
-          <Field type="hidden" name="id"></Field>
+        <Form autoComplete='off'>
+          <Field type='hidden' name='id'></Field>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container spacing={3} alignItems="center">
+            <Grid container spacing={3} alignItems='center'>
               <Grid item xs={8}>
                 <IconButton
                   onClick={() => {
@@ -123,13 +115,13 @@ export default function MeetingForm({
               <Grid item xs={3}>
                 <Button
                   disabled={isSubmitting || !isValid || !dirty}
-                  type="submit"
+                  type='submit'
                   fullWidth
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   startIcon={
                     isSubmitting ? (
-                      <CircularProgress size="0.9rem" />
+                      <CircularProgress size='0.9rem' />
                     ) : undefined
                   }
                 >
@@ -137,47 +129,47 @@ export default function MeetingForm({
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="h6">Details</Typography>
+                <Typography variant='h6'>Details</Typography>
                 <br></br>
                 <Field
                   fullWidth
                   required
-                  name="title"
+                  name='title'
                   component={TextField}
-                  label="Title"
-                  variant="outlined"
+                  label='Title'
+                  variant='outlined'
                 ></Field>
               </Grid>
 
               <Grid item xs={6}>
                 <Field
                   component={KeyboardDateTimePicker}
-                  format="yyyy/MM/dd hh:mm a"
+                  format='yyyy/MM/dd hh:mm a'
                   autoOk
-                  label="Start"
-                  name="startTime"
+                  label='Start'
+                  name='startTime'
                   minutesStep={30}
-                  inputVariant="outlined"
+                  inputVariant='outlined'
                 />
               </Grid>
 
               <Grid item xs={6}>
                 <Field
                   component={KeyboardDateTimePicker}
-                  format="yyyy/MM/dd hh:mm a"
+                  format='yyyy/MM/dd hh:mm a'
                   autoOk
-                  label="End"
-                  name="endTime"
+                  label='End'
+                  name='endTime'
                   minutesStep={30}
-                  inputVariant="outlined"
+                  inputVariant='outlined'
                 />
               </Grid>
 
               <Grid item xs={6}>
                 <Field
                   component={CheckboxWithLabel}
-                  type="checkbox"
-                  name="isWholeDay"
+                  type='checkbox'
+                  name='isWholeDay'
                   Label={{ label: "Make the whole day" }}
                 />
               </Grid>
@@ -185,25 +177,25 @@ export default function MeetingForm({
               <Grid item xs={6}>
                 <Field
                   component={CheckboxWithLabel}
-                  type="checkbox"
-                  name="isEveryWeek"
+                  type='checkbox'
+                  name='isEveryWeek'
                   Label={{ label: "Repeat everyweek" }}
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <Typography variant="h6">Location</Typography>
+                <Typography variant='h6'>Location</Typography>
                 <br></br>
                 <Field
                   component={TextField}
-                  type="text"
-                  name="roomId"
-                  label="Select Meeting Room"
+                  type='text'
+                  name='roomId'
+                  label='Select Meeting Room'
                   select
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  variant="outlined"
+                  variant='outlined'
                   value={values.roomId}
                   fullWidth
                   required
@@ -220,18 +212,18 @@ export default function MeetingForm({
                 <Field
                   fullWidth
                   required
-                  name="organizer"
+                  name='organizer'
                   component={TextField}
-                  label="Provide your email"
-                  variant="outlined"
+                  label='Provide your email'
+                  variant='outlined'
                 ></Field>
               </Grid>
               {currentUser && (
                 <Grid item xs={12}>
                   <Field
                     component={CheckboxWithLabel}
-                    type="checkbox"
-                    name="isVerified"
+                    type='checkbox'
+                    name='isVerified'
                     Label={{ label: "Verify and approve this meeting" }}
                   />
                 </Grid>

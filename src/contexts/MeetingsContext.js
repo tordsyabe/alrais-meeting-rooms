@@ -23,6 +23,7 @@ export default function MeetingsContextProvider({ children }) {
       const newMeetings = [];
 
       snapShot.docs.forEach((meeting) => {
+        console.log(meeting.id);
         newMeetings.push({
           id: meeting.id,
           ...meeting.data(),
@@ -52,6 +53,7 @@ export default function MeetingsContextProvider({ children }) {
 
       setLoading(false);
       setUnverified(newUnverified);
+      console.log(newUnverified);
     });
   }, []);
 

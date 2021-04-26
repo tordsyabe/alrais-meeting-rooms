@@ -34,6 +34,7 @@ export function saveMeeting(meeting) {
   if (meeting.isVerified === true) {
     meeting.isApproved = true;
   }
+  console.log(meeting);
 
   if (meeting.id) {
     return database.meetings.doc(meeting.id).update(meeting);

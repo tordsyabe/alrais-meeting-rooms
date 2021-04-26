@@ -62,16 +62,17 @@ export default function Meeting({
               setSelectedMeeting(meeting);
               setSelectedCardMeeting(meeting.id);
               handleOpenForm();
+              console.log(meeting);
             }}
           >
-            <Grid container alignItems="center" justify="center">
+            <Grid container alignItems='center' justify='center'>
               <Grid item xs={12}>
-                <Grid container alignItems="center">
+                <Grid container alignItems='center'>
                   <Grid item xs={12}>
-                    <Typography variant="h6">{meeting.title}</Typography>
+                    <Typography variant='h6'>{meeting.title}</Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="caption">
+                    <Typography variant='caption'>
                       {new Date().toLocaleDateString(undefined, {
                         weekday: "long",
                         year: "numeric",
@@ -83,10 +84,10 @@ export default function Meeting({
 
                   {
                     <Grid item xs={12}>
-                      <Typography color="textSecondary" variant="caption">
-                        <Grid container alignItems="center" spacing={1}>
+                      <Typography color='textSecondary' variant='caption'>
+                        <Grid container alignItems='center' spacing={1}>
                           <Grid item>
-                            <AccessTimeIcon fontSize="small" />
+                            <AccessTimeIcon fontSize='small' />
                           </Grid>
                           <Grid item>
                             {new Date(meeting.startTime).toLocaleString([], {
@@ -107,11 +108,11 @@ export default function Meeting({
               </Grid>
             </Grid>
 
-            <Grid container alignItems="center" spacing={1}>
+            <Grid container alignItems='center' spacing={1}>
               <Grid item xs={12}>
                 <Typography
-                  variant="caption"
-                  color="textSecondary"
+                  variant='caption'
+                  color='textSecondary'
                 ></Typography>
               </Grid>
               <Grid item xs={12}>
