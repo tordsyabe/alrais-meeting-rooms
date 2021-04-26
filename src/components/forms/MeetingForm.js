@@ -16,7 +16,7 @@ import { KeyboardDateTimePicker } from "formik-material-ui-pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { RoomsContext } from "../../contexts/RoomsContext";
-import { saveMeeting } from "../../services/MeetingService";
+import { deleteMeeting, saveMeeting } from "../../services/MeetingService";
 import { sendEmailVerification } from "../../services/SendEmailVerificationService";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -28,6 +28,8 @@ export default function MeetingForm({
   setOpenForm,
   setSnackBarOpen,
   setSnackBarMessage,
+  setMeetingToDelete,
+  setOpenDeleteDialog,
 }) {
   const { rooms } = useContext(RoomsContext);
   const { currentUser } = useContext(AuthContext);
@@ -107,7 +109,12 @@ export default function MeetingForm({
                 </IconButton>
               </Grid>
               <Grid item xs={1}>
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    setOpenDeleteDialog(true);
+                    setMeetingToDelete(selectedMeeting);
+                  }}
+                >
                   <DeleteIcon />
                 </IconButton>
               </Grid>

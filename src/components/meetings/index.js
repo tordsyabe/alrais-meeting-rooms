@@ -97,8 +97,6 @@ export default function Meetings() {
                       setSelectedCardMeeting={setSelectedCardMeeting}
                       setSnackBarMessage={setSnackBarMessage}
                       setSnackBarOpen={setSnackBarOpen}
-                      setOpenDeleteDialog={setOpenDeleteDialog}
-                      setMeetingToDelete={setMeetingToDelete}
                       setOpenForm={setOpenForm}
                     />
                   </Grid>
@@ -128,6 +126,8 @@ export default function Meetings() {
               setSnackBarOpen={setSnackBarOpen}
               setOpenForm={setOpenForm}
               setSnackBarMessage={setSnackBarMessage}
+              setOpenDeleteDialog={setOpenDeleteDialog}
+              setMeetingToDelete={setMeetingToDelete}
             />
           </Box>
         </div>
@@ -159,11 +159,13 @@ export default function Meetings() {
                   setSnackBarMessage("Successfully deleted meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
+                  setOpenForm(false);
                 })
                 .catch(() => {
                   setSnackBarMessage("Failed to delete meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
+                  setOpenForm(false);
                 })
             }
             color="primary"
