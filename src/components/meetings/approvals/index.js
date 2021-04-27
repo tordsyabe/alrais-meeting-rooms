@@ -41,7 +41,7 @@ export default function Approvals() {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h4">For Approvals</Typography>
+          <Typography variant="h6">For Approvals</Typography>
         </Grid>
         <Grid item xs={12}>
           {loading ? (
@@ -65,7 +65,9 @@ export default function Approvals() {
                 ))
               ) : (
                 <Grid item xs={12}>
-                  <Typography variant="h5">No for approval meetings</Typography>
+                  <Typography variant="h5" align="center" color="textSecondary">
+                    No for approval meetings
+                  </Typography>
                 </Grid>
               )}
             </Grid>

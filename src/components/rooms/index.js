@@ -20,18 +20,19 @@ export default function Rooms() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Typography variant="h4">Meeting Rooms</Typography>
+      <Typography variant="h6">Meeting Rooms</Typography>
       <Box py={3}>
-      {loading ? <Skeleton animation="wave" variant="rect" height={50} width="70%"/> :
-
-        <Grid container spacing={2}>
-          {rooms.map((room) => (
-            <Grid item xs={8} key={room.id}>
-              <Room room={room} />
-
-            </Grid>
-          ))}
-        </Grid>}
+        {loading ? (
+          <Skeleton animation="wave" variant="rect" height={50} width="70%" />
+        ) : (
+          <Grid container spacing={2}>
+            {rooms.map((room) => (
+              <Grid item xs={8} key={room.id}>
+                <Room room={room} />
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
       <Fab color="primary" aria-label="add" className={classes.fab}>
         <AddIcon />

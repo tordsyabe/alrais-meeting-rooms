@@ -119,7 +119,13 @@ export default function MeetingProgress() {
                     ))
                   ) : (
                     <Grid item xs={12}>
-                      <Typography variant="h5">No Meetings</Typography>
+                      <Typography
+                        variant="h5"
+                        align="center"
+                        color="textSecondary"
+                      >
+                        No Meetings
+                      </Typography>
                     </Grid>
                   )}
                 </Grid>
