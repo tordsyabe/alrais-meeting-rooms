@@ -77,22 +77,25 @@ export function pauseMeeting(meetingId) {
   });
 }
 
+export function verifyStatus(meetingId) {
+  return database.meetings.doc(meetingId).update({
+    status: "VERIFIED",
+  });
+}
+
 export function updateDuration(meetingId) {
   return database.meetings.doc(meetingId);
 }
 
-export function getMeetingsByDate() {
-  return database.meetings.where(
-    "startDate",
-    "<",
-    new Date(Date.now() - 60 * 60 * 1000)
-  );
-}
-
 export function verifyMeeting(meetingId) {
-  return database.meetings.doc(meetingId).update({
-    isVerified: true,
-  });
+  return database.meetings
+    .doc(meetingId)
+    .update({
+      isVerified: true,
+    })
+    .then(() => {
+      verifyStatus();
+    });
 }
 
 export function approveMeeting(meetingId) {

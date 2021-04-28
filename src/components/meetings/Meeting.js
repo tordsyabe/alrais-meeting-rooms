@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import React, { useContext } from "react";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useLocation } from "react-router-dom";
 import { constants } from "../../utils/constants";
 
@@ -68,8 +69,11 @@ export default function Meeting({
             <Grid container alignItems='center' justify='center'>
               <Grid item xs={12}>
                 <Grid container alignItems='center'>
-                  <Grid item xs={12}>
+                  <Grid item xs={11}>
                     <Typography variant='h6'>{meeting.title}</Typography>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <MoreVertIcon />
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant='caption'>
