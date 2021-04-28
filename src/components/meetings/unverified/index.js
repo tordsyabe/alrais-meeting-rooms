@@ -15,7 +15,11 @@ import {
 
 import Meeting from "../Meeting";
 import MeetingsSkeleton from "../../skeletons/MeetingsSkeleton";
-import { deleteMeeting, verifyMeeting } from "../../../services/MeetingService";
+import {
+  deleteMeeting,
+  verifyMeeting,
+  verifyStatus,
+} from "../../../services/MeetingService";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
 import MeetingForm from "../../forms/MeetingForm";
 
@@ -30,6 +34,7 @@ export default function Unverified() {
 
   const [snackBarMessage, setSnackBarMessage] = useState("");
   const [selectedCardMeeting, setSelectedCardMeeting] = useState("");
+  const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
 
   const handleCloseSnackbar = () => {
     setSnackBarOpen(false);
@@ -43,7 +48,7 @@ export default function Unverified() {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant='h6'>Unverified Meetings</Typography>
+          <Typography variant="h6">Unverified Meetings</Typography>
         </Grid>
         <Grid item xs={12}>
           {loading ? (
@@ -68,7 +73,7 @@ export default function Unverified() {
                 ))
               ) : (
                 <Grid item xs={12}>
-                  <Typography variant='h5' align='center' color='textSecondary'>
+                  <Typography variant="h5" align="center" color="textSecondary">
                     No Unverified Meetings
                   </Typography>
                 </Grid>
@@ -78,7 +83,7 @@ export default function Unverified() {
         </Grid>
       </Grid>
 
-      <Drawer anchor='right' open={openForm}>
+      <Drawer anchor="right" open={openForm}>
         <div style={{ width: 700 }}>
           <Box p={4}>
             <MeetingForm
@@ -90,9 +95,15 @@ export default function Unverified() {
             />
             <Button
               fullWidth
-              variant='contained'
-              color='primary'
-              onClick={() => verifyMeeting(selectedCardMeeting.id)}
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                verifyMeeting(selectedMeeting.id).then(() => {
+                  verifyStatus(selectedMeeting.id);
+                  setOpenForm(false);
+                  setSelectedMeeting({});
+                })
+              }
             >
               Verify
             </Button>
@@ -104,19 +115,19 @@ export default function Unverified() {
       <Dialog
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id='alert-dialog-title'>
+        <DialogTitle id="alert-dialog-title">
           {`Delete meeting "${meetingToDelete.title}"`}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this meeting?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color='primary'>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
             Cancel
           </Button>
           <Button
@@ -135,7 +146,7 @@ export default function Unverified() {
                   setOpenForm(false);
                 })
             }
-            color='primary'
+            color="primary"
             autoFocus
           >
             Delete

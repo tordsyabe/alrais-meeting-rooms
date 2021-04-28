@@ -37,8 +37,8 @@ export function getUnverifiedMeetings() {
 export function saveMeeting(meeting) {
   if (meeting.isVerified === true) {
     meeting.isApproved = true;
+    meeting.status = "APPROVED";
   }
-  console.log(meeting);
 
   if (meeting.id) {
     return database.meetings.doc(meeting.id).update(meeting);
@@ -83,19 +83,20 @@ export function verifyStatus(meetingId) {
   });
 }
 
+export function approveStatus(meetingId) {
+  return database.meetings.doc(meetingId).update({
+    status: "APPROVED",
+  });
+}
+
 export function updateDuration(meetingId) {
   return database.meetings.doc(meetingId);
 }
 
 export function verifyMeeting(meetingId) {
-  return database.meetings
-    .doc(meetingId)
-    .update({
-      isVerified: true,
-    })
-    .then(() => {
-      verifyStatus();
-    });
+  return database.meetings.doc(meetingId).update({
+    isVerified: true,
+  });
 }
 
 export function approveMeeting(meetingId) {

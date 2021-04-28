@@ -63,14 +63,14 @@ export default function Meetings() {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Grid container alignItems='center' justify='center'>
+          <Grid container alignItems="center" justify="center">
             <Grid item xs={1}>
               <IconButton>
                 <ArrowBackIcon />
               </IconButton>
             </Grid>
             <Grid item xs={10}>
-              <Typography variant='h5' align='center'>
+              <Typography variant="h5" align="center">
                 Today
               </Typography>
             </Grid>
@@ -103,7 +103,7 @@ export default function Meetings() {
                 ))
               ) : (
                 <Grid item xs={12}>
-                  <Typography variant='h5' align='center' color='textSecondary'>
+                  <Typography variant="h5" align="center" color="textSecondary">
                     No Meetings
                   </Typography>
                 </Grid>
@@ -113,15 +113,15 @@ export default function Meetings() {
         </Grid>
       </Grid>
       <Fab
-        color='primary'
-        aria-label='add'
+        color="primary"
+        aria-label="add"
         className={classes.fab}
         onClick={() => setOpenForm(true)}
       >
         <AddIcon />
       </Fab>
 
-      <Drawer anchor='right' open={openForm}>
+      <Drawer anchor="right" open={openForm}>
         <div style={{ width: 700 }}>
           <Box p={4}>
             <MeetingForm
@@ -132,7 +132,6 @@ export default function Meetings() {
               setMeetingToDelete={setMeetingToDelete}
             />
           </Box>
-          <Button fullWidth>Verify</Button>
         </div>
       </Drawer>
 
@@ -140,19 +139,19 @@ export default function Meetings() {
       <Dialog
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id='alert-dialog-title'>
+        <DialogTitle id="alert-dialog-title">
           {`Delete meeting "${meetingToDelete.title}"`}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this meeting?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color='primary'>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
             Cancel
           </Button>
           <Button
@@ -171,7 +170,7 @@ export default function Meetings() {
                   setOpenForm(false);
                 })
             }
-            color='primary'
+            color="primary"
             autoFocus
           >
             Delete

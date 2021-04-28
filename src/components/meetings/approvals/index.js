@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Drawer,
   Grid,
   Snackbar,
   Typography,
@@ -14,7 +16,12 @@ import {
 import Meeting from "../Meeting";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
 import MeetingsSkeleton from "../../skeletons/MeetingsSkeleton";
-import { deleteMeeting } from "../../../services/MeetingService";
+import {
+  approveMeeting,
+  deleteMeeting,
+  approveStatus,
+} from "../../../services/MeetingService";
+import MeetingForm from "../../forms/MeetingForm";
 
 export default function Approvals() {
   const { forApprovals, loading } = useContext(MeetingsContext);
@@ -27,6 +34,7 @@ export default function Approvals() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
   const [selectedCardMeeting, setSelectedCardMeeting] = useState("");
 
   const handleCloseSnackbar = () => {
@@ -60,6 +68,7 @@ export default function Approvals() {
                       setSnackBarOpen={setSnackBarOpen}
                       setOpenDeleteDialog={setOpenDeleteDialog}
                       setMeetingToDelete={setMeetingToDelete}
+                      setOpenForm={setOpenForm}
                     />
                   </Grid>
                 ))
@@ -74,6 +83,34 @@ export default function Approvals() {
           )}
         </Grid>
       </Grid>
+
+      <Drawer anchor="right" open={openForm}>
+        <div style={{ width: 700 }}>
+          <Box p={4}>
+            <MeetingForm
+              setSnackBarOpen={setSnackBarOpen}
+              setOpenForm={setOpenForm}
+              setSnackBarMessage={setSnackBarMessage}
+              setOpenDeleteDialog={setOpenDeleteDialog}
+              setMeetingToDelete={setMeetingToDelete}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                approveMeeting(selectedMeeting.id).then(() => {
+                  approveStatus(selectedMeeting.id);
+                  setOpenForm(false);
+                  setSelectedMeeting({});
+                });
+              }}
+            >
+              Approve
+            </Button>
+          </Box>
+        </div>
+      </Drawer>
 
       {/* DIALOG DELETE MEETING CONFIRMATION */}
       <Dialog
@@ -101,11 +138,13 @@ export default function Approvals() {
                   setSnackBarMessage("Successfully deleted meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
+                  setOpenForm(false);
                 })
                 .catch(() => {
                   setSnackBarMessage("Failed to delete meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
+                  setOpenForm(false);
                 })
             }
             color="primary"
