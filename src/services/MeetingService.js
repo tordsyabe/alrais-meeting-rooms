@@ -38,6 +38,9 @@ export function saveMeeting(meeting) {
   if (meeting.isVerified === true) {
     meeting.isApproved = true;
     meeting.status = "APPROVED";
+  } else {
+    meeting.isApproved = false;
+    meeting.status = "UNVERIFIED";
   }
 
   if (meeting.id) {
