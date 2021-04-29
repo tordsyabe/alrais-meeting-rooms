@@ -82,7 +82,7 @@ export default function MeetingForm({
                   ...doc.data(),
                 };
                 console.log("RETURNED", meeting);
-                // sendEmailVerification(meeting);
+                sendEmailVerification(meeting);
               });
             }
 
