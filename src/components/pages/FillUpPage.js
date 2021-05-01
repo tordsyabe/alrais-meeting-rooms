@@ -54,14 +54,14 @@ export default function FillUpPage() {
         <Grid item xs={5}>
           <Box p={6}>
             <Grid container spacing={6}>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Typography variant='h4'>
                   Fill up the form to book your meeting
                 </Typography>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} style={{ flexGrow: 1 }}>
                 <Box>
-                  <Typography variant='h5' color='textSecondary'>
+                  <Typography variant="h5">
                     Provide meeting information
                   </Typography>
                   <br></br>
@@ -73,11 +73,11 @@ export default function FillUpPage() {
                 </Box>
               </Grid>
 
-              <Grid item xs={12} alignSelf='flex-end'>
+              <Grid item xs={12} alignSelf="flex-end">
                 <Typography
-                  variant='body2'
-                  color='textSecondary'
-                  align='center'
+                  variant="body2"
+                  color="textSecondary"
+                  align="center"
                 >
                   {"Alrais Meeting Room Booking System Copyright © "}
                   {new Date().getFullYear()}
@@ -88,13 +88,13 @@ export default function FillUpPage() {
           </Box>
         </Grid>
         <Grid item xs={7} className={classes.bg}>
-          <Box p={5} fontWeight='bold' className={classes.inspire}>
-            <Typography variant='h2' className={classes.quote}>
+          <Box p={5} fontWeight="bold" className={classes.inspire}>
+            <Typography variant="h2" className={classes.quote}>
               "Whoever is happy will make others happy too."
             </Typography>
             <br></br>
             <br></br>
-            <Typography variant='h5' align='right' color='textSecondary'>
+            <Typography variant="h5" align="right" color="textSecondary">
               - Anne Frank
             </Typography>
           </Box>

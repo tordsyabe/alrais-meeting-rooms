@@ -5,9 +5,13 @@ import {
   CardActionArea,
   CardContent,
   Grid,
+  IconButton,
   makeStyles,
   Typography,
 } from "@material-ui/core";
+
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
@@ -46,12 +50,23 @@ export default function MeetingCalendar() {
   console.log(calendar);
 
   return (
-    <Grid container spacing={4}>
-      <Grid item xs={12}>
+    <Grid container spacing={4} alignItems="center" justify="center">
+      <Grid item xs={1}>
+        <IconButton>
+          <ArrowBackIcon />
+        </IconButton>
+      </Grid>
+      <Grid item xs={10}>
         <Typography variant="h5" align="center">
           {value.format("MMMM")} {value.format("YYYY")}
         </Typography>
       </Grid>
+      <Grid item xs={1}>
+        <IconButton>
+          <ArrowForwardIcon />
+        </IconButton>
+      </Grid>
+
       <Grid item xs={12}>
         {calendar.map((week) => (
           <Grid container spacing={2} justify="center">
