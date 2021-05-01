@@ -138,6 +138,7 @@ export default function Unverified() {
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
                   setOpenForm(false);
+                  setSelectedMeeting({});
                 })
                 .catch(() => {
                   setSnackBarMessage("Failed to delete meeting");
