@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import {
-  ButtonBase,
-  Card,
-  CardActionArea,
-  CardContent,
   Grid,
   IconButton,
   makeStyles,
@@ -14,6 +10,7 @@ import {
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { MeetingsContext } from "../../../contexts/MeetingsContext";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
@@ -32,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function MeetingCalendar() {
+  const { allMeetings } = useContext(MeetingsContext);
   const classes = useStyles();
   const [calendar, setCalendar] = useState([]);
   const [value, setValue] = useState(moment());
@@ -55,12 +53,14 @@ export default function MeetingCalendar() {
     setCalendar(a);
   }, [value]);
 
-  console.log(calendar);
+  console.log(allMeetings);
 
   return (
     <Grid container spacing={4} alignItems='center' justify='center'>
       <Grid item xs={1}>
-        <IconButton>
+        <IconButton
+          onClick={() => setValue(value.clone().subtract(1, "month"))}
+        >
           <ArrowBackIcon />
         </IconButton>
       </Grid>
@@ -70,7 +70,7 @@ export default function MeetingCalendar() {
         </Typography>
       </Grid>
       <Grid item xs={1}>
-        <IconButton>
+        <IconButton onClick={() => setValue(value.clone().add(1, "month"))}>
           <ArrowForwardIcon />
         </IconButton>
       </Grid>
@@ -102,6 +102,22 @@ export default function MeetingCalendar() {
                   >
                     {day.format("D")}
                   </Typography>
+                  <br></br>
+                  {allMeetings
+                    .filter((meeting) =>
+                      day.isSame(
+                        new Date(meeting.startTime.seconds * 1000),
+                        "day"
+                      )
+                    )
+                    .map((filteredMeeting) => (
+                      <React.Fragment>
+                        <Typography variant='caption' key={filteredMeeting.id}>
+                          {filteredMeeting.title}
+                        </Typography>
+                        <br></br>
+                      </React.Fragment>
+                    ))}
                 </Paper>
                 {/* </ButtonBase> */}
               </div>

@@ -9,6 +9,7 @@ import {
 export const MeetingsContext = createContext();
 
 export default function MeetingsContextProvider({ children }) {
+  const [allMeetings, setAllMeetings] = useState([]);
   const [meetings, setMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMeeting, setSelectedMeeting] = useState({
@@ -17,6 +18,23 @@ export default function MeetingsContextProvider({ children }) {
 
   const [forApprovals, setForApprovals] = useState([]);
   const [unverified, setUnverified] = useState([]);
+
+  useEffect(() => {
+    return getMeetings().onSnapshot((snapShot) => {
+      const newAllMeetings = [];
+
+      snapShot.docs.forEach((meeting) => {
+        console.log(meeting.id);
+        newAllMeetings.push({
+          id: meeting.id,
+          ...meeting.data(),
+        });
+      });
+
+      setLoading(false);
+      setAllMeetings(newAllMeetings);
+    });
+  }, []);
 
   useEffect(() => {
     return getApprovedMeetings().onSnapshot((snapShot) => {
@@ -82,6 +100,7 @@ export default function MeetingsContextProvider({ children }) {
     setSelectedMeeting,
     forApprovals,
     unverified,
+    allMeetings,
   };
   return (
     <MeetingsContext.Provider value={values}>
