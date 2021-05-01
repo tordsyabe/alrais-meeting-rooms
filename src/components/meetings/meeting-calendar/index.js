@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import {
+  ButtonBase,
   Card,
   CardActionArea,
   CardContent,
   Grid,
   IconButton,
   makeStyles,
+  Paper,
   Typography,
 } from "@material-ui/core";
 
@@ -16,11 +18,17 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
     background: theme.palette.primary.main,
-    height: 100,
+    height: 120,
     color: "white",
+    padding: 10,
+    margin: 2,
+    cursor: "pointer",
   },
   card: {
-    height: 100,
+    height: 120,
+    padding: 10,
+    margin: 2,
+    cursor: "pointer",
   },
 }));
 export default function MeetingCalendar() {
@@ -50,14 +58,14 @@ export default function MeetingCalendar() {
   console.log(calendar);
 
   return (
-    <Grid container spacing={4} alignItems="center" justify="center">
+    <Grid container spacing={4} alignItems='center' justify='center'>
       <Grid item xs={1}>
         <IconButton>
           <ArrowBackIcon />
         </IconButton>
       </Grid>
       <Grid item xs={10}>
-        <Typography variant="h5" align="center">
+        <Typography variant='h5' align='center'>
           {value.format("MMMM")} {value.format("YYYY")}
         </Typography>
       </Grid>
@@ -69,10 +77,17 @@ export default function MeetingCalendar() {
 
       <Grid item xs={12}>
         {calendar.map((week) => (
-          <Grid container spacing={2} justify="center">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(7, 1fr)",
+            }}
+          >
             {week.map((day) => (
-              <Grid item xs={1}>
-                <Card
+              <div>
+                {/* <ButtonBase fullwidth> */}
+                <Paper
+                  square
                   onClick={() => setValue(day)}
                   className={
                     value.isSame(day, "day")
@@ -80,15 +95,18 @@ export default function MeetingCalendar() {
                       : classes.card
                   }
                 >
-                  <CardActionArea className={classes.card}>
-                    <CardContent>
-                      <Typography align="justify">{day.format("D")}</Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
+                  <Typography
+                    align='justify'
+                    variant='caption'
+                    color='textSecondary'
+                  >
+                    {day.format("D")}
+                  </Typography>
+                </Paper>
+                {/* </ButtonBase> */}
+              </div>
             ))}
-          </Grid>
+          </div>
         ))}
       </Grid>
     </Grid>
