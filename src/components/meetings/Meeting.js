@@ -18,6 +18,7 @@ import { constants } from "../../utils/constants";
 
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { verifyMeeting, approveMeeting } from "../../services/MeetingService";
+import { dateToLocalTime, dateToLongDate } from "../../utils/dateFormatter";
 
 const useStyles = makeStyles((theme) => ({
   card: {},
@@ -77,12 +78,7 @@ export default function Meeting({
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant='caption'>
-                      {new Date().toLocaleDateString(undefined, {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
+                      {dateToLongDate(meeting.startTime)}
                     </Typography>
                   </Grid>
 
@@ -94,15 +90,8 @@ export default function Meeting({
                             <AccessTimeIcon fontSize='small' />
                           </Grid>
                           <Grid item>
-                            {new Date(meeting.startTime).toLocaleString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}{" "}
-                            -{" "}
-                            {new Date(meeting.endTime).toLocaleString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
+                            {dateToLocalTime(meeting.startTime)} -{" "}
+                            {dateToLocalTime(meeting.endTime)}
                           </Grid>
                         </Grid>
                       </Typography>

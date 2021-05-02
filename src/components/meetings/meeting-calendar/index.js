@@ -20,12 +20,16 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     margin: 2,
     cursor: "pointer",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
   },
   card: {
     height: 120,
     padding: 10,
     margin: 2,
     cursor: "pointer",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
   },
 }));
 export default function MeetingCalendar() {
@@ -111,12 +115,21 @@ export default function MeetingCalendar() {
                       )
                     )
                     .map((filteredMeeting) => (
-                      <React.Fragment>
-                        <Typography variant='caption' key={filteredMeeting.id}>
+                      <div
+                        style={{
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <Typography
+                          variant='caption'
+                          noWrap
+                          key={filteredMeeting.id}
+                        >
                           {filteredMeeting.title}
                         </Typography>
                         <br></br>
-                      </React.Fragment>
+                      </div>
                     ))}
                 </Paper>
                 {/* </ButtonBase> */}

@@ -1,20 +1,9 @@
+import { secondsToLocalTime, secondsToLongDate } from "../utils/dateFormatter";
+
 export function sendEmailVerification(data) {
-  data.startTime = new Date(data.startTime.seconds * 1000).toLocaleString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  data.endTime = new Date(data.endTime.seconds * 1000).toLocaleString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  data.meetingDate = new Date(
-    data.meetingDate.seconds * 1000
-  ).toLocaleDateString(undefined, {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  data.startTime = secondsToLocalTime(data.startTime.seconds);
+  data.endTime = secondsToLocalTime(data.endTime.seconds);
+  data.meetingDate = secondsToLongDate(data.meetingDate.seconds);
   console.log(data);
   const requestOptions = {
     method: "POST",
