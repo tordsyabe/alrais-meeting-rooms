@@ -99,6 +99,7 @@ export function updateDuration(meetingId) {
 export function verifyMeeting(meetingId) {
   return database.meetings.doc(meetingId).update({
     isVerified: true,
+    isApproved: true,
   });
 }
 
