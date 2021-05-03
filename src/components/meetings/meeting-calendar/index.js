@@ -126,9 +126,7 @@ export default function MeetingCalendar() {
                           {secondsToLocalTime(
                             filteredMeeting.startTime.seconds
                           )}
-                          {" - "}{" "}
-                          {secondsToLocalTime(filteredMeeting.endTime.seconds)}-{" "}
-                          {filteredMeeting.title}
+                          {" - "} {filteredMeeting.title}
                         </Typography>
                         <br></br>
                       </div>
