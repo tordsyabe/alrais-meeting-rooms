@@ -1,14 +1,20 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
+  Dialog,
   Grid,
+  IconButton,
   makeStyles,
   Snackbar,
   Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import MeetingForm from "../forms/MeetingForm";
+
+import CloseIcon from "@material-ui/icons/Close";
+import MeetingCalendar from "../meetings/meeting-calendar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,12 +46,18 @@ export default function FillUpPage() {
 
   const [openForm, setOpenForm] = React.useState(false);
 
+  const [openCalendar, setOpenCalendar] = useState(false);
+
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
   const handleCloseSnackbar = () => {
     setSnackBarOpen(false);
+  };
+
+  const handleCloseCalendar = () => {
+    setOpenCalendar(false);
   };
 
   return (
@@ -97,6 +109,14 @@ export default function FillUpPage() {
             <Typography variant="h5" align="right" color="textSecondary">
               - Anne Frank
             </Typography>
+            <br></br>
+            <Button
+              onClick={() => setOpenCalendar(true)}
+              variant="contained"
+              color="secondary"
+            >
+              Check Calendar
+            </Button>
           </Box>
         </Grid>
       </Grid>
@@ -106,6 +126,32 @@ export default function FillUpPage() {
         onClose={handleCloseSnackbar}
         message={snackBarMessage}
       />
+
+      <Dialog
+        fullScreen
+        open={openCalendar}
+        onClose={handleCloseCalendar}
+        // TransitionComponent={Transition}
+      >
+        <Box p={3}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleCloseCalendar}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Grid>
+
+            <Grid item xs={12}>
+              <MeetingCalendar />
+            </Grid>
+          </Grid>
+        </Box>
+      </Dialog>
     </React.Fragment>
   );
 }

@@ -11,6 +11,7 @@ import {
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
+import { secondsToLocalTime } from "../../../utils/dateFormatter";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
@@ -20,16 +21,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     margin: 2,
     cursor: "pointer",
-    textOverflow: "ellipsis",
-    overflow: "hidden",
   },
   card: {
     height: 120,
     padding: 10,
     margin: 2,
     cursor: "pointer",
-    textOverflow: "ellipsis",
-    overflow: "hidden",
   },
 }));
 export default function MeetingCalendar() {
@@ -60,7 +57,7 @@ export default function MeetingCalendar() {
   console.log(allMeetings);
 
   return (
-    <Grid container spacing={4} alignItems='center' justify='center'>
+    <Grid container spacing={4} alignItems="center" justify="center">
       <Grid item xs={1}>
         <IconButton
           onClick={() => setValue(value.clone().subtract(1, "month"))}
@@ -69,7 +66,7 @@ export default function MeetingCalendar() {
         </IconButton>
       </Grid>
       <Grid item xs={10}>
-        <Typography variant='h5' align='center'>
+        <Typography variant="h5" align="center">
           {value.format("MMMM")} {value.format("YYYY")}
         </Typography>
       </Grid>
@@ -84,7 +81,7 @@ export default function MeetingCalendar() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(7, 1fr)",
+              gridTemplateColumns: "repeat(7, 14.27%)",
             }}
           >
             {week.map((day) => (
@@ -100,9 +97,9 @@ export default function MeetingCalendar() {
                   }
                 >
                   <Typography
-                    align='justify'
-                    variant='caption'
-                    color='textSecondary'
+                    align="justify"
+                    variant="caption"
+                    color="textSecondary"
                   >
                     {day.format("D")}
                   </Typography>
@@ -122,10 +119,15 @@ export default function MeetingCalendar() {
                         }}
                       >
                         <Typography
-                          variant='caption'
+                          variant="caption"
                           noWrap
                           key={filteredMeeting.id}
                         >
+                          {secondsToLocalTime(
+                            filteredMeeting.startTime.seconds
+                          )}
+                          {" - "}{" "}
+                          {secondsToLocalTime(filteredMeeting.endTime.seconds)}-{" "}
                           {filteredMeeting.title}
                         </Typography>
                         <br></br>
