@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import {
+  ButtonBase,
   Grid,
   IconButton,
   makeStyles,
@@ -122,6 +123,7 @@ export default function MeetingCalendar() {
                           variant="caption"
                           noWrap
                           key={filteredMeeting.id}
+                          onClick={() => console.log(filteredMeeting)}
                         >
                           {secondsToLocalTime(
                             filteredMeeting.startTime.seconds
