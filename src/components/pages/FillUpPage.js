@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
   inspire: {
     height: "100%",
-    width: "90%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",

@@ -21,13 +21,11 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     padding: 10,
     margin: 2,
-    cursor: "pointer",
   },
   card: {
     height: 120,
     padding: 10,
     margin: 2,
-    cursor: "pointer",
   },
 }));
 export default function MeetingCalendar() {
@@ -90,18 +88,14 @@ export default function MeetingCalendar() {
                 {/* <ButtonBase fullwidth> */}
                 <Paper
                   square
-                  onClick={() => setValue(day)}
+                  // onClick={() => setValue(day)}
                   className={
                     value.isSame(day, "day")
                       ? classes.selectedCard
                       : classes.card
                   }
                 >
-                  <Typography
-                    align="justify"
-                    variant="caption"
-                    color="textSecondary"
-                  >
+                  <Typography align="justify" variant="caption">
                     {day.format("D")}
                   </Typography>
                   <br></br>
@@ -124,11 +118,15 @@ export default function MeetingCalendar() {
                           noWrap
                           key={filteredMeeting.id}
                           onClick={() => console.log(filteredMeeting)}
+                          style={{ cursor: "pointer" }}
                         >
                           {secondsToLocalTime(
                             filteredMeeting.startTime.seconds
                           )}
-                          {" - "} {filteredMeeting.title}
+                          {" - "}{" "}
+                          <span style={{ fontWeight: "bold" }}>
+                            {filteredMeeting.title}
+                          </span>
                         </Typography>
                         <br></br>
                       </div>
