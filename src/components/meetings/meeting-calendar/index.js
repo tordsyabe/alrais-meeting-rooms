@@ -93,7 +93,37 @@ export default function MeetingCalendar() {
             <ArrowForwardIcon />
           </IconButton>
         </Grid>
+        <Grid item xs={12}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(7, 1fr)",
+            }}
+          >
+            <Typography variant='h5' align='center'>
+              Sun
+            </Typography>
+            <Typography variant='h5' align='center'>
+              Mon
+            </Typography>
+            <Typography variant='h5' align='center'>
+              Tue
+            </Typography>
+            <Typography variant='h5' align='center'>
+              Wed
+            </Typography>
 
+            <Typography variant='h5' align='center'>
+              Thu
+            </Typography>
+            <Typography variant='h5' align='center'>
+              Fri
+            </Typography>
+            <Typography variant='h5' align='center'>
+              Sat
+            </Typography>
+          </div>
+        </Grid>
         <Grid item xs={12}>
           {calendar.map((week) => (
             <div
@@ -169,7 +199,7 @@ export default function MeetingCalendar() {
       >
         {({ TransitionProps }) => (
           // <Fade {...TransitionProps} timeout={350}>
-          <Paper>
+          <Paper elevation={10}>
             <Box p={2}>
               <Grid container alignItems='center' justify='center'>
                 <Grid item xs={12}>
