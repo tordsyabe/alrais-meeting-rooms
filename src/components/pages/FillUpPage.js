@@ -132,7 +132,7 @@ export default function FillUpPage() {
 
       <Dialog
         fullScreen
-        disableEnforceFocus={true}
+        disableEnforceFocus
         open={openCalendar}
         onClose={handleCloseCalendar}
         // TransitionComponent={Transition}

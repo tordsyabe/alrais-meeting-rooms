@@ -14,8 +14,12 @@ import {
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { MeetingsContext } from "../../../contexts/MeetingsContext";
-import { secondsToLocalTime } from "../../../utils/dateFormatter";
+import {
+  secondsToLocalTime,
+  secondsToLongDate,
+} from "../../../utils/dateFormatter";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
@@ -37,14 +41,16 @@ export default function MeetingCalendar() {
   const [calendar, setCalendar] = useState([]);
   const [value, setValue] = useState(moment());
 
+  const [selectedMeeting, setSelectedMeeting] = useState({});
+
   const startDay = value.clone().startOf("month").startOf("week");
   const endDay = value.clone().endOf("month").endOf("week");
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClickMeeting = (event) => {
+  const handleClickMeeting = (meeting) => (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
-    console.log(event.currentTarget);
+    setSelectedMeeting(meeting);
   };
 
   const openMeetingDetails = Boolean(anchorEl);
@@ -128,7 +134,7 @@ export default function MeetingCalendar() {
                           key={filteredMeeting.id}
                         >
                           <Typography
-                            onClick={handleClickMeeting}
+                            onClick={handleClickMeeting(filteredMeeting)}
                             variant='caption'
                             noWrap
                             style={{ cursor: "pointer" }}
@@ -159,16 +165,50 @@ export default function MeetingCalendar() {
         anchorEl={anchorEl}
         placement='left'
         transition
-        style={{ zIndex: "99" }}
+        style={{ zIndex: 1500 }}
       >
         {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={350}>
-            <Paper>
-              <Box p={2}>
-                <Typography>The content of the Popper.</Typography>
-              </Box>
-            </Paper>
-          </Fade>
+          // <Fade {...TransitionProps} timeout={350}>
+          <Paper>
+            <Box p={2}>
+              <Grid container alignItems='center' justify='center'>
+                <Grid item xs={12}>
+                  <Grid container alignItems='center'>
+                    <Grid item xs={12}>
+                      <Typography variant='h6'>
+                        {selectedMeeting.title}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Typography variant='caption'>
+                        {secondsToLongDate(selectedMeeting.startTime.seconds)}
+                      </Typography>
+                    </Grid>
+
+                    {
+                      <Grid item xs={12}>
+                        <Typography color='textSecondary' variant='caption'>
+                          <Grid container alignItems='center' spacing={1}>
+                            <Grid item>
+                              <AccessTimeIcon fontSize='small' />
+                            </Grid>
+                            <Grid item>
+                              {secondsToLocalTime(
+                                selectedMeeting.startTime.seconds
+                              )}{" "}
+                              - {secondsToLocalTime(selectedMeeting.endTime)}
+                            </Grid>
+                          </Grid>
+                        </Typography>
+                      </Grid>
+                    }
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
+          </Paper>
+          // </Fade>
         )}
       </Popper>
     </React.Fragment>
