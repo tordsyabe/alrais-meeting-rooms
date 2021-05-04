@@ -29,9 +29,12 @@ export default function MeetingForm({}) {
   const { currentUser } = useContext(AuthContext);
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
 
-  const { setOpenFormDrawer, setSnackBarMessage, setSnackBarOpen } = useContext(
-    MeetingCardContext
-  );
+  const {
+    setOpenFormDrawer,
+    setSnackBarMessage,
+    setSnackBarOpen,
+    setOpenPopperMeetingDetails,
+  } = useContext(MeetingCardContext);
 
   function initialValues() {
     if (selectedMeeting.startTime) {
@@ -105,7 +108,8 @@ export default function MeetingForm({}) {
                   <IconButton
                     onClick={() => {
                       setOpenFormDrawer(false);
-                      setSelectedMeeting({});
+                      // setSelectedMeeting({});
+                      // setOpenPopperMeetingDetails(false);
                     }}
                   >
                     <CloseIcon />

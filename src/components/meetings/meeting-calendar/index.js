@@ -14,6 +14,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { dateToLocalTime } from "../../../utils/dateFormatter";
 import Meeting from "../Meeting";
 import { MeetingCardContext } from "../../../contexts/MeetingCardContext";
+import { MeetingsContext } from "../../../contexts/MeetingsContext";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
@@ -41,7 +42,7 @@ export default function MeetingCalendar({ meetings, loading }) {
   const [calendar, setCalendar] = useState([]);
   const [value, setValue] = useState(moment());
 
-  const [selectedMeeting, setSelectedMeeting] = useState({});
+  const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
 
   const startDay = value.clone().startOf("month").startOf("week");
   const endDay = value.clone().endOf("month").endOf("week");

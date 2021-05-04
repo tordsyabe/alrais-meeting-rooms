@@ -80,3 +80,9 @@ export function verifyMeeting(meetingId) {
     isApproved: true,
   });
 }
+
+export function approveMeeting(meetingId) {
+  return database.meetings.doc(meetingId).update({
+    isApproved: true,
+  });
+}

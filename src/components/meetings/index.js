@@ -53,6 +53,7 @@ export default function Meetings() {
     setOpenFormDrawer,
     snackBarMessage,
     setMeetingToDelete,
+    setOpenPopperMeetingDetails,
   } = useContext(MeetingCardContext);
 
   return (
@@ -63,7 +64,7 @@ export default function Meetings() {
         </Grid>
       </Grid>
 
-      <Drawer anchor='right' open={openFormDrawer}>
+      <Drawer anchor='right' open={openFormDrawer} style={{ zIndex: 1600 }}>
         <div style={{ width: 700 }}>
           <Box p={4}>
             <MeetingForm />
@@ -98,21 +99,21 @@ export default function Meetings() {
             Cancel
           </Button>
           <Button
-            onClick={() =>
+            onClick={() => {
+              setOpenPopperMeetingDetails(false);
               deleteMeeting(meetingToDelete.id)
                 .then(() => {
                   setSnackBarMessage("Successfully deleted meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
-                  openFormDrawer(false);
                 })
                 .catch(() => {
                   setSnackBarMessage("Failed to delete meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
-                  openFormDrawer(false);
-                })
-            }
+                  setOpenPopperMeetingDetails(false);
+                });
+            }}
             color='primary'
             autoFocus
           >

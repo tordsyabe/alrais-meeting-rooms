@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -18,6 +19,7 @@ import { constants } from "../../utils/constants";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { dateToLocalTime, dateToLongDate } from "../../utils/dateFormatter";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
+import { approveMeeting, approveStatus } from "../../services/MeetingService";
 
 const useStyles = makeStyles((theme) => ({
   card: {},
@@ -37,7 +39,7 @@ export default function Meeting({
   setOpenForm,
 }) {
   const {
-    setOpenFromDrawer,
+    setOpenFormDrawer,
     setOpenDeleteDialog,
     setMeetingToDelete,
   } = useContext(MeetingCardContext);
@@ -100,7 +102,20 @@ export default function Meeting({
               <Typography variant='caption' color='textSecondary'></Typography>
             </Grid>
             <Grid item xs={8}>
-              <Typography>{meeting.status}</Typography>
+              {meeting.isApproved ? (
+                <Typography>{meeting.status}</Typography>
+              ) : (
+                <Button
+                  variant='contained'
+                  onClick={() =>
+                    approveMeeting(meeting.id).then(() =>
+                      approveStatus(meeting.id)
+                    )
+                  }
+                >
+                  Approve
+                </Button>
+              )}
             </Grid>
 
             <Grid item xs={4}>
@@ -112,7 +127,12 @@ export default function Meeting({
               >
                 <DeleteIcon />
               </IconButton>
-              <IconButton>
+              <IconButton
+                onClick={() => {
+                  setOpenFormDrawer(true);
+                  setSelectedMeeting(meeting);
+                }}
+              >
                 <EditIcon />
               </IconButton>
             </Grid>
