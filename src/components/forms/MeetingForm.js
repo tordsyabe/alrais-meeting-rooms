@@ -11,7 +11,7 @@ import { CheckboxWithLabel, TextField } from "formik-material-ui";
 import React, { useContext, useState } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
-import { KeyboardDateTimePicker } from "formik-material-ui-pickers";
+import { DatePicker, KeyboardDateTimePicker } from "formik-material-ui-pickers";
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -45,7 +45,7 @@ export default function MeetingForm({}) {
         duration: 0,
         title: "",
         roomId: "",
-        meetingDate: new Date(),
+        meetingDate: "",
         endTime: new Date(),
         startTime: new Date(),
         status: "UNVERIFIED",
@@ -79,22 +79,25 @@ export default function MeetingForm({}) {
                 };
                 console.log("RETURNED", meeting);
                 sendEmailVerification(meeting);
+                setSnackBarMessage(
+                  "Please check your email to verify your booking"
+                );
               });
             }
 
             setSubmitting(false);
             setOpenFormDrawer(false);
-            setSnackBarMessage(
-              "Please check your email to verify your booking"
-            );
+            setSnackBarMessage("Meeting saved successfully");
             setSelectedMeeting({});
             setSnackBarOpen(true);
+            setOpenPopperMeetingDetails(false);
           })
           .catch((error) => {
             console.log(error);
             setSnackBarMessage("Failed to save meeting");
             setSnackBarOpen(true);
             setSubmitting(false);
+            setOpenPopperMeetingDetails(false);
           });
       }}
     >
@@ -146,7 +149,18 @@ export default function MeetingForm({}) {
                 ></Field>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={4}>
+                <Field
+                  component={TextField}
+                  label='Meeting Date'
+                  name='meetingDate'
+                  variant='outlined'
+                  type='date'
+                  value={new Date().toISOString().split("T")[0]}
+                />
+              </Grid>
+
+              <Grid item xs={4}>
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast
@@ -159,7 +173,7 @@ export default function MeetingForm({}) {
                 />
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast

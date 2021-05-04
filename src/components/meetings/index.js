@@ -39,7 +39,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Meetings() {
   const classes = useStyles();
 
-  const { allMeetings, loading } = useContext(MeetingsContext);
+  const { allMeetings, loading, setSelectedMeeting } = useContext(
+    MeetingsContext
+  );
   const {
     openFormDrawer,
     openDeleteDialog,
@@ -133,7 +135,11 @@ export default function Meetings() {
         color='primary'
         aria-label='add'
         className={classes.fab}
-        onClick={() => setOpenFormDrawer(true)}
+        onClick={() => {
+          setSelectedMeeting({});
+          setOpenPopperMeetingDetails(false);
+          setOpenFormDrawer(true);
+        }}
       >
         <AddIcon />
       </Fab>

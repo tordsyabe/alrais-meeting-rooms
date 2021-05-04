@@ -127,15 +127,16 @@ export default function MeetingCalendar({ meetings, loading }) {
           </div>
         </Grid>
         <Grid item xs={12}>
-          {calendar.map((week) => (
+          {calendar.map((week, index) => (
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(7, 14.27%)",
               }}
+              key={index}
             >
-              {week.map((day) => (
-                <div>
+              {week.map((day, index) => (
+                <div key={index}>
                   {/* <ButtonBase fullwidth> */}
                   <Paper
                     square
