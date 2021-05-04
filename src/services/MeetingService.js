@@ -23,7 +23,6 @@ export function getApprovedMeetings() {
   return database.meetings
     .where("isVerified", "==", true)
     .where("isApproved", "==", true)
-    .where("meetingDateString", "==", new Date().toLocaleDateString())
     .orderBy("startTime");
 }
 

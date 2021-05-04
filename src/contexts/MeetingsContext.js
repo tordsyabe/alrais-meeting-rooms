@@ -20,7 +20,7 @@ export default function MeetingsContextProvider({ children }) {
   const [unverified, setUnverified] = useState([]);
 
   useEffect(() => {
-    return getMeetings().onSnapshot((snapShot) => {
+    return getApprovedMeetings().onSnapshot((snapShot) => {
       const newAllMeetings = [];
 
       snapShot.docs.forEach((meeting) => {

@@ -71,11 +71,9 @@ export default function MeetingCalendar() {
     setCalendar(a);
   }, [value]);
 
-  console.log(allMeetings);
-
   return (
     <React.Fragment>
-      <Grid container spacing={4} alignItems='center' justify='center'>
+      <Grid container spacing={4} alignItems="center" justify="center">
         <Grid item xs={1}>
           <IconButton
             onClick={() => setValue(value.clone().subtract(1, "month"))}
@@ -84,7 +82,7 @@ export default function MeetingCalendar() {
           </IconButton>
         </Grid>
         <Grid item xs={10}>
-          <Typography variant='h5' align='center'>
+          <Typography variant="h5" align="center">
             {value.format("MMMM")} {value.format("YYYY")}
           </Typography>
         </Grid>
@@ -100,26 +98,26 @@ export default function MeetingCalendar() {
               gridTemplateColumns: "repeat(7, 1fr)",
             }}
           >
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Sun
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Mon
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Tue
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Wed
             </Typography>
 
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Thu
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Fri
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Sat
             </Typography>
           </div>
@@ -144,7 +142,7 @@ export default function MeetingCalendar() {
                         : classes.card
                     }
                   >
-                    <Typography align='justify' variant='caption'>
+                    <Typography align="justify" variant="caption">
                       {day.format("D")}
                     </Typography>
                     <br></br>
@@ -165,7 +163,7 @@ export default function MeetingCalendar() {
                         >
                           <Typography
                             onClick={handleClickMeeting(filteredMeeting)}
-                            variant='caption'
+                            variant="caption"
                             noWrap
                             style={{ cursor: "pointer" }}
                           >
@@ -193,7 +191,7 @@ export default function MeetingCalendar() {
       <Popper
         open={openMeetingDetails}
         anchorEl={anchorEl}
-        placement='left'
+        placement="left"
         transition
         style={{ zIndex: 1500 }}
       >
@@ -201,27 +199,27 @@ export default function MeetingCalendar() {
           // <Fade {...TransitionProps} timeout={350}>
           <Paper elevation={10}>
             <Box p={2}>
-              <Grid container alignItems='center' justify='center'>
+              <Grid container alignItems="center" justify="center">
                 <Grid item xs={12}>
-                  <Grid container alignItems='center'>
+                  <Grid container alignItems="center">
                     <Grid item xs={12}>
-                      <Typography variant='h6'>
+                      <Typography variant="h6">
                         {selectedMeeting.title}
                       </Typography>
                     </Grid>
 
                     <Grid item xs={12}>
-                      <Typography variant='caption'>
+                      <Typography variant="caption">
                         {secondsToLongDate(selectedMeeting.startTime.seconds)}
                       </Typography>
                     </Grid>
 
                     {
                       <Grid item xs={12}>
-                        <Typography color='textSecondary' variant='caption'>
-                          <Grid container alignItems='center' spacing={1}>
+                        <Typography color="textSecondary" variant="caption">
+                          <Grid container alignItems="center" spacing={1}>
                             <Grid item>
-                              <AccessTimeIcon fontSize='small' />
+                              <AccessTimeIcon fontSize="small" />
                             </Grid>
                             <Grid item>
                               {secondsToLocalTime(
