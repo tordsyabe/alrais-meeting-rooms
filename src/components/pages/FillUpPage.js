@@ -1,23 +1,19 @@
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Dialog,
-  Fade,
   Grid,
   IconButton,
   makeStyles,
-  Paper,
-  Popper,
   Snackbar,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import MeetingForm from "../forms/MeetingForm";
 
 import CloseIcon from "@material-ui/icons/Close";
 import MeetingCalendar from "../meetings/meeting-calendar";
+import { MeetingsContext } from "../../contexts/MeetingsContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
 export default function FillUpPage() {
   const classes = useStyles();
 
-  const [openForm, setOpenForm] = React.useState(false);
+  const { approvedMeetings } = useContext(MeetingsContext);
+
+  const [openForm, setOpenForm] = useState(false);
 
   const [openCalendar, setOpenCalendar] = useState(false);
 
@@ -151,7 +149,7 @@ export default function FillUpPage() {
             </Grid>
 
             <Grid item xs={12}>
-              <MeetingCalendar />
+              <MeetingCalendar meetings={approvedMeetings} />
             </Grid>
           </Grid>
         </Box>

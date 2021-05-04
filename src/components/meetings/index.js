@@ -25,6 +25,7 @@ import { MeetingsContext } from "../../contexts/MeetingsContext";
 import MeetingForm from "../forms/MeetingForm";
 import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
 import { deleteMeeting } from "../../services/MeetingService";
+import MeetingCalendar from "./meeting-calendar";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Meetings() {
   const classes = useStyles();
 
-  const { meetings, loading } = useContext(MeetingsContext);
+  const { allMeetings, loading } = useContext(MeetingsContext);
   const [meetingToDelete, setMeetingToDelete] = useState({});
 
   const [openForm, setOpenForm] = useState(false);
@@ -63,65 +64,11 @@ export default function Meetings() {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Grid container alignItems="center" justify="center">
-            <Grid item xs={1}>
-              <IconButton>
-                <ArrowBackIcon />
-              </IconButton>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography variant="h5" align="center">
-                Today
-              </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <IconButton>
-                <ArrowForwardIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12}>
-          {loading ? (
-            <MeetingsSkeleton />
-          ) : (
-            <Grid container spacing={2}>
-              {meetings.length > 0 ? (
-                meetings.map((meeting) => (
-                  <Grid item xs={4} key={meeting.id}>
-                    <Meeting
-                      meeting={meeting}
-                      onDashboard={true}
-                      selectedCardMeeting={selectedCardMeeting}
-                      setSelectedCardMeeting={setSelectedCardMeeting}
-                      setSnackBarMessage={setSnackBarMessage}
-                      setSnackBarOpen={setSnackBarOpen}
-                      setOpenForm={setOpenForm}
-                    />
-                  </Grid>
-                ))
-              ) : (
-                <Grid item xs={12}>
-                  <Typography variant="h5" align="center" color="textSecondary">
-                    No Meetings
-                  </Typography>
-                </Grid>
-              )}
-            </Grid>
-          )}
+          <MeetingCalendar meetings={allMeetings} loading={loading} />
         </Grid>
       </Grid>
-      <Fab
-        color="primary"
-        aria-label="add"
-        className={classes.fab}
-        onClick={() => setOpenForm(true)}
-      >
-        <AddIcon />
-      </Fab>
 
-      <Drawer anchor="right" open={openForm}>
+      <Drawer anchor='right' open={openForm}>
         <div style={{ width: 700 }}>
           <Box p={4}>
             <MeetingForm
@@ -139,19 +86,19 @@ export default function Meetings() {
       <Dialog
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle id='alert-dialog-title'>
           {`Delete meeting "${meetingToDelete.title}"`}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id='alert-dialog-description'>
             Are you sure you want to delete this meeting?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color="primary">
+          <Button onClick={handleCloseDeleteDialog} color='primary'>
             Cancel
           </Button>
           <Button
@@ -170,7 +117,7 @@ export default function Meetings() {
                   setOpenForm(false);
                 })
             }
-            color="primary"
+            color='primary'
             autoFocus
           >
             Delete
@@ -184,6 +131,15 @@ export default function Meetings() {
         onClose={handleCloseSnackbar}
         message={snackBarMessage}
       />
+
+      <Fab
+        color='primary'
+        aria-label='add'
+        className={classes.fab}
+        onClick={() => setOpenForm(true)}
+      >
+        <AddIcon />
+      </Fab>
     </React.Fragment>
   );
 }

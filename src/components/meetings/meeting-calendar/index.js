@@ -1,43 +1,41 @@
 import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import {
-  ButtonBase,
   Grid,
   IconButton,
   makeStyles,
   Paper,
   Popper,
   Typography,
-  Fade,
-  Box,
 } from "@material-ui/core";
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import { MeetingsContext } from "../../../contexts/MeetingsContext";
-import {
-  secondsToLocalTime,
-  secondsToLongDate,
-} from "../../../utils/dateFormatter";
+import { dateToLocalTime } from "../../../utils/dateFormatter";
 import Meeting from "../Meeting";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
     background: theme.palette.primary.main,
-    height: 120,
+    height: 130,
     color: "white",
     padding: 10,
     margin: 2,
   },
   card: {
-    height: 120,
+    height: 130,
     padding: 10,
     margin: 2,
   },
+  approvedMeetingText: {
+    background: theme.palette.info.light,
+  },
+
+  unverifiedMeetingText: {
+    background: theme.palette.error.light,
+  },
 }));
-export default function MeetingCalendar() {
-  const { allMeetings } = useContext(MeetingsContext);
+export default function MeetingCalendar({ meetings, loading }) {
   const classes = useStyles();
   const [calendar, setCalendar] = useState([]);
   const [value, setValue] = useState(moment());
@@ -74,7 +72,7 @@ export default function MeetingCalendar() {
 
   return (
     <React.Fragment>
-      <Grid container spacing={4} alignItems="center" justify="center">
+      <Grid container spacing={4} alignItems='center' justify='center'>
         <Grid item xs={1}>
           <IconButton
             onClick={() => setValue(value.clone().subtract(1, "month"))}
@@ -83,7 +81,7 @@ export default function MeetingCalendar() {
           </IconButton>
         </Grid>
         <Grid item xs={10}>
-          <Typography variant="h5" align="center">
+          <Typography variant='h5' align='center'>
             {value.format("MMMM")} {value.format("YYYY")}
           </Typography>
         </Grid>
@@ -99,26 +97,26 @@ export default function MeetingCalendar() {
               gridTemplateColumns: "repeat(7, 1fr)",
             }}
           >
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Sun
             </Typography>
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Mon
             </Typography>
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Tue
             </Typography>
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Wed
             </Typography>
 
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Thu
             </Typography>
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Fri
             </Typography>
-            <Typography variant="h5" align="center">
+            <Typography variant='h5' align='center'>
               Sat
             </Typography>
           </div>
@@ -143,41 +141,41 @@ export default function MeetingCalendar() {
                         : classes.card
                     }
                   >
-                    <Typography align="justify" variant="caption">
+                    <Typography align='justify' variant='caption'>
                       {day.format("D")}
                     </Typography>
                     <br></br>
-                    {allMeetings
+                    {meetings
                       .filter((meeting) =>
-                        day.isSame(
-                          new Date(meeting.startTime.seconds * 1000),
-                          "day"
-                        )
+                        day.isSame(new Date(meeting.startTime), "day")
                       )
                       .map((filteredMeeting) => (
                         <div
+                          className={
+                            filteredMeeting.isApproved
+                              ? classes.approvedMeetingText
+                              : classes.unverifiedMeetingText
+                          }
                           style={{
                             textOverflow: "ellipsis",
                             overflow: "hidden",
+
+                            margin: "2px 0",
                           }}
                           key={filteredMeeting.id}
                         >
                           <Typography
                             onClick={handleClickMeeting(filteredMeeting)}
-                            variant="caption"
+                            variant='caption'
                             noWrap
                             style={{ cursor: "pointer" }}
                           >
-                            {secondsToLocalTime(
-                              filteredMeeting.startTime.seconds
-                            )}
+                            {dateToLocalTime(filteredMeeting.startTime)}
                             {" - "}{" "}
                             <span style={{ fontWeight: "bold" }}>
                               {filteredMeeting.title}
                             </span>
                           </Typography>
-
-                          <br></br>
                         </div>
                       ))}
                   </Paper>
@@ -192,7 +190,7 @@ export default function MeetingCalendar() {
       <Popper
         open={openMeetingDetails}
         anchorEl={anchorEl}
-        placement="left"
+        placement='left'
         transition
         style={{ zIndex: 1500 }}
       >

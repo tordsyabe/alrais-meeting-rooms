@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import {
   getApprovedMeetings,
-  getForApprovalMeetings,
   getMeetings,
   getUnverifiedMeetings,
 } from "../services/MeetingService";
@@ -10,14 +9,13 @@ export const MeetingsContext = createContext();
 
 export default function MeetingsContextProvider({ children }) {
   const [allMeetings, setAllMeetings] = useState([]);
-  const [meetings, setMeetings] = useState([]);
+  const [approvedMeetings, setApprovedMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMeeting, setSelectedMeeting] = useState({
     title: "FREE",
   });
 
-  const [forApprovals, setForApprovals] = useState([]);
-  const [unverified, setUnverified] = useState([]);
+  const [unverifiedMeetings, setUnverifiedMeetings] = useState([]);
 
   useEffect(() => {
     return getMeetings().onSnapshot((snapShot) => {
@@ -53,8 +51,7 @@ export default function MeetingsContextProvider({ children }) {
       });
 
       setLoading(false);
-      setMeetings(newMeetings);
-      console.log(newMeetings);
+      setApprovedMeetings(newMeetings);
     });
   }, []);
 
@@ -72,36 +69,17 @@ export default function MeetingsContextProvider({ children }) {
       });
 
       setLoading(false);
-      setUnverified(newUnverified);
+      setUnverifiedMeetings(newUnverified);
       console.log(newUnverified);
     });
   }, []);
 
-  useEffect(() => {
-    getForApprovalMeetings().onSnapshot((snapShot) => {
-      const newForApproval = [];
-
-      snapShot.docs.forEach((meeting) => {
-        newForApproval.push({
-          id: meeting.id,
-          ...meeting.data(),
-          startTime: meeting.data().startTime.toDate(),
-          endTime: meeting.data().endTime.toDate(),
-        });
-      });
-
-      setLoading(false);
-      setForApprovals(newForApproval);
-    });
-  }, []);
-
   const values = {
-    meetings,
+    approvedMeetings,
     loading,
     selectedMeeting,
     setSelectedMeeting,
-    forApprovals,
-    unverified,
+    unverifiedMeetings,
     allMeetings,
   };
   return (

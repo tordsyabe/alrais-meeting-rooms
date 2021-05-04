@@ -16,11 +16,7 @@ import { KeyboardDateTimePicker } from "formik-material-ui-pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { RoomsContext } from "../../contexts/RoomsContext";
-import {
-  deleteMeeting,
-  getMeeting,
-  saveMeeting,
-} from "../../services/MeetingService";
+import { saveMeeting } from "../../services/MeetingService";
 import { sendEmailVerification } from "../../services/SendEmailVerificationService";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -53,7 +49,6 @@ export default function MeetingForm({
         startTime: new Date(),
         status: "UNVERIFIED",
         isStarted: false,
-        isVerified: false,
         isApproved: false,
         organizer: "",
         isWholeDay: false,
@@ -186,24 +181,6 @@ export default function MeetingForm({
                 />
               </Grid>
 
-              {/* <Grid item xs={6}>
-                <Field
-                  component={CheckboxWithLabel}
-                  type="checkbox"
-                  name="isWholeDay"
-                  Label={{ label: "Make the whole day" }}
-                />
-              </Grid>
-
-              <Grid item xs={6}>
-                <Field
-                  component={CheckboxWithLabel}
-                  type="checkbox"
-                  name="isEveryWeek"
-                  Label={{ label: "Repeat everyweek" }}
-                />
-              </Grid> */}
-
               <Grid item xs={12}>
                 <Typography variant='h6'>Location</Typography>
                 <br></br>
@@ -244,8 +221,8 @@ export default function MeetingForm({
                   <Field
                     component={CheckboxWithLabel}
                     type='checkbox'
-                    name='isVerified'
-                    Label={{ label: "Verify and approve this meeting" }}
+                    name='isApproved'
+                    Label={{ label: "Verify this meeting" }}
                   />
                 </Grid>
               )}
