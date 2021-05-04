@@ -16,9 +16,6 @@ import {
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-
 import AddIcon from "@material-ui/icons/Add";
 import Meeting from "./Meeting";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
@@ -26,6 +23,7 @@ import MeetingForm from "../forms/MeetingForm";
 import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
 import { deleteMeeting } from "../../services/MeetingService";
 import MeetingCalendar from "./meeting-calendar";
+import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -42,24 +40,21 @@ export default function Meetings() {
   const classes = useStyles();
 
   const { allMeetings, loading } = useContext(MeetingsContext);
-  const [meetingToDelete, setMeetingToDelete] = useState({});
+  const {
+    openFormDrawer,
+    openDeleteDialog,
+    handleCloseDeleteDialog,
+    meetingToDelete,
+    setSnackBarMessage,
+    setSnackBarOpen,
+    setOpenDeleteDialog,
+    snackBarOpen,
+    handleCloseSnackbar,
+    setOpenFormDrawer,
+    snackBarMessage,
+    setMeetingToDelete,
+  } = useContext(MeetingCardContext);
 
-  const [openForm, setOpenForm] = useState(false);
-
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
-  const [snackBarOpen, setSnackBarOpen] = useState(false);
-
-  const [snackBarMessage, setSnackBarMessage] = useState("");
-  const [selectedCardMeeting, setSelectedCardMeeting] = useState("");
-
-  const handleCloseSnackbar = () => {
-    setSnackBarOpen(false);
-  };
-
-  const handleCloseDeleteDialog = () => {
-    setOpenDeleteDialog(false);
-  };
   return (
     <React.Fragment>
       <Grid container spacing={3}>
@@ -68,16 +63,10 @@ export default function Meetings() {
         </Grid>
       </Grid>
 
-      <Drawer anchor='right' open={openForm}>
+      <Drawer anchor='right' open={openFormDrawer}>
         <div style={{ width: 700 }}>
           <Box p={4}>
-            <MeetingForm
-              setSnackBarOpen={setSnackBarOpen}
-              setOpenForm={setOpenForm}
-              setSnackBarMessage={setSnackBarMessage}
-              setOpenDeleteDialog={setOpenDeleteDialog}
-              setMeetingToDelete={setMeetingToDelete}
-            />
+            <MeetingForm />
           </Box>
         </div>
       </Drawer>
@@ -88,6 +77,7 @@ export default function Meetings() {
         onClose={handleCloseDeleteDialog}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
+        style={{ zIndex: 1600 }}
       >
         <DialogTitle id='alert-dialog-title'>
           {`Delete meeting "${meetingToDelete.title}"`}
@@ -98,7 +88,13 @@ export default function Meetings() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color='primary'>
+          <Button
+            onClick={() => {
+              handleCloseDeleteDialog();
+              setMeetingToDelete({});
+            }}
+            color='primary'
+          >
             Cancel
           </Button>
           <Button
@@ -108,13 +104,13 @@ export default function Meetings() {
                   setSnackBarMessage("Successfully deleted meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
-                  setOpenForm(false);
+                  openFormDrawer(false);
                 })
                 .catch(() => {
                   setSnackBarMessage("Failed to delete meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
-                  setOpenForm(false);
+                  openFormDrawer(false);
                 })
             }
             color='primary'
@@ -136,7 +132,7 @@ export default function Meetings() {
         color='primary'
         aria-label='add'
         className={classes.fab}
-        onClick={() => setOpenForm(true)}
+        onClick={() => setOpenFormDrawer(true)}
       >
         <AddIcon />
       </Fab>

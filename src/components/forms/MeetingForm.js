@@ -21,19 +21,17 @@ import { sendEmailVerification } from "../../services/SendEmailVerificationServi
 import { AuthContext } from "../../contexts/AuthContext";
 
 import CloseIcon from "@material-ui/icons/Close";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
+import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 
-export default function MeetingForm({
-  setOpenForm,
-  setSnackBarOpen,
-  setSnackBarMessage,
-  setMeetingToDelete,
-  setOpenDeleteDialog,
-}) {
+export default function MeetingForm({}) {
   const { rooms } = useContext(RoomsContext);
   const { currentUser } = useContext(AuthContext);
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
+
+  const { setOpenFormDrawer, setSnackBarMessage, setSnackBarOpen } = useContext(
+    MeetingCardContext
+  );
 
   function initialValues() {
     if (selectedMeeting.startTime) {
@@ -82,7 +80,7 @@ export default function MeetingForm({
             }
 
             setSubmitting(false);
-            setOpenForm(false);
+            setOpenFormDrawer(false);
             setSnackBarMessage(
               "Please check your email to verify your booking"
             );
@@ -102,11 +100,11 @@ export default function MeetingForm({
           <Field type='hidden' name='id'></Field>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container spacing={3} alignItems='center'>
-              <Grid item xs={8}>
+              <Grid item xs={9}>
                 {currentUser && (
                   <IconButton
                     onClick={() => {
-                      setOpenForm(false);
+                      setOpenFormDrawer(false);
                       setSelectedMeeting({});
                     }}
                   >
@@ -114,18 +112,7 @@ export default function MeetingForm({
                   </IconButton>
                 )}
               </Grid>
-              <Grid item xs={1}>
-                {currentUser && (
-                  <IconButton
-                    onClick={() => {
-                      setOpenDeleteDialog(true);
-                      setMeetingToDelete(selectedMeeting);
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                )}
-              </Grid>
+
               <Grid item xs={3}>
                 <Button
                   disabled={isSubmitting || !isValid || !dirty}

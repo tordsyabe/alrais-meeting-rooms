@@ -36,6 +36,7 @@ import { Badge } from "@material-ui/core";
 import { constants } from "../../utils/constants";
 import Unverified from "../meetings/unverified";
 import MeetingCalendar from "../meetings/meeting-calendar";
+import MeetingCardContextProvider from "../../contexts/MeetingCardContext";
 
 const drawerWidth = 240;
 

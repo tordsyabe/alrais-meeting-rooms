@@ -13,6 +13,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { dateToLocalTime } from "../../../utils/dateFormatter";
 import Meeting from "../Meeting";
+import { MeetingCardContext } from "../../../contexts/MeetingCardContext";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
@@ -47,12 +48,15 @@ export default function MeetingCalendar({ meetings, loading }) {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClickMeeting = (meeting) => (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-    setSelectedMeeting(meeting);
-  };
+  const { openPopperMeetingDetails, setOpenPopperMeetingDetails } = useContext(
+    MeetingCardContext
+  );
 
-  const openMeetingDetails = Boolean(anchorEl);
+  const handleClickMeeting = (meeting) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedMeeting(meeting);
+    setOpenPopperMeetingDetails(!openPopperMeetingDetails);
+  };
 
   useEffect(() => {
     const day = startDay.clone().subtract(1, "day");
@@ -159,8 +163,9 @@ export default function MeetingCalendar({ meetings, loading }) {
                           style={{
                             textOverflow: "ellipsis",
                             overflow: "hidden",
-
+                            borderRadius: "5px",
                             margin: "2px 0",
+                            padding: "0 2px",
                           }}
                           key={filteredMeeting.id}
                         >
@@ -188,7 +193,7 @@ export default function MeetingCalendar({ meetings, loading }) {
       </Grid>
 
       <Popper
-        open={openMeetingDetails}
+        open={openPopperMeetingDetails}
         anchorEl={anchorEl}
         placement='left'
         transition
