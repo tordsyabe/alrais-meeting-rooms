@@ -42,6 +42,9 @@ export default function Meeting({
     setOpenFormDrawer,
     setOpenDeleteDialog,
     setMeetingToDelete,
+    setOpenPopperMeetingDetails,
+    setSnackBarMessage,
+    setSnackBarOpen,
   } = useContext(MeetingCardContext);
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
   const location = useLocation();
@@ -97,46 +100,55 @@ export default function Meeting({
             </Grid>
           </Grid>
 
-          <Grid container alignItems='center' spacing={1}>
-            <Grid item xs={12}>
-              <Typography variant='caption' color='textSecondary'></Typography>
-            </Grid>
-            <Grid item xs={8}>
-              {meeting.isApproved ? (
-                <Typography>{meeting.status}</Typography>
-              ) : (
-                <Button
-                  variant='contained'
-                  onClick={() =>
-                    approveMeeting(meeting.id).then(() =>
-                      approveStatus(meeting.id)
-                    )
-                  }
-                >
-                  Approve
-                </Button>
-              )}
-            </Grid>
+          {location.pathname.includes("/app") && (
+            <Grid container alignItems='center' spacing={1}>
+              <Grid item xs={12}>
+                <Typography
+                  variant='caption'
+                  color='textSecondary'
+                ></Typography>
+              </Grid>
+              <Grid item xs={8}>
+                {meeting.isApproved ? (
+                  <Typography>{meeting.status}</Typography>
+                ) : (
+                  <Button
+                    variant='contained'
+                    onClick={() =>
+                      approveMeeting(meeting.id).then(() =>
+                        approveStatus(meeting.id).then(() => {
+                          setOpenPopperMeetingDetails(false);
+                          setSnackBarMessage("Meeting has been approved");
+                          setSnackBarOpen(true);
+                        })
+                      )
+                    }
+                  >
+                    Approve
+                  </Button>
+                )}
+              </Grid>
 
-            <Grid item xs={4}>
-              <IconButton
-                onClick={() => {
-                  setOpenDeleteDialog(true);
-                  setMeetingToDelete(meeting);
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  setOpenFormDrawer(true);
-                  setSelectedMeeting(meeting);
-                }}
-              >
-                <EditIcon />
-              </IconButton>
+              <Grid item xs={4}>
+                <IconButton
+                  onClick={() => {
+                    setOpenDeleteDialog(true);
+                    setMeetingToDelete(meeting);
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setOpenFormDrawer(true);
+                    setSelectedMeeting(meeting);
+                  }}
+                >
+                  <EditIcon />
+                </IconButton>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </CardContent>
       </Card>
     </React.Fragment>

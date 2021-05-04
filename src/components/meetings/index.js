@@ -66,7 +66,7 @@ export default function Meetings() {
         </Grid>
       </Grid>
 
-      <Drawer anchor='right' open={openFormDrawer} style={{ zIndex: 1600 }}>
+      <Drawer anchor='right' open={openFormDrawer}>
         <div style={{ width: 700 }}>
           <Box p={4}>
             <MeetingForm />

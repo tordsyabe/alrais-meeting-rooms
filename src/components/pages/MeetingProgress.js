@@ -7,9 +7,12 @@ import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
 import Timer from "../utils/Timer";
 
 export default function MeetingProgress() {
-  const { meetings, loading, selectedMeeting, setSelectedMeeting } = useContext(
-    MeetingsContext
-  );
+  const {
+    approvedMeetings,
+    loading,
+    selectedMeeting,
+    setSelectedMeeting,
+  } = useContext(MeetingsContext);
   const [isActive, setIsActive] = useState(false);
 
   const [selectedCardMeeting, setSelectedCardMeeting] = useState("");
@@ -101,8 +104,8 @@ export default function MeetingProgress() {
                 <MeetingsSkeleton />
               ) : (
                 <Grid container spacing={2}>
-                  {meetings.length > 0 ? (
-                    meetings.map((meeting) => (
+                  {approvedMeetings.length > 0 ? (
+                    approvedMeetings.map((meeting) => (
                       <Grid item xs={12} key={meeting.id}>
                         <Meeting
                           onDashboard={false}

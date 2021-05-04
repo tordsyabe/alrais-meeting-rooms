@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { CheckboxWithLabel, TextField } from "formik-material-ui";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
 import { DatePicker, KeyboardDateTimePicker } from "formik-material-ui-pickers";
@@ -24,7 +24,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 
-export default function MeetingForm({}) {
+export default function MeetingForm() {
   const { rooms } = useContext(RoomsContext);
   const { currentUser } = useContext(AuthContext);
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
