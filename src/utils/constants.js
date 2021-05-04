@@ -3,4 +3,5 @@ export const constants = {
   ROOMS_LINK: "/app/rooms",
   APPROVAL_LINK: "/app/approvals",
   UNVERIFIED_LINK: "/app/unverified",
+  CALENDAR_LINK: "/app/calendar",
 };

@@ -20,6 +20,7 @@ import {
   secondsToLocalTime,
   secondsToLongDate,
 } from "../../../utils/dateFormatter";
+import Meeting from "../Meeting";
 
 const useStyles = makeStyles((theme) => ({
   selectedCard: {
@@ -198,43 +199,15 @@ export default function MeetingCalendar() {
         {({ TransitionProps }) => (
           // <Fade {...TransitionProps} timeout={350}>
           <Paper elevation={10}>
-            <Box p={2}>
-              <Grid container alignItems="center" justify="center">
-                <Grid item xs={12}>
-                  <Grid container alignItems="center">
-                    <Grid item xs={12}>
-                      <Typography variant="h6">
-                        {selectedMeeting.title}
-                      </Typography>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Typography variant="caption">
-                        {secondsToLongDate(selectedMeeting.startTime.seconds)}
-                      </Typography>
-                    </Grid>
-
-                    {
-                      <Grid item xs={12}>
-                        <Typography color="textSecondary" variant="caption">
-                          <Grid container alignItems="center" spacing={1}>
-                            <Grid item>
-                              <AccessTimeIcon fontSize="small" />
-                            </Grid>
-                            <Grid item>
-                              {secondsToLocalTime(
-                                selectedMeeting.startTime.seconds
-                              )}{" "}
-                              - {secondsToLocalTime(selectedMeeting.endTime)}
-                            </Grid>
-                          </Grid>
-                        </Typography>
-                      </Grid>
-                    }
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Box>
+            <Meeting
+              meeting={selectedMeeting}
+              // onDashboard={true}
+              // selectedCardMeeting={selectedCardMeeting}
+              // setSelectedCardMeeting={setSelectedCardMeeting}
+              // setSnackBarMessage={setSnackBarMessage}
+              // setSnackBarOpen={setSnackBarOpen}
+              // setOpenForm={setOpenForm}
+            />
           </Paper>
           // </Fade>
         )}

@@ -20,7 +20,7 @@ export default function MeetingsContextProvider({ children }) {
   const [unverified, setUnverified] = useState([]);
 
   useEffect(() => {
-    return getApprovedMeetings().onSnapshot((snapShot) => {
+    return getMeetings().onSnapshot((snapShot) => {
       const newAllMeetings = [];
 
       snapShot.docs.forEach((meeting) => {
@@ -28,6 +28,8 @@ export default function MeetingsContextProvider({ children }) {
         newAllMeetings.push({
           id: meeting.id,
           ...meeting.data(),
+          startTime: meeting.data().startTime.toDate(),
+          endTime: meeting.data().endTime.toDate(),
         });
       });
 

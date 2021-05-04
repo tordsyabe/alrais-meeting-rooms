@@ -22,6 +22,7 @@ import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness5Icon from "@material-ui/icons/Brightness5";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import AssignmentLateIcon from "@material-ui/icons/AssignmentLate";
+import TodayIcon from "@material-ui/icons/Today";
 import { Route, Switch } from "react-router";
 import Meetings from "../meetings/index";
 import Rooms from "../rooms/index";
@@ -118,6 +119,7 @@ export default function Home() {
     MEETINGS_LINK,
     ROOMS_LINK,
     UNVERIFIED_LINK,
+    CALENDAR_LINK,
   } = constants;
 
   const { handleLogout } = useContext(AuthContext);
@@ -240,6 +242,17 @@ export default function Home() {
             <ListItemText primary="Unverified" />
           </ListItem>
 
+          <ListItem
+            selected={location.pathname === CALENDAR_LINK}
+            button
+            onClick={() => history.push(CALENDAR_LINK)}
+          >
+            <ListItemIcon>
+              <TodayIcon />
+            </ListItemIcon>
+            <ListItemText primary="Calendar" />
+          </ListItem>
+
           <Divider />
 
           <ListItem
@@ -261,7 +274,7 @@ export default function Home() {
           <Route path={ROOMS_LINK} component={Rooms} />
           <Route path={APPROVAL_LINK} component={Approvals} />
           <Route path={UNVERIFIED_LINK} component={Unverified} />
-          <Route path={"/app/calendar"} component={MeetingCalendar} />
+          <Route path={CALENDAR_LINK} component={MeetingCalendar} />
         </Switch>
       </main>
     </div>
