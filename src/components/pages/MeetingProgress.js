@@ -120,7 +120,7 @@ export default function MeetingProgress() {
               {loading ? (
                 <MeetingsSkeleton />
               ) : (
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                   {todayMeetings.length > 0 ? (
                     todayMeetings.map((meeting) => (
                       <Grid item xs={12} key={meeting.id}>
