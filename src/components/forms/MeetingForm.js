@@ -72,7 +72,7 @@ export default function MeetingForm() {
 
         saveMeeting(meetingToSave)
           .then((docRef) => {
-            if (docRef) {
+            if (docRef && meetingToSave.isApproved === false) {
               docRef.get().then((doc) => {
                 const meeting = {
                   id: docRef.id,
