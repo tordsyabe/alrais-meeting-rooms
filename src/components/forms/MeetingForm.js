@@ -45,7 +45,7 @@ export default function MeetingForm() {
         duration: 0,
         title: "",
         roomId: "",
-        meetingDate: "",
+        meetingDate: new Date().toISOString().split("T")[0],
         endTime: new Date(),
         startTime: new Date(),
         status: "UNVERIFIED",
@@ -69,6 +69,7 @@ export default function MeetingForm() {
         };
 
         setSubmitting(true);
+
         saveMeeting(meetingToSave)
           .then((docRef) => {
             if (docRef) {
@@ -102,10 +103,10 @@ export default function MeetingForm() {
       }}
     >
       {({ values, errors, isSubmitting, isValid, dirty }) => (
-        <Form autoComplete='off'>
-          <Field type='hidden' name='id'></Field>
+        <Form autoComplete="off">
+          <Field type="hidden" name="id"></Field>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container spacing={3} alignItems='center'>
+            <Grid container spacing={3} alignItems="center">
               <Grid item xs={9}>
                 {currentUser && (
                   <IconButton
@@ -123,13 +124,13 @@ export default function MeetingForm() {
               <Grid item xs={3}>
                 <Button
                   disabled={isSubmitting || !isValid || !dirty}
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
-                  color='primary'
+                  variant="contained"
+                  color="primary"
                   startIcon={
                     isSubmitting ? (
-                      <CircularProgress size='0.9rem' />
+                      <CircularProgress size="0.9rem" />
                     ) : undefined
                   }
                 >
@@ -137,26 +138,26 @@ export default function MeetingForm() {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant='h6'>Details</Typography>
+                <Typography variant="h6">Details</Typography>
                 <br></br>
                 <Field
                   fullWidth
                   required
-                  name='title'
+                  name="title"
                   component={TextField}
-                  label='Title'
-                  variant='outlined'
+                  label="Title"
+                  variant="outlined"
                 ></Field>
               </Grid>
 
               <Grid item xs={4}>
                 <Field
                   component={TextField}
-                  label='Meeting Date'
-                  name='meetingDate'
-                  variant='outlined'
-                  type='date'
-                  value={new Date().toISOString().split("T")[0]}
+                  label="Meeting Date"
+                  name="meetingDate"
+                  variant="outlined"
+                  type="date"
+                  defaultValue={new Date().toISOString().split("T")[0]}
                 />
               </Grid>
 
@@ -164,12 +165,12 @@ export default function MeetingForm() {
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast
-                  format='yyyy/MM/dd hh:mm a'
+                  format="yyyy/MM/dd hh:mm a"
                   autoOk
-                  label='Start'
-                  name='startTime'
+                  label="Start"
+                  name="startTime"
                   minutesStep={30}
-                  inputVariant='outlined'
+                  inputVariant="outlined"
                 />
               </Grid>
 
@@ -177,28 +178,28 @@ export default function MeetingForm() {
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast
-                  format='yyyy/MM/dd hh:mm a'
+                  format="yyyy/MM/dd hh:mm a"
                   autoOk
-                  label='End'
-                  name='endTime'
+                  label="End"
+                  name="endTime"
                   minutesStep={30}
-                  inputVariant='outlined'
+                  inputVariant="outlined"
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <Typography variant='h6'>Location</Typography>
+                <Typography variant="h6">Location</Typography>
                 <br></br>
                 <Field
                   component={TextField}
-                  type='text'
-                  name='roomId'
-                  label='Select Meeting Room'
+                  type="text"
+                  name="roomId"
+                  label="Select Meeting Room"
                   select
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  variant='outlined'
+                  variant="outlined"
                   value={values.roomId}
                   fullWidth
                   required
@@ -215,18 +216,18 @@ export default function MeetingForm() {
                 <Field
                   fullWidth
                   required
-                  name='organizer'
+                  name="organizer"
                   component={TextField}
-                  label='Provide your email'
-                  variant='outlined'
+                  label="Provide your email"
+                  variant="outlined"
                 ></Field>
               </Grid>
               {currentUser && (
                 <Grid item xs={12}>
                   <Field
                     component={CheckboxWithLabel}
-                    type='checkbox'
-                    name='isApproved'
+                    type="checkbox"
+                    name="isApproved"
                     Label={{ label: "Verify this meeting" }}
                   />
                 </Grid>

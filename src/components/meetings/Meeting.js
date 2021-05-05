@@ -18,9 +18,12 @@ import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { dateToLocalTime, dateToLongDate } from "../../utils/dateFormatter";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 import { approveMeeting, approveStatus } from "../../services/MeetingService";
+import { TimerContext } from "../../contexts/TimerContext";
 
 const useStyles = makeStyles(() => ({
-  card: {},
+  card: {
+    cursor: "pointer",
+  },
 
   notSelectedCard: {
     pointerEvents: "none",
@@ -28,12 +31,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Meeting({
-  meeting,
-  isActive,
-
-  selectedCardMeeting,
-}) {
+export default function Meeting({ meeting }) {
   const {
     setOpenFormDrawer,
     setOpenDeleteDialog,
@@ -43,6 +41,9 @@ export default function Meeting({
     setSnackBarOpen,
   } = useContext(MeetingCardContext);
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
+  const { isActive, selectedCardMeeting, setSelectedCardMeeting } = useContext(
+    TimerContext
+  );
   const location = useLocation();
 
   // const handleOpenForm = () => {
@@ -53,6 +54,11 @@ export default function Meeting({
   return (
     <React.Fragment>
       <Card
+        onClick={() => {
+          setSelectedMeeting(meeting);
+          setSelectedCardMeeting(meeting.id);
+          console.log(meeting);
+        }}
         className={
           isActive && selectedCardMeeting !== meeting.id
             ? classes.notSelectedCard
@@ -61,27 +67,25 @@ export default function Meeting({
         raised={meeting.id === selectedMeeting.id ? true : false}
       >
         <CardContent>
-          <Grid container alignItems='center' justify='center'>
-            <Grid item xs={12}>
-              <Grid container alignItems='center'>
+          <Grid container alignItems="center">
+            <Grid item xs={9}>
+              <Grid container alignItems="center">
                 <Grid item xs={12}>
-                  <Typography variant='h6'>{meeting.title}</Typography>
+                  <Typography variant="h6">{meeting.title}</Typography>
                 </Grid>
-                {/* <Grid item xs={1}>
-                    <MoreVertIcon />
-                  </Grid> */}
+
                 <Grid item xs={12}>
-                  <Typography variant='caption'>
+                  <Typography variant="caption">
                     {dateToLongDate(meeting.startTime)}
                   </Typography>
                 </Grid>
 
                 {
                   <Grid item xs={12}>
-                    <Typography color='textSecondary' variant='caption'>
-                      <Grid container alignItems='center' spacing={1}>
+                    <Typography color="textSecondary" variant="caption">
+                      <Grid container alignItems="center" spacing={1}>
                         <Grid item>
-                          <AccessTimeIcon fontSize='small' />
+                          <AccessTimeIcon fontSize="small" />
                         </Grid>
                         <Grid item>
                           {dateToLocalTime(meeting.startTime)} -{" "}
@@ -93,14 +97,19 @@ export default function Meeting({
                 }
               </Grid>
             </Grid>
+            {!location.pathname.includes("/app") && (
+              <Grid item={3}>
+                <Typography variant="subtitle1">{meeting.status}</Typography>
+              </Grid>
+            )}
           </Grid>
 
           {location.pathname.includes("/app") && (
-            <Grid container alignItems='center' spacing={1}>
+            <Grid container alignItems="center" spacing={1}>
               <Grid item xs={12}>
                 <Typography
-                  variant='caption'
-                  color='textSecondary'
+                  variant="caption"
+                  color="textSecondary"
                 ></Typography>
               </Grid>
               <Grid item xs={8}>
@@ -108,7 +117,7 @@ export default function Meeting({
                   <Typography>{meeting.status}</Typography>
                 ) : (
                   <Button
-                    variant='contained'
+                    variant="contained"
                     onClick={() =>
                       approveMeeting(meeting.id).then(() =>
                         approveStatus(meeting.id).then(() => {
@@ -126,7 +135,9 @@ export default function Meeting({
 
               <Grid item xs={4}>
                 <IconButton
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
                     setOpenDeleteDialog(true);
                     setMeetingToDelete(meeting);
                   }}
@@ -134,9 +145,12 @@ export default function Meeting({
                   <DeleteIcon />
                 </IconButton>
                 <IconButton
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
                     setOpenFormDrawer(true);
                     setSelectedMeeting(meeting);
+                    setOpenPopperMeetingDetails(false);
                   }}
                 >
                   <EditIcon />

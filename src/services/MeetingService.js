@@ -22,9 +22,15 @@ export function getUnverifiedMeetings() {
     .orderBy("startTime");
 }
 
+export function getTodaysMeetings() {
+  return database.meetings
+    .where("isApproved", "==", true)
+    .where("meetingDate", "==", new Date().toISOString().split("T")[0])
+    .orderBy("startTime");
+}
+
 export function saveMeeting(meeting) {
-  if (meeting.isVerified === true) {
-    meeting.isApproved = true;
+  if (meeting.isApproved === true) {
     meeting.status = "APPROVED";
   }
 

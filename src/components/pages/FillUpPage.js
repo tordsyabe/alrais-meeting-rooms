@@ -14,6 +14,7 @@ import MeetingForm from "../forms/MeetingForm";
 import CloseIcon from "@material-ui/icons/Close";
 import MeetingCalendar from "../meetings/meeting-calendar";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
+import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +45,9 @@ export default function FillUpPage() {
 
   const { approvedMeetings } = useContext(MeetingsContext);
 
-  const [openForm, setOpenForm] = useState(false);
+  const { setOpenPopperMeetingDetails } = useContext(MeetingCardContext);
+
+  const [setOpenForm] = useState(false);
 
   const [openCalendar, setOpenCalendar] = useState(false);
 
@@ -73,7 +76,7 @@ export default function FillUpPage() {
               </Grid> */}
               <Grid item xs={12} style={{ flexGrow: 1 }}>
                 <Box>
-                  <Typography variant='h5'>
+                  <Typography variant="h5">
                     Provide meeting information
                   </Typography>
                   <br></br>
@@ -87,9 +90,9 @@ export default function FillUpPage() {
 
               <Grid item xs={12}>
                 <Typography
-                  variant='body2'
-                  color='textSecondary'
-                  align='center'
+                  variant="body2"
+                  color="textSecondary"
+                  align="center"
                 >
                   {"Alrais Meeting Room Booking System Copyright © "}
                   {new Date().getFullYear()}
@@ -100,21 +103,21 @@ export default function FillUpPage() {
           </Box>
         </Grid>
         <Grid item xs={7} className={classes.bg}>
-          <Box p={5} fontWeight='bold' className={classes.inspire}>
-            <Typography variant='h2' className={classes.quote}>
+          <Box p={5} fontWeight="bold" className={classes.inspire}>
+            <Typography variant="h2" className={classes.quote}>
               "Whoever is happy will make others happy too."
             </Typography>
             <br></br>
             <br></br>
-            <Typography variant='h5' align='right' color='textSecondary'>
+            <Typography variant="h5" align="right" color="textSecondary">
               - Anne Frank
             </Typography>
             <br></br>
             <br></br>
             <Button
               onClick={() => setOpenCalendar(true)}
-              variant='contained'
-              color='secondary'
+              variant="contained"
+              color="secondary"
             >
               Check Calendar
             </Button>
@@ -139,10 +142,13 @@ export default function FillUpPage() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <IconButton
-                edge='start'
-                color='inherit'
-                onClick={handleCloseCalendar}
-                aria-label='close'
+                edge="start"
+                color="inherit"
+                onClick={() => {
+                  handleCloseCalendar();
+                  setOpenPopperMeetingDetails(false);
+                }}
+                aria-label="close"
               >
                 <CloseIcon />
               </IconButton>

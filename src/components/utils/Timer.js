@@ -14,14 +14,16 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import PauseIcon from "@material-ui/icons/Pause";
 
 import { startMeeting, stopMeeting } from "../../services/MeetingService";
+import { TimerContext } from "../../contexts/TimerContext";
 
-export default function Timer({
-  isActive,
-  setIsActive,
-  selectedCardMeeting,
-  setSelectedCardMeeting,
-}) {
+export default function Timer() {
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
+  const {
+    isActive,
+    setIsActive,
+    selectedCardMeeting,
+    setSelectedCardMeeting,
+  } = useContext(TimerContext);
   const [second, setSecond] = useState("00");
   const [minute, setMinute] = useState("00");
 
@@ -71,7 +73,7 @@ export default function Timer({
     <React.Fragment>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant='h1'>
+          <Typography variant="h1">
             {minute} : {second}
           </Typography>
         </Grid>
@@ -88,7 +90,7 @@ export default function Timer({
               selectedMeeting.status === "CANCELLED"
             }
           >
-            <PlayCircleFilledIcon fontSize='large' />
+            <PlayCircleFilledIcon fontSize="large" />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -102,7 +104,7 @@ export default function Timer({
               selectedMeeting.status === "CANCELLED"
             }
           >
-            <PauseIcon fontSize='large' />
+            <PauseIcon fontSize="large" />
           </IconButton>
 
           <IconButton

@@ -14,6 +14,7 @@ import FillUpPage from "./components/pages/FillUpPage";
 import RoomsContextProvider from "./contexts/RoomsContext";
 import Verify from "./components/pages/Verify";
 import MeetingCardContextProvider from "./contexts/MeetingCardContext";
+import TimerContextProvider from "./contexts/TimerContext";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -24,19 +25,21 @@ function App() {
         <RoomsContextProvider>
           <MeetingsContextProvider>
             <MeetingCardContextProvider>
-              <Switch>
-                <Public
-                  exact
-                  restricted={true}
-                  path='/login'
-                  component={Singin}
-                />
-                <Route exact path='/book' component={FillUpPage} />
-                <Route exact path='/verify' component={Verify} />
-                <Private exact path='/' component={Home} />
-                <Private path='/app' component={Home} />
-                <Private path='/:id' component={MeetingProgress} />
-              </Switch>
+              <TimerContextProvider>
+                <Switch>
+                  <Public
+                    exact
+                    restricted={true}
+                    path="/login"
+                    component={Singin}
+                  />
+                  <Route exact path="/book" component={FillUpPage} />
+                  <Route exact path="/verify" component={Verify} />
+                  <Private exact path="/" component={Home} />
+                  <Private path="/app" component={Home} />
+                  <Private path="/:id" component={MeetingProgress} />
+                </Switch>
+              </TimerContextProvider>
             </MeetingCardContextProvider>
           </MeetingsContextProvider>
         </RoomsContextProvider>

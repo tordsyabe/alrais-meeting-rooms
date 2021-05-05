@@ -64,7 +64,7 @@ export default function Meetings() {
         </Grid>
       </Grid>
 
-      <Drawer anchor='right' open={openFormDrawer}>
+      <Drawer anchor="right" open={openFormDrawer}>
         <div style={{ width: 700 }}>
           <Box p={4}>
             <MeetingForm />
@@ -76,15 +76,15 @@ export default function Meetings() {
       <Dialog
         open={openDeleteDialog}
         onClose={handleCloseDeleteDialog}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
         style={{ zIndex: 1600 }}
       >
-        <DialogTitle id='alert-dialog-title'>
+        <DialogTitle id="alert-dialog-title">
           {`Delete meeting "${meetingToDelete.title}"`}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
+          <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this meeting?
           </DialogContentText>
         </DialogContent>
@@ -94,7 +94,7 @@ export default function Meetings() {
               handleCloseDeleteDialog();
               setMeetingToDelete({});
             }}
-            color='primary'
+            color="primary"
           >
             Cancel
           </Button>
@@ -114,7 +114,7 @@ export default function Meetings() {
                   setOpenPopperMeetingDetails(false);
                 });
             }}
-            color='primary'
+            color="primary"
             autoFocus
           >
             Delete
@@ -130,13 +130,14 @@ export default function Meetings() {
       />
 
       <Fab
-        color='primary'
-        aria-label='add'
+        color="primary"
+        aria-label="add"
         className={classes.fab}
         onClick={() => {
           setSelectedMeeting({});
           setOpenPopperMeetingDetails(false);
           setOpenFormDrawer(true);
+          console.log(new Date().toISOString().split("T")[0]);
         }}
       >
         <AddIcon />
