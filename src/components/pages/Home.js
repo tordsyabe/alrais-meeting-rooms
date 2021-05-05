@@ -20,9 +20,9 @@ import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness5Icon from "@material-ui/icons/Brightness5";
-import EventSeatIcon from "@material-ui/icons/EventSeat";
+
 import AssignmentLateIcon from "@material-ui/icons/AssignmentLate";
-import TodayIcon from "@material-ui/icons/Today";
+
 import { Route, Switch } from "react-router";
 import Meetings from "../meetings/index";
 import Rooms from "../rooms/index";
@@ -35,8 +35,6 @@ import { Badge } from "@material-ui/core";
 
 import { constants } from "../../utils/constants";
 import Unverified from "../meetings/unverified";
-import MeetingCalendar from "../meetings/meeting-calendar";
-import MeetingCardContextProvider from "../../contexts/MeetingCardContext";
 
 const drawerWidth = 240;
 

@@ -1,7 +1,6 @@
 import {
   Button,
   Card,
-  CardActionArea,
   CardContent,
   Grid,
   IconButton,
@@ -14,14 +13,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
 import { useLocation } from "react-router-dom";
-import { constants } from "../../utils/constants";
 
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { dateToLocalTime, dateToLongDate } from "../../utils/dateFormatter";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 import { approveMeeting, approveStatus } from "../../services/MeetingService";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   card: {},
 
   notSelectedCard: {
@@ -33,10 +31,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Meeting({
   meeting,
   isActive,
-  onDashboard,
+
   selectedCardMeeting,
-  setSelectedCardMeeting,
-  setOpenForm,
 }) {
   const {
     setOpenFormDrawer,
@@ -48,11 +44,10 @@ export default function Meeting({
   } = useContext(MeetingCardContext);
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
   const location = useLocation();
-  const { UNVERIFIED_LINK, APPROVAL_LINK } = constants;
 
-  const handleOpenForm = () => {
-    location.pathname.includes("/app") ? setOpenForm(true) : console.log();
-  };
+  // const handleOpenForm = () => {
+  //   location.pathname.includes("/app") ? setOpenForm(true) : console.log();
+  // };
 
   const classes = useStyles();
   return (

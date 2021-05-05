@@ -1,4 +1,4 @@
-import { Avatar, Chip, Grid, IconButton, Typography } from "@material-ui/core";
+import { Grid, IconButton, Typography } from "@material-ui/core";
 import React, { useState, useEffect, useContext } from "react";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import {
@@ -71,7 +71,7 @@ export default function Timer({
     <React.Fragment>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="h1">
+          <Typography variant='h1'>
             {minute} : {second}
           </Typography>
         </Grid>
@@ -88,7 +88,7 @@ export default function Timer({
               selectedMeeting.status === "CANCELLED"
             }
           >
-            <PlayCircleFilledIcon fontSize="large" />
+            <PlayCircleFilledIcon fontSize='large' />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -102,7 +102,7 @@ export default function Timer({
               selectedMeeting.status === "CANCELLED"
             }
           >
-            <PauseIcon fontSize="large" />
+            <PauseIcon fontSize='large' />
           </IconButton>
 
           <IconButton
@@ -124,7 +124,7 @@ export default function Timer({
           <IconButton
             onClick={() =>
               cancelMeeting(selectedMeeting.id).then(() => {
-                setSelectedCardMeeting("")
+                setSelectedCardMeeting("");
               })
             }
             disabled={

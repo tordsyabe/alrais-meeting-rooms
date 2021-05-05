@@ -11,7 +11,7 @@ import { CheckboxWithLabel, TextField } from "formik-material-ui";
 import React, { useContext } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
-import { DatePicker, KeyboardDateTimePicker } from "formik-material-ui-pickers";
+import { KeyboardDateTimePicker } from "formik-material-ui-pickers";
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./App.css";
-import { Redirect, Route, Router, Switch } from "react-router";
+import { Route, Switch } from "react-router";
 import Private from "./components/routes/Private";
 import Public from "./components/routes/Public";
 import Singin from "./components/pages/Singin";

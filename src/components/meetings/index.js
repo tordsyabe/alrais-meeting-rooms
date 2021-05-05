@@ -9,18 +9,16 @@ import {
   Drawer,
   Fab,
   Grid,
-  IconButton,
   makeStyles,
   Snackbar,
-  Typography,
 } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import AddIcon from "@material-ui/icons/Add";
-import Meeting from "./Meeting";
+
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import MeetingForm from "../forms/MeetingForm";
-import MeetingsSkeleton from "../skeletons/MeetingsSkeleton";
+
 import { deleteMeeting } from "../../services/MeetingService";
 import MeetingCalendar from "./meeting-calendar";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
