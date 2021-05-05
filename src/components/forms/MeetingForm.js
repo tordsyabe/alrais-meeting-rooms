@@ -64,8 +64,8 @@ export default function MeetingForm() {
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {
         const meetingToSave = {
-          meetingDateString: data.startTime.toLocaleDateString(),
           ...data,
+          meetingDate: data.startTime.toISOString().split("T")[0],
         };
 
         setSubmitting(true);
@@ -150,7 +150,7 @@ export default function MeetingForm() {
                 ></Field>
               </Grid>
 
-              <Grid item xs={4}>
+              {/* <Grid item xs={4}>
                 <Field
                   component={TextField}
                   label="Meeting Date"
@@ -159,9 +159,9 @@ export default function MeetingForm() {
                   type="date"
                   defaultValue={new Date().toISOString().split("T")[0]}
                 />
-              </Grid>
+              </Grid> */}
 
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast
@@ -174,7 +174,7 @@ export default function MeetingForm() {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast
