@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,7 +13,7 @@ import {
   makeStyles,
   Snackbar,
 } from "@material-ui/core";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import AddIcon from "@material-ui/icons/Add";
 
@@ -55,6 +56,8 @@ export default function Meetings() {
     setMeetingToDelete,
     setOpenPopperMeetingDetails,
   } = useContext(MeetingCardContext);
+
+  const [isDeleting, setIsDeleting] = useState(false);
 
   return (
     <React.Fragment>
@@ -99,13 +102,19 @@ export default function Meetings() {
             Cancel
           </Button>
           <Button
+            startIcon={
+              isDeleting ? <CircularProgress size="0.9rem" /> : undefined
+            }
+            disabled={isDeleting}
             onClick={() => {
+              setIsDeleting(true);
               setOpenPopperMeetingDetails(false);
               deleteMeeting(meetingToDelete.id)
                 .then(() => {
                   setSnackBarMessage("Successfully deleted meeting");
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
+                  setIsDeleting(false);
                 })
                 .catch(() => {
                   setSnackBarMessage("Failed to delete meeting");

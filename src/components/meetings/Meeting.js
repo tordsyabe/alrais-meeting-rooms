@@ -2,12 +2,13 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Grid,
   IconButton,
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -45,6 +46,8 @@ export default function Meeting({ meeting }) {
     TimerContext
   );
   const location = useLocation();
+
+  const [isApproving, setIsApproving] = useState(false);
 
   // const handleOpenForm = () => {
   //   location.pathname.includes("/app") ? setOpenForm(true) : console.log();
@@ -117,16 +120,24 @@ export default function Meeting({ meeting }) {
                   <Typography>{meeting.status}</Typography>
                 ) : (
                   <Button
+                    startIcon={
+                      isApproving ? (
+                        <CircularProgress size="0.9rem" />
+                      ) : undefined
+                    }
+                    disabled={isApproving}
                     variant="contained"
-                    onClick={() =>
+                    onClick={() => {
+                      setIsApproving(true);
                       approveMeeting(meeting.id).then(() =>
                         approveStatus(meeting.id).then(() => {
+                          setIsApproving(false);
                           setOpenPopperMeetingDetails(false);
                           setSnackBarMessage("Meeting has been approved");
                           setSnackBarOpen(true);
                         })
-                      )
-                    }
+                      );
+                    }}
                   >
                     Approve
                   </Button>
