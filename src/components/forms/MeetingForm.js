@@ -27,32 +27,28 @@ import CloseIcon from "@material-ui/icons/Close";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 import { dateToLocalTime } from "../../utils/dateFormatter";
+import setDate from "date-fns/setDate";
 
 export default function MeetingForm(props) {
   const { rooms } = useContext(RoomsContext);
   const { currentUser } = useContext(AuthContext);
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
 
-  const ref = useRef(null);
-
   const [startTimeSelection, setStartTimeSelection] = useState([]);
   const [endTimeSelection, setEndTimeSelection] = useState([]);
   const [dateSelected, setDateSelected] = useState(new Date());
   const [startTimeSelected, setStartTimeSelected] = useState("");
 
-  useEffect(() => {
-    const endTime12H = startTimeSelected.split(" ");
-    console.log(endTime12H);
-  }, [startTimeSelected]);
+  // START TIME VALUES
 
   useEffect(() => {
     dateSelected.setDate(dateSelected.getDate());
-    if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
-      dateSelected.setHours(8);
-    }
+    // if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
+    dateSelected.setHours(8);
+    // }
     dateSelected.setMinutes(0);
     dateSelected.setMilliseconds(0);
-    var minutesToAdd = 30;
+    var minutesToAdd = 0;
 
     const last = new Date();
     last.setDate(dateSelected.getDate());
@@ -64,9 +60,6 @@ export default function MeetingForm(props) {
 
     let time = new Date(dateSelected.getTime() + minutesToAdd * 60000);
 
-    console.log("DATE SELECTED", dateSelected.toLocaleDateString());
-    console.log("TODAY", new Date().toLocaleDateString());
-
     while (time < last) {
       time = new Date(dateSelected.getTime() + minutesToAdd * 60000);
       startTimeSelection.push(dateToLocalTime(time));
@@ -74,8 +67,7 @@ export default function MeetingForm(props) {
     }
 
     setStartTimeSelection(startTimeSelection);
-    console.log(startTimeSelection);
-  }, [dateSelected]);
+  }, []);
 
   const {
     setOpenFormDrawer,
@@ -111,7 +103,6 @@ export default function MeetingForm(props) {
 
   return (
     <Formik
-      innerRef={ref}
       initialValues={initialValues()}
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {
@@ -245,7 +236,6 @@ export default function MeetingForm(props) {
                   }}
                   fullWidth
                   autoOk
-                  // onChange={setDateSelected(values.date)}
                   inputVariant="outlined"
                 />
               </Grid>
@@ -264,7 +254,6 @@ export default function MeetingForm(props) {
                   value={values.start}
                   fullWidth
                   required
-                  // onChange={setStartTimeSelected(values.start)}
                 >
                   {startTimeSelection.map((startTime) => (
                     <MenuItem value={startTime} key={startTime}>
@@ -289,9 +278,9 @@ export default function MeetingForm(props) {
                   fullWidth
                   required
                 >
-                  {startTimeSelection.map((startTime) => (
-                    <MenuItem value={startTime} key={startTime}>
-                      {startTime}
+                  {endTimeSelection.map((endTime) => (
+                    <MenuItem value={endTime} key={endTime}>
+                      {endTime}
                     </MenuItem>
                   ))}
                 </Field>
