@@ -67,6 +67,7 @@ export default function MeetingForm(props) {
     }
 
     setStartTimeSelection(startTimeSelection);
+    setEndTimeSelection(startTimeSelection);
   }, []);
 
   const {
@@ -221,7 +222,7 @@ export default function MeetingForm(props) {
                 />
               </Grid>
 
-              <Grid item xs={5}>
+              <Grid item xs={4}>
                 <Field
                   component={KeyboardDatePicker}
                   disableToolbar
@@ -240,7 +241,7 @@ export default function MeetingForm(props) {
                 />
               </Grid>
 
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Field
                   component={TextField}
                   type="text"
@@ -263,7 +264,7 @@ export default function MeetingForm(props) {
                 </Field>
               </Grid>
 
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Field
                   component={TextField}
                   type="text"
