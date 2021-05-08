@@ -51,6 +51,7 @@ export default function MeetingForm(props) {
   const handleStartTime = (e, { value }, setFieldValue) => {
     setFieldValue("start", e.target.value);
     setStartTimeSelected(e.target.value);
+    setEndTimeSelections([]);
   };
 
   useEffect(() => {
@@ -59,11 +60,11 @@ export default function MeetingForm(props) {
     let endTime = parseInt(endTime12H[0].split(":")[0]);
     console.log(endTime);
     let endDateSelected = new Date();
-    endDateSelected.setDate(endDateSelected.getDate());
-    if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
-      endDateSelected.setHours(endTime - 12);
+    endDateSelected.setDate(dateSelected.getDate());
+    if (dateSelected.toLocaleDateString() === new Date().toLocaleDateString()) {
+      endDateSelected.setHours(endTime);
     }
-    endDateSelected.setHours(endTime + 12);
+    endDateSelected.setHours(endTime);
 
     endDateSelected.setMinutes(0);
     endDateSelected.setMilliseconds(0);
