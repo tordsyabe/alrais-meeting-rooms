@@ -8,10 +8,13 @@ import {
 } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { CheckboxWithLabel, TextField } from "formik-material-ui";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
-import { KeyboardDateTimePicker } from "formik-material-ui-pickers";
+import {
+  KeyboardDatePicker,
+  KeyboardDateTimePicker,
+} from "formik-material-ui-pickers";
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -23,11 +26,47 @@ import { AuthContext } from "../../contexts/AuthContext";
 import CloseIcon from "@material-ui/icons/Close";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
+import { dateToLocalTime } from "../../utils/dateFormatter";
 
-export default function MeetingForm() {
+export default function MeetingForm(props) {
   const { rooms } = useContext(RoomsContext);
   const { currentUser } = useContext(AuthContext);
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
+
+  const [startTimeSelection, setStartTimeSelection] = useState([]);
+  const [dateSelected, setDateSelected] = useState(new Date());
+
+  useEffect(() => {
+    dateSelected.setDate(dateSelected.getDate());
+    if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
+      dateSelected.setHours(8);
+    }
+    dateSelected.setMinutes(0);
+    dateSelected.setMilliseconds(0);
+    var minutesToAdd = 30;
+
+    const last = new Date();
+    last.setDate(dateSelected.getDate());
+    last.setHours(17);
+    last.setMinutes(0);
+    last.setMilliseconds(0);
+
+    const startTimeSelection = [];
+
+    let time = new Date(dateSelected.getTime() + minutesToAdd * 60000);
+
+    console.log("DATE SELECTED", dateSelected.toLocaleDateString());
+    console.log("TODAY", new Date().toLocaleDateString());
+
+    while (time < last) {
+      time = new Date(dateSelected.getTime() + minutesToAdd * 60000);
+      startTimeSelection.push(dateToLocalTime(time));
+      minutesToAdd += 30;
+    }
+
+    setStartTimeSelection(startTimeSelection);
+    console.log(startTimeSelection);
+  }, [dateSelected]);
 
   const {
     setOpenFormDrawer,
@@ -54,6 +93,9 @@ export default function MeetingForm() {
         organizer: "",
         isWholeDay: false,
         isEveryWeek: false,
+        start: "",
+        end: "",
+        date: new Date(),
       };
     }
   }
@@ -67,6 +109,8 @@ export default function MeetingForm() {
           ...data,
           meetingDate: data.startTime.toISOString().split("T")[0],
         };
+
+        console.log(meetingToSave);
 
         setSubmitting(true);
 
@@ -187,6 +231,73 @@ export default function MeetingForm() {
                 />
               </Grid>
 
+              <Grid item xs={5}>
+                <Field
+                  component={KeyboardDatePicker}
+                  disableToolbar
+                  variant="inline"
+                  // format="MM/dd/yyyy"
+                  margin="normal"
+                  id="date"
+                  label="Meeting Date"
+                  name="date"
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                  fullWidth
+                  autoOk
+                  onChange={setDateSelected(values.date)}
+                  inputVariant="outlined"
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <Field
+                  component={TextField}
+                  type="text"
+                  name="start"
+                  label="Start"
+                  select
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  value={values.start}
+                  fullWidth
+                  required
+                  // onChange={setEndTimings()}
+                >
+                  {startTimeSelection.map((startTime) => (
+                    <MenuItem value={startTime} key={startTime}>
+                      {startTime}
+                    </MenuItem>
+                  ))}
+                </Field>
+              </Grid>
+
+              <Grid item xs={3}>
+                <Field
+                  component={TextField}
+                  type="text"
+                  name="end"
+                  label="End"
+                  select
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  value={values.end}
+                  fullWidth
+                  required
+                >
+                  {startTimeSelection.map((startTime) => (
+                    <MenuItem value={startTime} key={startTime}>
+                      {startTime}
+                    </MenuItem>
+                  ))}
+                </Field>
+              </Grid>
+
               <Grid item xs={12}>
                 <Typography variant="h6">Location</Typography>
                 <br></br>
@@ -233,7 +344,9 @@ export default function MeetingForm() {
                 </Grid>
               )}
 
-              <Grid item xs={12}></Grid>
+              <Grid item xs={12}>
+                {JSON.stringify(values, null, 4)}
+              </Grid>
             </Grid>
           </MuiPickersUtilsProvider>
         </Form>
