@@ -54,13 +54,14 @@ export default function MeetingForm(props) {
   };
 
   useEffect(() => {
+    setEndTimeSelections([]);
     let endTime12H = startTimeSelected.split(" ");
     let endTime = parseInt(endTime12H[0].split(":")[0]);
     console.log(endTime);
     let endDateSelected = new Date();
-    endDateSelected.setDate(dateSelected.getDate());
+    endDateSelected.setDate(endDateSelected.getDate());
     if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
-      endDateSelected.setHours(endTime);
+      endDateSelected.setHours(endTime - 12);
     }
     endDateSelected.setHours(endTime + 12);
 
