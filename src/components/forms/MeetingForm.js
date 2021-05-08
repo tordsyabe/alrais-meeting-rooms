@@ -35,8 +35,8 @@ export default function MeetingForm(props) {
   const { currentUser } = useContext(AuthContext);
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
 
-  const [startTimeSelection, setStartTimeSelection] = useState([]);
-  const [endTimeSelection, setEndTimeSelection] = useState([]);
+  const [startTimeSelections, setStartTimeSelections] = useState([]);
+  const [endTimeSelections, setEndTimeSelections] = useState([]);
   const [dateSelected, setDateSelected] = useState(new Date());
   const [startTimeSelected, setStartTimeSelected] = useState("");
 
@@ -44,8 +44,8 @@ export default function MeetingForm(props) {
     setFieldValue("date", e);
     setDateSelected(e);
     setStartTimeSelected("");
-    setStartTimeSelection([]);
-    setEndTimeSelection([]);
+    setStartTimeSelections([]);
+    setEndTimeSelections([]);
   };
 
   const handleStartTime = (e, { value }, setFieldValue) => {
@@ -54,23 +54,18 @@ export default function MeetingForm(props) {
   };
 
   useEffect(() => {
-    setEndTimeSelection([]);
     let endTime12H = startTimeSelected.split(" ");
     let endTime = parseInt(endTime12H[0].split(":")[0]);
     let endDateSelected = new Date();
     endDateSelected.setDate(dateSelected.getDate());
-    if (
-      endDateSelected.toLocaleDateString() !== new Date().toLocaleDateString()
-    ) {
-      console.log("SAME");
-      endDateSelected.setHours(endTime + 12);
-    }
-    endDateSelected.setHours(endTime);
+
+    endDateSelected.setHours(endTime + 12);
+
     endDateSelected.setMinutes(0);
     endDateSelected.setMilliseconds(0);
-    let minutesToAddToEndTime = 30;
+    let minutesToAddToEndTime = 60;
 
-    const endTimeSelection = [];
+    let endTimeSelection = [];
     let end = new Date(
       endDateSelected.getTime() + minutesToAddToEndTime * 60000
     );
@@ -86,12 +81,12 @@ export default function MeetingForm(props) {
       minutesToAddToEndTime += 30;
     }
 
-    setEndTimeSelection(endTimeSelection);
+    setEndTimeSelections(endTimeSelection);
     console.log(endTimeSelection);
   }, [startTimeSelected]);
 
   useEffect(() => {
-    setStartTimeSelection([]);
+    setStartTimeSelections([]);
     let startDateSelected = new Date();
     startDateSelected.setDate(dateSelected.getDate());
     if (
@@ -119,7 +114,7 @@ export default function MeetingForm(props) {
       minutesToAdd += 30;
     }
 
-    setStartTimeSelection(startTimeSelection);
+    setStartTimeSelections(startTimeSelection);
   }, [dateSelected]);
 
   const {
@@ -314,7 +309,7 @@ export default function MeetingForm(props) {
                   required
                   onChange={(e, val) => handleStartTime(e, val, setFieldValue)}
                 >
-                  {startTimeSelection.map((startTime) => (
+                  {startTimeSelections.map((startTime) => (
                     <MenuItem value={startTime} key={startTime}>
                       {startTime}
                     </MenuItem>
@@ -337,7 +332,7 @@ export default function MeetingForm(props) {
                   fullWidth
                   required
                 >
-                  {endTimeSelection.map((endTime) => (
+                  {endTimeSelections.map((endTime) => (
                     <MenuItem value={endTime} key={endTime}>
                       {endTime}
                     </MenuItem>
