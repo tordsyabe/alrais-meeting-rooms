@@ -56,9 +56,12 @@ export default function MeetingForm(props) {
   useEffect(() => {
     let endTime12H = startTimeSelected.split(" ");
     let endTime = parseInt(endTime12H[0].split(":")[0]);
+    console.log(endTime);
     let endDateSelected = new Date();
     endDateSelected.setDate(dateSelected.getDate());
-
+    if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
+      endDateSelected.setHours(endTime);
+    }
     endDateSelected.setHours(endTime + 12);
 
     endDateSelected.setMinutes(0);
@@ -89,9 +92,7 @@ export default function MeetingForm(props) {
     setStartTimeSelections([]);
     let startDateSelected = new Date();
     startDateSelected.setDate(dateSelected.getDate());
-    if (
-      startDateSelected.toLocaleDateString() !== new Date().toLocaleDateString()
-    ) {
+    if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
       console.log("SAME");
       startDateSelected.setHours(8);
     }
