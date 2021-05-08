@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { CheckboxWithLabel, TextField } from "formik-material-ui";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { meetingValidation } from "../../utils/validationSchema";
 
 import {
@@ -33,8 +33,17 @@ export default function MeetingForm(props) {
   const { currentUser } = useContext(AuthContext);
   const { selectedMeeting, setSelectedMeeting } = useContext(MeetingsContext);
 
+  const ref = useRef(null);
+
   const [startTimeSelection, setStartTimeSelection] = useState([]);
+  const [endTimeSelection, setEndTimeSelection] = useState([]);
   const [dateSelected, setDateSelected] = useState(new Date());
+  const [startTimeSelected, setStartTimeSelected] = useState("");
+
+  useEffect(() => {
+    const endTime12H = startTimeSelected.split(" ");
+    console.log(endTime12H);
+  }, [startTimeSelected]);
 
   useEffect(() => {
     dateSelected.setDate(dateSelected.getDate());
@@ -102,6 +111,7 @@ export default function MeetingForm(props) {
 
   return (
     <Formik
+      innerRef={ref}
       initialValues={initialValues()}
       validationSchema={meetingValidation}
       onSubmit={(data, { setSubmitting }) => {
@@ -194,17 +204,6 @@ export default function MeetingForm(props) {
                 ></Field>
               </Grid>
 
-              {/* <Grid item xs={4}>
-                <Field
-                  component={TextField}
-                  label="Meeting Date"
-                  name="meetingDate"
-                  variant="outlined"
-                  type="date"
-                  defaultValue={new Date().toISOString().split("T")[0]}
-                />
-              </Grid> */}
-
               <Grid item xs={6}>
                 <Field
                   component={KeyboardDateTimePicker}
@@ -246,7 +245,7 @@ export default function MeetingForm(props) {
                   }}
                   fullWidth
                   autoOk
-                  onChange={setDateSelected(values.date)}
+                  // onChange={setDateSelected(values.date)}
                   inputVariant="outlined"
                 />
               </Grid>
@@ -265,7 +264,7 @@ export default function MeetingForm(props) {
                   value={values.start}
                   fullWidth
                   required
-                  // onChange={setEndTimings()}
+                  // onChange={setStartTimeSelected(values.start)}
                 >
                   {startTimeSelection.map((startTime) => (
                     <MenuItem value={startTime} key={startTime}>
