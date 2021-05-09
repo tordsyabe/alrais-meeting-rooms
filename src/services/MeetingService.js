@@ -1,7 +1,7 @@
 import { database } from "../firebase";
 
 export function getMeetings() {
-  return database.meetings.orderBy("startTime");
+  return database.meetings.orderBy("date");
 }
 
 export function getMeeting(meetingId) {
@@ -13,20 +13,26 @@ export function deleteMeeting(meetingId) {
 }
 
 export function getApprovedMeetings() {
-  return database.meetings.where("isApproved", "==", true).orderBy("startTime");
+  return database.meetings.where("isApproved", "==", true).orderBy("date");
 }
 
 export function getUnverifiedMeetings() {
-  return database.meetings
-    .where("isApproved", "==", false)
-    .orderBy("startTime");
+  return database.meetings.where("isApproved", "==", false).orderBy("date");
 }
 
 export function getTodaysMeetings() {
   return database.meetings
     .where("isApproved", "==", true)
     .where("meetingDate", "==", new Date().toISOString().split("T")[0])
-    .orderBy("startTime");
+    .orderBy("date");
+}
+
+export function getMeetingByDate(date) {
+  return database.meetings
+    .where("isApproved", "==", true)
+    .where("meetingDate", "==", date.toISOString().split("T")[0])
+    .orderBy("date")
+    .get();
 }
 
 export function saveMeeting(meeting) {
