@@ -37,7 +37,7 @@ function App() {
                   <Route exact path="/verify" component={Verify} />
                   <Private exact path="/" component={Home} />
                   <Private path="/app" component={Home} />
-                  <Private path="/:id" component={MeetingProgress} />
+                  <Private path="/room/:id" component={MeetingProgress} />
                 </Switch>
               </TimerContextProvider>
             </MeetingCardContextProvider>

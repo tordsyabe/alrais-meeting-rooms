@@ -79,7 +79,7 @@ export default function Meeting({ meeting }) {
                   <Typography variant="h6">{meeting.title}</Typography>
                 </Grid>
 
-                {location.pathname.includes("/app") && (
+                {!location.pathname.includes("/room") && (
                   <Grid item xs={1}>
                     <IconButton
                       onClick={(event) => {

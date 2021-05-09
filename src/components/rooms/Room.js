@@ -26,12 +26,12 @@ export default function Room({ room }) {
   const history = useHistory();
   return (
     <Card className={classes.card}>
-      <CardActionArea onClick={() => history.push(`/${room.id}`)}>
+      <CardActionArea onClick={() => history.push(`/room/${room.id}`)}>
         <CardContent>
-          <Grid container spacing={2} alignItems='center'>
+          <Grid container spacing={2} alignItems="center">
             <Grid item xs={10}>
-              <Typography variant='h5'>{room.name}</Typography>
-              <Typography variant='caption' color='textSecondary'>
+              <Typography variant="h5">{room.name}</Typography>
+              <Typography variant="caption" color="textSecondary">
                 Room Capacity: {room.capacity}
               </Typography>
             </Grid>
