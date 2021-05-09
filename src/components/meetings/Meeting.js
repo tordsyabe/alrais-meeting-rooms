@@ -95,7 +95,7 @@ export default function Meeting({ meeting }) {
 
                 <Grid item xs={12}>
                   <Typography variant="caption">
-                    {dateToLongDate(meeting.startTime)}
+                    {dateToLongDate(meeting.date)}
                   </Typography>
                 </Grid>
 
