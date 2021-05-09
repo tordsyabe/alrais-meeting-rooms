@@ -19,7 +19,7 @@ import {
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { RoomsContext } from "../../contexts/RoomsContext";
-import { saveMeeting } from "../../services/MeetingService";
+import { getMeetingByDate, saveMeeting } from "../../services/MeetingService";
 import { sendEmailVerification } from "../../services/SendEmailVerificationService";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -37,6 +37,7 @@ export default function MeetingForm(props) {
   const [endTimeSelections, setEndTimeSelections] = useState([]);
   const [dateSelected, setDateSelected] = useState(new Date());
   const [startTimeSelected, setStartTimeSelected] = useState("");
+  const [meetingsOnSelectedDate, setMeetingsOnSelectedDate] = useState([]);
 
   const handleMeetingDateChange = (e, { value }, setFieldValue) => {
     setFieldValue("date", e);
@@ -51,6 +52,19 @@ export default function MeetingForm(props) {
     setStartTimeSelected(e.target.value);
     setEndTimeSelections([]);
   };
+
+  useEffect(() => {
+    getMeetingByDate(dateSelected)
+      .then((querySnapshot) => {
+        const meetings = [];
+        querySnapshot.forEach((doc) => {
+          meetings.push({ id: doc.id, ...doc.data() });
+        });
+
+        setMeetingsOnSelectedDate(meetings);
+      })
+      .catch((err) => console.log(err));
+  }, [dateSelected]);
 
   useEffect(() => {
     setEndTimeSelections([]);
@@ -82,14 +96,14 @@ export default function MeetingForm(props) {
 
     while (end < endLast) {
       end = new Date(endDateSelected.getTime() + minutesToAddToEndTime * 60000);
-      endTimeSelection.push(dateToLocalTime(end));
+      endTimeSelection.push({ value: dateToLocalTime(end), disabled: false });
       minutesToAddToEndTime += 30;
       console.log(end);
     }
 
     setEndTimeSelections(endTimeSelection);
   }, [startTimeSelected]);
-
+  // START TIME SELECTINOS
   useEffect(() => {
     setStartTimeSelections([]);
     let startDateSelected = new Date();
@@ -113,7 +127,12 @@ export default function MeetingForm(props) {
 
     while (start < startLast) {
       start = new Date(startDateSelected.getTime() + minutesToAdd * 60000);
-      startTimeSelection.push(dateToLocalTime(start));
+      startTimeSelection.push({
+        value: dateToLocalTime(start),
+        disabled: meetingsOnSelectedDate.filter(
+          (m) => m.start === dateToLocalTime(start).length > 0
+        ),
+      });
       minutesToAdd += 30;
     }
 
@@ -285,8 +304,12 @@ export default function MeetingForm(props) {
                   onChange={(e, val) => handleStartTime(e, val, setFieldValue)}
                 >
                   {startTimeSelections.map((startTime) => (
-                    <MenuItem value={startTime} key={startTime}>
-                      {startTime}
+                    <MenuItem
+                      value={startTime.value}
+                      key={startTime.value}
+                      disabled={true}
+                    >
+                      {startTime.value}
                     </MenuItem>
                   ))}
                 </Field>
