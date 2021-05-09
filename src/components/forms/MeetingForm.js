@@ -127,11 +127,13 @@ export default function MeetingForm(props) {
 
     while (start < startLast) {
       start = new Date(startDateSelected.getTime() + minutesToAdd * 60000);
+      let startString = dateToLocalTime(start);
       startTimeSelection.push({
-        value: dateToLocalTime(start),
-        disabled: meetingsOnSelectedDate.filter(
-          (m) => m.start === dateToLocalTime(start).length > 0
-        ),
+        value: startString,
+        disabled:
+          meetingsOnSelectedDate.find((m) => m.start === startString) === {}
+            ? true
+            : false,
       });
       minutesToAdd += 30;
     }
