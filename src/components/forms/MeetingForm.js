@@ -94,15 +94,27 @@ export default function MeetingForm(props) {
     endLast.setMinutes(0);
     endLast.setMilliseconds(0);
 
+    let disbledSelectionEnd = false;
+
     while (end < endLast) {
       end = new Date(endDateSelected.getTime() + minutesToAddToEndTime * 60000);
       let endString = dateToLocalTime(end);
+
+      let objEnd = meetingsOnSelectedDate.find((m) => m.end === endString);
+
+      if (objEnd) {
+        disbledSelectionEnd = true;
+      }
+
+      let objEnd2 = meetingsOnSelectedDate.find((m) => m.start === endString);
+
+      if (objEnd2) {
+        disbledSelectionEnd = false;
+      }
+
       endTimeSelection.push({
         value: endString,
-        disabled:
-          meetingsOnSelectedDate.filter((m) => m.start === endString).length > 0
-            ? true
-            : false,
+        disabled: disbledSelectionEnd,
       });
       minutesToAddToEndTime += 30;
     }
