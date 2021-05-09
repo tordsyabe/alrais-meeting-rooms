@@ -24,7 +24,7 @@ export function todayToLongDate() {
 }
 
 export function dateToLongDate(date) {
-  return new Date().toLocaleDateString(undefined, {
+  return date.toLocaleDateString(undefined, {
     weekday: "long",
     year: "numeric",
     month: "long",
