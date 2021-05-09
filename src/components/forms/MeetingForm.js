@@ -57,7 +57,7 @@ export default function MeetingForm(props) {
     // let endTime12H = startTimeSelected.split(" ");
     // let endTime = parseInt(endTime12H[0].split(":")[0]);
 
-    let endTime = convertTime12to24(startTimeSelected)
+    let endTime = convertTime12to24(startTimeSelected);
     console.log(endTime);
     let endDateSelected = new Date();
     endDateSelected.setDate(dateSelected.getDate());
@@ -159,7 +159,7 @@ export default function MeetingForm(props) {
       onSubmit={(data, { setSubmitting }) => {
         const meetingToSave = {
           ...data,
-          meetingDate: data.startTime.toISOString().split("T")[0],
+          meetingDate: data.date.toISOString().split("T")[0],
         };
 
         console.log(meetingToSave);
@@ -388,10 +388,6 @@ export default function MeetingForm(props) {
                   />
                 </Grid>
               )}
-
-              <Grid item xs={12}>
-                {JSON.stringify(values, null, 4)}
-              </Grid>
             </Grid>
           </MuiPickersUtilsProvider>
         </Form>

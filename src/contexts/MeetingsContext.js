@@ -28,6 +28,7 @@ export default function MeetingsContextProvider({ children }) {
           ...meeting.data(),
           startTime: meeting.data().startTime.toDate(),
           endTime: meeting.data().endTime.toDate(),
+          date: meeting.data().date.toDate(),
         });
       });
 
@@ -47,6 +48,7 @@ export default function MeetingsContextProvider({ children }) {
           ...meeting.data(),
           startTime: meeting.data().startTime.toDate(),
           endTime: meeting.data().endTime.toDate(),
+          date: meeting.data().date.toDate(),
         });
       });
 
@@ -65,6 +67,7 @@ export default function MeetingsContextProvider({ children }) {
           ...meeting.data(),
           startTime: meeting.data().startTime.toDate(),
           endTime: meeting.data().endTime.toDate(),
+          date: meeting.data().date.toDate(),
         });
       });
 

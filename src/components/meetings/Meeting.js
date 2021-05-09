@@ -12,6 +12,7 @@ import React, { useContext, useState } from "react";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
 
 import { useLocation } from "react-router-dom";
 
@@ -45,6 +46,7 @@ export default function Meeting({ meeting }) {
   const { isActive, selectedCardMeeting, setSelectedCardMeeting } = useContext(
     TimerContext
   );
+
   const location = useLocation();
 
   const [isApproving, setIsApproving] = useState(false);
@@ -71,11 +73,25 @@ export default function Meeting({ meeting }) {
       >
         <CardContent>
           <Grid container alignItems="center">
-            <Grid item xs={9}>
+            <Grid item xs={12}>
               <Grid container alignItems="center">
-                <Grid item xs={12}>
+                <Grid item xs={11}>
                   <Typography variant="h6">{meeting.title}</Typography>
                 </Grid>
+
+                {location.pathname.includes("/app") && (
+                  <Grid item xs={1}>
+                    <IconButton
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        setOpenPopperMeetingDetails(false);
+                      }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </Grid>
+                )}
 
                 <Grid item xs={12}>
                   <Typography variant="caption">
@@ -91,8 +107,7 @@ export default function Meeting({ meeting }) {
                           <AccessTimeIcon fontSize="small" />
                         </Grid>
                         <Grid item>
-                          {dateToLocalTime(meeting.startTime)} -{" "}
-                          {dateToLocalTime(meeting.endTime)}
+                          {meeting.start} - {meeting.end}
                         </Grid>
                       </Grid>
                     </Typography>
@@ -115,7 +130,7 @@ export default function Meeting({ meeting }) {
                   color="textSecondary"
                 ></Typography>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={9}>
                 {meeting.isApproved ? (
                   <Typography>{meeting.status}</Typography>
                 ) : (
@@ -144,7 +159,7 @@ export default function Meeting({ meeting }) {
                 )}
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <IconButton
                   onClick={(event) => {
                     event.stopPropagation();

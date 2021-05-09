@@ -77,7 +77,7 @@ export default function MeetingCalendar({ meetings, loading }) {
 
   return (
     <React.Fragment>
-      <Grid container spacing={4} alignItems='center' justify='center'>
+      <Grid container spacing={4} alignItems="center" justify="center">
         <Grid item xs={1}>
           <IconButton
             onClick={() => setValue(value.clone().subtract(1, "month"))}
@@ -86,7 +86,7 @@ export default function MeetingCalendar({ meetings, loading }) {
           </IconButton>
         </Grid>
         <Grid item xs={10}>
-          <Typography variant='h5' align='center'>
+          <Typography variant="h5" align="center">
             {value.format("MMMM")} {value.format("YYYY")}
           </Typography>
         </Grid>
@@ -102,26 +102,26 @@ export default function MeetingCalendar({ meetings, loading }) {
               gridTemplateColumns: "repeat(7, 1fr)",
             }}
           >
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Sun
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Mon
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Tue
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Wed
             </Typography>
 
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Thu
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Fri
             </Typography>
-            <Typography variant='h5' align='center'>
+            <Typography variant="h5" align="center">
               Sat
             </Typography>
           </div>
@@ -147,13 +147,13 @@ export default function MeetingCalendar({ meetings, loading }) {
                         : classes.card
                     }
                   >
-                    <Typography align='justify' variant='caption'>
+                    <Typography align="justify" variant="caption">
                       {day.format("D")}
                     </Typography>
                     <br></br>
                     {meetings
                       .filter((meeting) =>
-                        day.isSame(new Date(meeting.startTime), "day")
+                        day.isSame(new Date(meeting.date), "day")
                       )
                       .map((filteredMeeting) => (
                         <div
@@ -173,11 +173,11 @@ export default function MeetingCalendar({ meetings, loading }) {
                         >
                           <Typography
                             onClick={handleClickMeeting(filteredMeeting)}
-                            variant='caption'
+                            variant="caption"
                             noWrap
                             style={{ cursor: "pointer" }}
                           >
-                            {dateToLocalTime(filteredMeeting.startTime)}
+                            {filteredMeeting.start}
                             {" - "}{" "}
                             <span style={{ fontWeight: "bold" }}>
                               {filteredMeeting.title}
@@ -197,7 +197,7 @@ export default function MeetingCalendar({ meetings, loading }) {
       <Popper
         open={openPopperMeetingDetails}
         anchorEl={anchorEl}
-        placement='left'
+        placement="bottom-start"
         transition
         style={{ zIndex: 1500 }}
       >
