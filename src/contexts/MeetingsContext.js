@@ -26,8 +26,6 @@ export default function MeetingsContextProvider({ children }) {
         newAllMeetings.push({
           id: meeting.id,
           ...meeting.data(),
-          startTime: meeting.data().startTime.toDate(),
-          endTime: meeting.data().endTime.toDate(),
           date: meeting.data().date.toDate(),
         });
       });
@@ -46,8 +44,6 @@ export default function MeetingsContextProvider({ children }) {
         newMeetings.push({
           id: meeting.id,
           ...meeting.data(),
-          startTime: meeting.data().startTime.toDate(),
-          endTime: meeting.data().endTime.toDate(),
           date: meeting.data().date.toDate(),
         });
       });
@@ -65,8 +61,6 @@ export default function MeetingsContextProvider({ children }) {
         newUnverified.push({
           id: meeting.id,
           ...meeting.data(),
-          startTime: meeting.data().startTime.toDate(),
-          endTime: meeting.data().endTime.toDate(),
           date: meeting.data().date.toDate(),
         });
       });

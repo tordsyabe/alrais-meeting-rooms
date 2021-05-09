@@ -137,8 +137,6 @@ export default function MeetingForm(props) {
         title: "",
         roomId: "",
         meetingDate: new Date().toISOString().split("T")[0],
-        endTime: new Date(),
-        startTime: new Date(),
         status: "UNVERIFIED",
         isStarted: false,
         isApproved: false,
@@ -244,32 +242,6 @@ export default function MeetingForm(props) {
                   label="Title"
                   variant="outlined"
                 ></Field>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Field
-                  component={KeyboardDateTimePicker}
-                  disablePast
-                  format="yyyy/MM/dd hh:mm a"
-                  autoOk
-                  label="Start"
-                  name="startTime"
-                  minutesStep={30}
-                  inputVariant="outlined"
-                />
-              </Grid>
-
-              <Grid item xs={6}>
-                <Field
-                  component={KeyboardDateTimePicker}
-                  disablePast
-                  format="yyyy/MM/dd hh:mm a"
-                  autoOk
-                  label="End"
-                  name="endTime"
-                  minutesStep={30}
-                  inputVariant="outlined"
-                />
               </Grid>
 
               <Grid item xs={4}>
