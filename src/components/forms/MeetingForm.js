@@ -26,9 +26,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import CloseIcon from "@material-ui/icons/Close";
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
-import { dateToLocalTime } from "../../utils/dateFormatter";
-import setDate from "date-fns/setDate";
-import { Effect } from "formik-effect";
+import { convertTime12to24, dateToLocalTime } from "../../utils/dateFormatter";
 
 export default function MeetingForm(props) {
   const { rooms } = useContext(RoomsContext);
@@ -56,14 +54,16 @@ export default function MeetingForm(props) {
 
   useEffect(() => {
     setEndTimeSelections([]);
-    let endTime12H = startTimeSelected.split(" ");
-    let endTime = parseInt(endTime12H[0].split(":")[0]);
+    // let endTime12H = startTimeSelected.split(" ");
+    // let endTime = parseInt(endTime12H[0].split(":")[0]);
+
+    let endTime = convertTime12to24(startTimeSelected)
     console.log(endTime);
     let endDateSelected = new Date();
     endDateSelected.setDate(dateSelected.getDate());
-    if (dateSelected.toLocaleDateString() === new Date().toLocaleDateString()) {
-      endDateSelected.setHours(endTime);
-    }
+    // if (dateSelected.toLocaleDateString() === new Date().toLocaleDateString()) {
+    //   endDateSelected.setHours(endTime);
+    // }
     endDateSelected.setHours(endTime);
 
     endDateSelected.setMinutes(0);
@@ -76,7 +76,7 @@ export default function MeetingForm(props) {
     );
     let endLast = new Date();
     endLast.setDate(dateSelected.getDate());
-    endLast.setHours(22);
+    endLast.setHours(17);
     endLast.setMinutes(0);
     endLast.setMilliseconds(0);
 
@@ -84,10 +84,10 @@ export default function MeetingForm(props) {
       end = new Date(endDateSelected.getTime() + minutesToAddToEndTime * 60000);
       endTimeSelection.push(dateToLocalTime(end));
       minutesToAddToEndTime += 30;
+      console.log(end);
     }
 
     setEndTimeSelections(endTimeSelection);
-    console.log(endTimeSelection);
   }, [startTimeSelected]);
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function MeetingForm(props) {
     let start = new Date(startDateSelected.getTime() + minutesToAdd * 60000);
     let startLast = new Date();
     startLast.setDate(dateSelected.getDate());
-    startLast.setHours(22);
+    startLast.setHours(17);
     startLast.setMinutes(0);
     startLast.setMilliseconds(0);
 
@@ -199,10 +199,10 @@ export default function MeetingForm(props) {
       }}
     >
       {({ setFieldValue, values, errors, isSubmitting, isValid, dirty }) => (
-        <Form autoComplete='off'>
-          <Field type='hidden' name='id'></Field>
+        <Form autoComplete="off">
+          <Field type="hidden" name="id"></Field>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container spacing={3} alignItems='center'>
+            <Grid container spacing={3} alignItems="center">
               <Grid item xs={9}>
                 {currentUser && (
                   <IconButton
@@ -220,13 +220,13 @@ export default function MeetingForm(props) {
               <Grid item xs={3}>
                 <Button
                   disabled={isSubmitting || !isValid || !dirty}
-                  type='submit'
+                  type="submit"
                   fullWidth
-                  variant='contained'
-                  color='primary'
+                  variant="contained"
+                  color="primary"
                   startIcon={
                     isSubmitting ? (
-                      <CircularProgress size='0.9rem' />
+                      <CircularProgress size="0.9rem" />
                     ) : undefined
                   }
                 >
@@ -234,15 +234,15 @@ export default function MeetingForm(props) {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant='h6'>Details</Typography>
+                <Typography variant="h6">Details</Typography>
                 <br></br>
                 <Field
                   fullWidth
                   required
-                  name='title'
+                  name="title"
                   component={TextField}
-                  label='Title'
-                  variant='outlined'
+                  label="Title"
+                  variant="outlined"
                 ></Field>
               </Grid>
 
@@ -250,12 +250,12 @@ export default function MeetingForm(props) {
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast
-                  format='yyyy/MM/dd hh:mm a'
+                  format="yyyy/MM/dd hh:mm a"
                   autoOk
-                  label='Start'
-                  name='startTime'
+                  label="Start"
+                  name="startTime"
                   minutesStep={30}
-                  inputVariant='outlined'
+                  inputVariant="outlined"
                 />
               </Grid>
 
@@ -263,12 +263,12 @@ export default function MeetingForm(props) {
                 <Field
                   component={KeyboardDateTimePicker}
                   disablePast
-                  format='yyyy/MM/dd hh:mm a'
+                  format="yyyy/MM/dd hh:mm a"
                   autoOk
-                  label='End'
-                  name='endTime'
+                  label="End"
+                  name="endTime"
                   minutesStep={30}
-                  inputVariant='outlined'
+                  inputVariant="outlined"
                 />
               </Grid>
 
@@ -277,18 +277,18 @@ export default function MeetingForm(props) {
                   component={KeyboardDatePicker}
                   disableToolbar
                   disablePast
-                  variant='inline'
+                  variant="inline"
                   // format="MM/dd/yyyy"
-                  margin='normal'
-                  id='date'
-                  label='Meeting Date'
-                  name='date'
+                  margin="normal"
+                  id="date"
+                  label="Meeting Date"
+                  name="date"
                   KeyboardButtonProps={{
                     "aria-label": "change date",
                   }}
                   fullWidth
                   autoOk
-                  inputVariant='outlined'
+                  inputVariant="outlined"
                   value={values.date}
                   onChange={(e, val) =>
                     handleMeetingDateChange(e, val, setFieldValue)
@@ -299,14 +299,14 @@ export default function MeetingForm(props) {
               <Grid item xs={4}>
                 <Field
                   component={TextField}
-                  type='text'
-                  name='start'
-                  label='Start'
+                  type="text"
+                  name="start"
+                  label="Start"
                   select
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  variant='outlined'
+                  variant="outlined"
                   value={values.start}
                   fullWidth
                   required
@@ -323,14 +323,14 @@ export default function MeetingForm(props) {
               <Grid item xs={4}>
                 <Field
                   component={TextField}
-                  type='text'
-                  name='end'
-                  label='End'
+                  type="text"
+                  name="end"
+                  label="End"
                   select
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  variant='outlined'
+                  variant="outlined"
                   value={values.end}
                   fullWidth
                   required
@@ -344,18 +344,18 @@ export default function MeetingForm(props) {
               </Grid>
 
               <Grid item xs={12}>
-                <Typography variant='h6'>Location</Typography>
+                <Typography variant="h6">Location</Typography>
                 <br></br>
                 <Field
                   component={TextField}
-                  type='text'
-                  name='roomId'
-                  label='Select Meeting Room'
+                  type="text"
+                  name="roomId"
+                  label="Select Meeting Room"
                   select
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  variant='outlined'
+                  variant="outlined"
                   value={values.roomId}
                   fullWidth
                   required
@@ -372,18 +372,18 @@ export default function MeetingForm(props) {
                 <Field
                   fullWidth
                   required
-                  name='organizer'
+                  name="organizer"
                   component={TextField}
-                  label='Provide your email'
-                  variant='outlined'
+                  label="Provide your email"
+                  variant="outlined"
                 ></Field>
               </Grid>
               {currentUser && (
                 <Grid item xs={12}>
                   <Field
                     component={CheckboxWithLabel}
-                    type='checkbox'
-                    name='isApproved'
+                    type="checkbox"
+                    name="isApproved"
                     Label={{ label: "Verify this meeting" }}
                   />
                 </Grid>
