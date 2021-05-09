@@ -331,8 +331,8 @@ export default function MeetingForm(props) {
                   required
                 >
                   {endTimeSelections.map((endTime) => (
-                    <MenuItem value={endTime} key={endTime}>
-                      {endTime}
+                    <MenuItem value={endTime.value} key={endTime.value}>
+                      {endTime.value}
                     </MenuItem>
                   ))}
                 </Field>
