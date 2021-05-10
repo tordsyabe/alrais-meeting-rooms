@@ -100,13 +100,13 @@ export default function MeetingForm(props) {
       end = new Date(endDateSelected.getTime() + minutesToAddToEndTime * 60000);
       let endString = dateToLocalTime(end);
 
-      let objEnd = meetingsOnSelectedDate.find((m) => m.end === endString);
+      let objEnd = meetingsOnSelectedDate.find((m) => m.start === endString);
 
       if (objEnd) {
         disbledSelectionEnd = true;
       }
 
-      let objEnd2 = meetingsOnSelectedDate.find((m) => m.start === endString);
+      let objEnd2 = meetingsOnSelectedDate.find((m) => m.end === endString);
 
       if (objEnd2) {
         disbledSelectionEnd = false;
