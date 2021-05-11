@@ -82,7 +82,7 @@ export default function MeetingForm(props) {
 
     endDateSelected.setMinutes(0);
     endDateSelected.setMilliseconds(0);
-    let minutesToAddToEndTime = 60;
+    let minutesToAddToEndTime = 0;
 
     let endTimeSelection = [];
     let end = new Date(
