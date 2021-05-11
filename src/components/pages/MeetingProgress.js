@@ -44,8 +44,7 @@ export default function MeetingProgress() {
         newTodayMeetings.push({
           id: meeting.id,
           ...meeting.data(),
-          startTime: meeting.data().startTime.toDate(),
-          endTime: meeting.data().endTime.toDate(),
+          date: meeting.data().date.toDate(),
         });
       });
 
