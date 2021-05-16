@@ -50,7 +50,7 @@ export default function MeetingForm(props) {
   const handleStartTime = (e, { value }, setFieldValue) => {
     setFieldValue("start", e.target.value);
     setStartTimeSelected(e.target.value);
-    setEndTimeSelections([]);
+    // setEndTimeSelections([]);
   };
 
   useEffect(() => {
@@ -67,60 +67,60 @@ export default function MeetingForm(props) {
       .catch((err) => console.log(err));
   }, [dateSelected]);
 
-  useEffect(() => {
-    setEndTimeSelections([]);
-    // let endTime12H = startTimeSelected.split(" ");
-    // let endTime = parseInt(endTime12H[0].split(":")[0]);
+  // useEffect(() => {
+  //   setEndTimeSelections([]);
+  //   // let endTime12H = startTimeSelected.split(" ");
+  //   // let endTime = parseInt(endTime12H[0].split(":")[0]);
 
-    let endTime = convertTime12to24(startTimeSelected);
-    let endDateSelected = new Date();
-    endDateSelected.setDate(dateSelected.getDate());
-    // if (dateSelected.toLocaleDateString() === new Date().toLocaleDateString()) {
-    //   endDateSelected.setHours(endTime);
-    // }
-    endDateSelected.setHours(endTime);
+  //   let endTime = convertTime12to24(startTimeSelected);
+  //   let endDateSelected = new Date();
+  //   endDateSelected.setDate(dateSelected.getDate());
+  //   // if (dateSelected.toLocaleDateString() === new Date().toLocaleDateString()) {
+  //   //   endDateSelected.setHours(endTime);
+  //   // }
+  //   endDateSelected.setHours(endTime);
 
-    endDateSelected.setMinutes(0);
-    endDateSelected.setMilliseconds(0);
-    let minutesToAddToEndTime = 0;
+  //   endDateSelected.setMinutes(0);
+  //   endDateSelected.setMilliseconds(0);
+  //   let minutesToAddToEndTime = 0;
 
-    let endTimeSelection = [];
-    let end = new Date(
-      endDateSelected.getTime() + minutesToAddToEndTime * 60000
-    );
-    let endLast = new Date();
-    endLast.setDate(dateSelected.getDate());
-    endLast.setHours(17);
-    endLast.setMinutes(0);
-    endLast.setMilliseconds(0);
+  //   let endTimeSelection = [];
+  //   let end = new Date(
+  //     endDateSelected.getTime() + minutesToAddToEndTime * 60000
+  //   );
+  //   let endLast = new Date();
+  //   endLast.setDate(dateSelected.getDate());
+  //   endLast.setHours(17);
+  //   endLast.setMinutes(0);
+  //   endLast.setMilliseconds(0);
 
-    let disbledSelectionEnd = false;
+  //   let disbledSelectionEnd = false;
 
-    while (end < endLast) {
-      end = new Date(endDateSelected.getTime() + minutesToAddToEndTime * 60000);
-      let endString = dateToLocalTime(end);
+  //   while (end < endLast) {
+  //     end = new Date(endDateSelected.getTime() + minutesToAddToEndTime * 60000);
+  //     let endString = dateToLocalTime(end);
 
-      let objEnd = meetingsOnSelectedDate.find((m) => m.start === endString);
+  //     let objEnd = meetingsOnSelectedDate.find((m) => m.start === endString);
 
-      if (objEnd) {
-        disbledSelectionEnd = true;
-      }
+  //     if (objEnd) {
+  //       disbledSelectionEnd = true;
+  //     }
 
-      let objEnd2 = meetingsOnSelectedDate.find((m) => m.end === endString);
+  //     let objEnd2 = meetingsOnSelectedDate.find((m) => m.end === endString);
 
-      if (objEnd2) {
-        disbledSelectionEnd = false;
-      }
+  //     if (objEnd2) {
+  //       disbledSelectionEnd = false;
+  //     }
 
-      endTimeSelection.push({
-        value: endString,
-        disabled: disbledSelectionEnd,
-      });
-      minutesToAddToEndTime += 30;
-    }
+  //     endTimeSelection.push({
+  //       value: endString,
+  //       disabled: disbledSelectionEnd,
+  //     });
+  //     minutesToAddToEndTime += 30;
+  //   }
 
-    setEndTimeSelections(endTimeSelection);
-  }, [startTimeSelected]);
+  //   setEndTimeSelections(endTimeSelection);
+  // }, [startTimeSelected]);
   // START TIME SELECTINOS
   useEffect(() => {
     setStartTimeSelections([]);
@@ -149,6 +149,7 @@ export default function MeetingForm(props) {
 
       let obj = meetingsOnSelectedDate.find((m) => m.start === startString);
       console.log(obj);
+      console.log(meetingsOnSelectedDate);
 
       if (obj) {
         disbledSelection = true;
@@ -169,6 +170,7 @@ export default function MeetingForm(props) {
     }
 
     setStartTimeSelections(startTimeSelection);
+    setEndTimeSelections(startTimeSelection);
     console.log(startTimeSelection);
   }, [dateSelected, meetingsOnSelectedDate]);
 
