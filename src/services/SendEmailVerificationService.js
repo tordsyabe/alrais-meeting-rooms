@@ -1,7 +1,7 @@
 import { secondsToLocalTime, secondsToLongDate } from "../utils/dateFormatter";
 
 export function sendEmailVerification(data) {
-  data.date = secondsToLongDate(data.meetingDate.seconds);
+  data.date = secondsToLongDate(data.date.seconds);
  
   const requestOptions = {
     method: "POST",
