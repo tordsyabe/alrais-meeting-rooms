@@ -71,9 +71,9 @@ export default function MeetingForm(props) {
     setStartTimeSelections([]);
     let startDateSelected = new Date();
     startDateSelected.setDate(dateSelected.getDate());
-    if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
+    // if (dateSelected.toLocaleDateString() !== new Date().toLocaleDateString()) {
       startDateSelected.setHours(8);
-    }
+    // }
     startDateSelected.setMinutes(0);
     startDateSelected.setMilliseconds(0);
     let minutesToAdd = 0;
