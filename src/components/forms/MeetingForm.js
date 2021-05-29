@@ -67,61 +67,6 @@ export default function MeetingForm(props) {
       .catch((err) => console.log(err));
   }, [dateSelected]);
 
-  // useEffect(() => {
-  //   setEndTimeSelections([]);
-  //   // let endTime12H = startTimeSelected.split(" ");
-  //   // let endTime = parseInt(endTime12H[0].split(":")[0]);
-
-  //   let endTime = convertTime12to24(startTimeSelected);
-  //   let endDateSelected = new Date();
-  //   endDateSelected.setDate(dateSelected.getDate());
-  //   // if (dateSelected.toLocaleDateString() === new Date().toLocaleDateString()) {
-  //   //   endDateSelected.setHours(endTime);
-  //   // }
-  //   endDateSelected.setHours(endTime);
-
-  //   endDateSelected.setMinutes(0);
-  //   endDateSelected.setMilliseconds(0);
-  //   let minutesToAddToEndTime = 0;
-
-  //   let endTimeSelection = [];
-  //   let end = new Date(
-  //     endDateSelected.getTime() + minutesToAddToEndTime * 60000
-  //   );
-  //   let endLast = new Date();
-  //   endLast.setDate(dateSelected.getDate());
-  //   endLast.setHours(17);
-  //   endLast.setMinutes(0);
-  //   endLast.setMilliseconds(0);
-
-  //   let disbledSelectionEnd = false;
-
-  //   while (end < endLast) {
-  //     end = new Date(endDateSelected.getTime() + minutesToAddToEndTime * 60000);
-  //     let endString = dateToLocalTime(end);
-
-  //     let objEnd = meetingsOnSelectedDate.find((m) => m.start === endString);
-
-  //     if (objEnd) {
-  //       disbledSelectionEnd = true;
-  //     }
-
-  //     let objEnd2 = meetingsOnSelectedDate.find((m) => m.end === endString);
-
-  //     if (objEnd2) {
-  //       disbledSelectionEnd = false;
-  //     }
-
-  //     endTimeSelection.push({
-  //       value: endString,
-  //       disabled: disbledSelectionEnd,
-  //     });
-  //     minutesToAddToEndTime += 30;
-  //   }
-
-  //   setEndTimeSelections(endTimeSelection);
-  // }, [startTimeSelected]);
-  // START TIME SELECTINOS
   useEffect(() => {
     setStartTimeSelections([]);
     let startDateSelected = new Date();
@@ -182,7 +127,7 @@ export default function MeetingForm(props) {
   } = useContext(MeetingCardContext);
 
   function initialValues() {
-    if (selectedMeeting.startTime) {
+    if (selectedMeeting.start) {
       return selectedMeeting;
     } else {
       return {

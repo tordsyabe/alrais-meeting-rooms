@@ -177,8 +177,9 @@ export default function Meeting({ meeting }) {
                   onClick={(event) => {
                     event.stopPropagation();
                     event.preventDefault();
-                    setOpenFormDrawer(true);
                     setSelectedMeeting(meeting);
+                    console.log(meeting);
+                    setOpenFormDrawer(true);
                     setOpenPopperMeetingDetails(false);
                   }}
                 >
