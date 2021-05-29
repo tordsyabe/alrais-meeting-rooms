@@ -1,4 +1,4 @@
-import { secondsToLocalTime, secondsToLongDate } from "../utils/dateFormatter";
+import { dateToLongDate, secondsToLocalTime, secondsToLongDate } from "../utils/dateFormatter";
 
 export function sendEmailVerification(data) {
   data.date = secondsToLongDate(data.date.seconds);
@@ -15,7 +15,7 @@ export function sendEmailVerification(data) {
 }
 
 export function sendApprovedEmail(data) {
-  data.date = secondsToLongDate(data.date.seconds);
+  data.date = dateToLongDate(data.date);
 
   const requestOptions = {
     method: "POST",

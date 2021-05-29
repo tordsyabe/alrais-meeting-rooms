@@ -21,6 +21,7 @@ import { dateToLocalTime, dateToLongDate } from "../../utils/dateFormatter";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 import { approveMeeting, approveStatus } from "../../services/MeetingService";
 import { TimerContext } from "../../contexts/TimerContext";
+import { sendApprovedEmail } from "../../services/SendEmailVerificationService";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -148,6 +149,8 @@ export default function Meeting({ meeting }) {
                         approveStatus(meeting.id).then(() => {
                           setIsApproving(false);
                           setOpenPopperMeetingDetails(false);
+                          console.log(meeting);
+                          sendApprovedEmail(meeting);
                           setSnackBarMessage("Meeting has been approved");
                           setSnackBarOpen(true);
                         })

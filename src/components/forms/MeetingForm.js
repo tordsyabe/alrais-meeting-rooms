@@ -227,10 +227,11 @@ export default function MeetingForm(props) {
                   ...doc.data(),
                 };
                 console.log("RETURNED", meeting);
-                sendEmailVerification(meeting);
-                setSnackBarMessage(
-                  "Please check your email to verify your booking"
-                );
+                // sendEmailVerification(meeting);
+                // setSnackBarMessage(
+                //   "Please check your email to verify your booking"
+                // );
+                setSnackBarMessage("Your booking has been saved for approval.")
               });
             }
 
