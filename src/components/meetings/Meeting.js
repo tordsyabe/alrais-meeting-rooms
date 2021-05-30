@@ -52,6 +52,7 @@ export default function Meeting({ meeting }) {
 
   const [isApproving, setIsApproving] = useState(false);
 
+
   // const handleOpenForm = () => {
   //   location.pathname.includes("/app") ? setOpenForm(true) : console.log();
   // };
@@ -144,7 +145,9 @@ export default function Meeting({ meeting }) {
                     }
                     disabled={isApproving}
                     variant="contained"
-                    onClick={() => {
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      event.preventDefault();
                       setIsApproving(true);
                       approveMeeting(meeting.id).then(() =>
                         approveStatus(meeting.id).then(() => {
@@ -160,34 +163,16 @@ export default function Meeting({ meeting }) {
                   >
                     Approve
                   </Button>
+                  {"    "}
                   <Button
-                    startIcon={
-                      isApproving ? (
-                        <CircularProgress size="0.9rem" />
-                      ) : undefined
-                    }
-                    disabled={isApproving}
                     variant="contained"
                     onClick={(event) => {
                       event.stopPropagation();
                       event.preventDefault();
-                      console.log(meeting);
                       setOpenDeleteDialog(true);
                       setMeetingToDelete(meeting);
                     }}
-                    // onClick={() => {
-                    //   setIsApproving(true);
-                    //   approveMeeting(meeting.id).then(() =>
-                    //     approveStatus(meeting.id).then(() => {
-                    //       setIsApproving(false);
-                    //       setOpenPopperMeetingDetails(false);
-                    //       console.log(meeting);
-                    //       sendApprovedEmail(meeting);
-                    //       setSnackBarMessage("Meeting has been approved");
-                    //       setSnackBarOpen(true);
-                    //     })
-                    //   );
-                    // }}
+
                   >
                     Reject
                   </Button>
