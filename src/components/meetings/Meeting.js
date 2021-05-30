@@ -21,7 +21,7 @@ import { dateToLocalTime, dateToLongDate } from "../../utils/dateFormatter";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 import { approveMeeting, approveStatus } from "../../services/MeetingService";
 import { TimerContext } from "../../contexts/TimerContext";
-import { sendApprovedEmail } from "../../services/SendEmailVerificationService";
+import { sendApprovedEmail, sendRejectedEmail } from "../../services/SendEmailVerificationService";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -135,7 +135,8 @@ export default function Meeting({ meeting }) {
                 {meeting.isApproved ? (
                   <Typography>{meeting.status}</Typography>
                 ) : (
-                  <Button
+                  <>
+                   <Button
                     startIcon={
                       isApproving ? (
                         <CircularProgress size="0.9rem" />
@@ -159,6 +160,41 @@ export default function Meeting({ meeting }) {
                   >
                     Approve
                   </Button>
+                  <Button
+                    startIcon={
+                      isApproving ? (
+                        <CircularProgress size="0.9rem" />
+                      ) : undefined
+                    }
+                    disabled={isApproving}
+                    variant="contained"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      event.preventDefault();
+                      console.log(meeting);
+                      setOpenDeleteDialog(true);
+                      setMeetingToDelete(meeting);
+                    }}
+                    // onClick={() => {
+                    //   setIsApproving(true);
+                    //   approveMeeting(meeting.id).then(() =>
+                    //     approveStatus(meeting.id).then(() => {
+                    //       setIsApproving(false);
+                    //       setOpenPopperMeetingDetails(false);
+                    //       console.log(meeting);
+                    //       sendApprovedEmail(meeting);
+                    //       setSnackBarMessage("Meeting has been approved");
+                    //       setSnackBarOpen(true);
+                    //     })
+                    //   );
+                    // }}
+                  >
+                    Reject
+                  </Button>
+
+                  </>
+                 
+                  
                 )}
               </Grid>
 

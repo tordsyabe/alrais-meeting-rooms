@@ -23,6 +23,7 @@ import MeetingForm from "../forms/MeetingForm";
 import { deleteMeeting } from "../../services/MeetingService";
 import MeetingCalendar from "./meeting-calendar";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
+import { sendRejectedEmail } from "../../services/SendEmailVerificationService";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -115,6 +116,8 @@ export default function Meetings() {
                   setSnackBarOpen(true);
                   setOpenDeleteDialog(false);
                   setIsDeleting(false);
+                  sendRejectedEmail(meetingToDelete);
+
                 })
                 .catch(() => {
                   setSnackBarMessage("Failed to delete meeting");
