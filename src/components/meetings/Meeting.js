@@ -163,7 +163,7 @@ export default function Meeting({ meeting }) {
                   >
                     Approve
                   </Button>
-                  {"    "}
+                  {"      "}
                   <Button
                     variant="contained"
                     onClick={(event) => {

@@ -53,6 +53,12 @@ export function cancelMeeting(meetingId) {
   });
 }
 
+export function rejectMeeting(meetingId) {
+  return database.meetings.doc(meetingId).update({
+    status: "REJECTED",
+  });
+}
+
 export function undoCancelledMeeting(meetingId) {
   return database.meetings.doc(meetingId).update({
     status: "BOOKED",
