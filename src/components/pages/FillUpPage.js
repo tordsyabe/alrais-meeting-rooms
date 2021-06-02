@@ -89,7 +89,7 @@ export default function FillUpPage() {
                   color="textSecondary"
                   align="center"
                 >
-                  {"Alrais Meeting Room Booking System Copyright © "}
+                  {"Alrais Meeting Room Booking System, developed and maintaned by Alrais IT Department. Copyright © "}
                   {new Date().getFullYear()}
                   {"."}
                 </Typography>
