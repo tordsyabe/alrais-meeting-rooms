@@ -176,7 +176,9 @@ export default function MeetingForm(props) {
                 // setSnackBarMessage(
                 //   "Please check your email to verify your booking"
                 // );
-                setSnackBarMessage("Your booking has been saved for approval.")
+                setSnackBarMessage("Your booking has been saved for approval.");
+                setSnackBarOpen(true);
+
               });
             }
 

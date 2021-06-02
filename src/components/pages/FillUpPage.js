@@ -51,17 +51,16 @@ export default function FillUpPage() {
 
   const [openCalendar, setOpenCalendar] = useState(false);
 
-  const [snackBarOpen, setSnackBarOpen] = useState(false);
-
-  const [snackBarMessage, setSnackBarMessage] = useState("");
-
-  const handleCloseSnackbar = () => {
-    setSnackBarOpen(false);
-  };
 
   const handleCloseCalendar = () => {
     setOpenCalendar(false);
   };
+
+  const {
+    snackBarOpen,
+    handleCloseSnackbar,
+    snackBarMessage,
+  } = useContext(MeetingCardContext);
 
   return (
     <React.Fragment>
@@ -80,11 +79,7 @@ export default function FillUpPage() {
                     Provide meeting information
                   </Typography>
                   <br></br>
-                  <MeetingForm
-                    setSnackBarOpen={setSnackBarOpen}
-                    setOpenForm={setOpenForm}
-                    setSnackBarMessage={setSnackBarMessage}
-                  />
+                  <MeetingForm />
                 </Box>
               </Grid>
 
