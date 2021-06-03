@@ -66,8 +66,8 @@ export default function FillUpPage() {
     <React.Fragment>
       <Grid container className={classes.root}>
         <Grid item xs={5}>
-          <Box p={6}>
-            <Grid container spacing={6}>
+          <Box px={5} py={3}>
+            <Grid container spacing={3}>
               {/* <Grid item xs={12}>
                 <Typography variant='h4'>
                   Fill up the form to book your meeting

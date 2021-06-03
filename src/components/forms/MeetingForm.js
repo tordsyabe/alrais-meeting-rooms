@@ -202,7 +202,7 @@ export default function MeetingForm(props) {
         <Form autoComplete='off'>
           <Field type='hidden' name='id'></Field>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container spacing={3} alignItems='center'>
+            <Grid container spacing={2} alignItems='center'>
               <Grid item xs={9}>
                 {currentUser && (
                   <IconButton
