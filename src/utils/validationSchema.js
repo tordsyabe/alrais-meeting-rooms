@@ -15,5 +15,7 @@ export const meetingValidation = yup.object({
     .string()
     .email("Please provide a valid email")
     .required("Email is required to vefiry your booking"),
+  start: yup.string("Please provide a start time").required(),
+  end: yup.string("Please provide a end time").required(),
   // status: yup.string().required("Password is required"),
 });
