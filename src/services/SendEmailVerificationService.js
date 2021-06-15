@@ -13,7 +13,7 @@ export function sendEmailVerification(data) {
     body: JSON.stringify({ data }),
   };
   fetch(
-    "http://tordsyabe.pythonanywhere.com/send-verification-email",
+    "https://tordsyabe.pythonanywhere.com/send-verification-email",
     requestOptions
   )
     .then((response) => response.json())
@@ -32,7 +32,7 @@ export function sendApprovedEmail(data) {
     body: JSON.stringify({ data }),
   };
   fetch(
-    "http://tordsyabe.pythonanywhere.com/send-approved-email",
+    "https://tordsyabe.pythonanywhere.com/send-approved-email",
     requestOptions
   )
     .then((response) => response.json())
@@ -50,7 +50,7 @@ export function sendRejectedEmail(data) {
     body: JSON.stringify({ data }),
   };
   fetch(
-    "http://tordsyabe.pythonanywhere.com/send-rejected-email",
+    "https://tordsyabe.pythonanywhere.com/send-rejected-email",
     requestOptions
   )
     .then((response) => response.json())
