@@ -13,15 +13,23 @@ import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
+import ContactMailIcon from "@material-ui/icons/ContactMail";
 
 import { useLocation } from "react-router-dom";
 
 import { MeetingsContext } from "../../contexts/MeetingsContext";
 import { dateToLocalTime, dateToLongDate } from "../../utils/dateFormatter";
 import { MeetingCardContext } from "../../contexts/MeetingCardContext";
-import { approveMeeting, approveStatus } from "../../services/MeetingService";
+import {
+  approveMeeting,
+  approveStatus,
+  deleteMeeting,
+} from "../../services/MeetingService";
 import { TimerContext } from "../../contexts/TimerContext";
-import { sendApprovedEmail, sendRejectedEmail } from "../../services/SendEmailVerificationService";
+import {
+  sendApprovedEmail,
+  sendRejectedEmail,
+} from "../../services/SendEmailVerificationService";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -44,14 +52,13 @@ export default function Meeting({ meeting }) {
     setSnackBarOpen,
   } = useContext(MeetingCardContext);
   const { setSelectedMeeting, selectedMeeting } = useContext(MeetingsContext);
-  const { isActive, selectedCardMeeting, setSelectedCardMeeting } = useContext(
-    TimerContext
-  );
+  const { isActive, selectedCardMeeting, setSelectedCardMeeting } =
+    useContext(TimerContext);
 
   const location = useLocation();
 
   const [isApproving, setIsApproving] = useState(false);
-
+  const [isRejecting, setIsRejecting] = useState(false);
 
   // const handleOpenForm = () => {
   //   location.pathname.includes("/app") ? setOpenForm(true) : console.log();
@@ -74,11 +81,11 @@ export default function Meeting({ meeting }) {
         raised={meeting.id === selectedMeeting.id ? true : false}
       >
         <CardContent>
-          <Grid container alignItems="center">
+          <Grid container alignItems='center'>
             <Grid item xs={12}>
-              <Grid container alignItems="center">
+              <Grid container alignItems='center'>
                 <Grid item xs={11}>
-                  <Typography variant="h6">{meeting.title}</Typography>
+                  <Typography variant='h6'>{meeting.title}</Typography>
                 </Grid>
 
                 {!location.pathname.includes("/room") && (
@@ -96,21 +103,29 @@ export default function Meeting({ meeting }) {
                 )}
 
                 <Grid item xs={12}>
-                  <Typography variant="caption">
+                  <Typography variant='caption'>
                     {dateToLongDate(meeting.date)}
                   </Typography>
                 </Grid>
 
                 {
                   <Grid item xs={12}>
-                    <Typography color="textSecondary" variant="caption">
-                      <Grid container alignItems="center" spacing={1}>
+                    <Typography color='textSecondary' variant='caption'>
+                      <Grid container alignItems='center' spacing={1}>
                         <Grid item>
-                          <AccessTimeIcon fontSize="small" />
+                          <AccessTimeIcon fontSize='small' />
                         </Grid>
                         <Grid item>
                           {meeting.start} - {meeting.end}
                         </Grid>
+                      </Grid>
+                    </Typography>
+                    <Typography color='textSecondary' variant='caption'>
+                      <Grid container alignItems='center' spacing={1}>
+                        <Grid item>
+                          <ContactMailIcon fontSize='small' />
+                        </Grid>
+                        <Grid item>{meeting.organizer}</Grid>
                       </Grid>
                     </Typography>
                   </Grid>
@@ -119,17 +134,17 @@ export default function Meeting({ meeting }) {
             </Grid>
             {!location.pathname.includes("/app") && (
               <Grid item={3}>
-                <Typography variant="subtitle1">{meeting.status}</Typography>
+                <Typography variant='subtitle1'>{meeting.status}</Typography>
               </Grid>
             )}
           </Grid>
 
           {location.pathname.includes("/app") && (
-            <Grid container alignItems="center" spacing={1}>
+            <Grid container alignItems='center' spacing={1}>
               <Grid item xs={12}>
                 <Typography
-                  variant="caption"
-                  color="textSecondary"
+                  variant='caption'
+                  color='textSecondary'
                 ></Typography>
               </Grid>
               <Grid item xs={9}>
@@ -137,49 +152,61 @@ export default function Meeting({ meeting }) {
                   <Typography>{meeting.status}</Typography>
                 ) : (
                   <>
-                   <Button
-                    startIcon={
-                      isApproving ? (
-                        <CircularProgress size="0.9rem" />
-                      ) : undefined
-                    }
-                    disabled={isApproving}
-                    variant="contained"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      event.preventDefault();
-                      setIsApproving(true);
-                      approveMeeting(meeting.id).then(() =>
-                        approveStatus(meeting.id).then(() => {
-                          setIsApproving(false);
-                          setOpenPopperMeetingDetails(false);
-                          console.log(meeting);
-                          sendApprovedEmail(meeting);
-                          setSnackBarMessage("Meeting has been approved");
-                          setSnackBarOpen(true);
-                        })
-                      );
-                    }}
-                  >
-                    Approve
-                  </Button>
-                  {"      "}
-                  <Button
-                    variant="contained"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      event.preventDefault();
-                      setOpenDeleteDialog(true);
-                      setMeetingToDelete(meeting);
-                    }}
+                    <Button
+                      startIcon={
+                        isApproving ? (
+                          <CircularProgress size='0.9rem' />
+                        ) : undefined
+                      }
+                      disabled={isApproving}
+                      variant='contained'
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        setIsApproving(true);
+                        approveMeeting(meeting.id).then(() =>
+                          approveStatus(meeting.id).then(() => {
+                            setIsApproving(false);
+                            setOpenPopperMeetingDetails(false);
+                            console.log(meeting);
+                            sendApprovedEmail(meeting);
+                            setSnackBarMessage("Meeting has been approved");
+                            setSnackBarOpen(true);
+                          })
+                        );
+                      }}
+                    >
+                      Approve
+                    </Button>
+                    {"      "}
+                    <Button
+                      disabled={isRejecting}
+                      variant='contained'
+                      onClick={(event) => {
+                        setIsRejecting(true);
+                        event.stopPropagation();
+                        event.preventDefault();
+                        setOpenPopperMeetingDetails(false);
 
-                  >
-                    Reject
-                  </Button>
-
+                        deleteMeeting(meeting.id)
+                          .then(() => {
+                            setSnackBarMessage("Successfully rejected meeting");
+                            setSnackBarOpen(true);
+                            setOpenDeleteDialog(false);
+                            setIsRejecting(false);
+                            sendRejectedEmail(meeting);
+                          })
+                          .catch(() => {
+                            setSnackBarMessage("Failed to reject meeting");
+                            setSnackBarOpen(true);
+                            setOpenDeleteDialog(false);
+                            setOpenPopperMeetingDetails(false);
+                          });
+                      }}
+                    >
+                      Reject
+                    </Button>
                   </>
-                 
-                  
                 )}
               </Grid>
 

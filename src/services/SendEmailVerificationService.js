@@ -1,4 +1,8 @@
-import { dateToLongDate, secondsToLocalTime, secondsToLongDate } from "../utils/dateFormatter";
+import {
+  dateToLongDate,
+  secondsToLocalTime,
+  secondsToLongDate,
+} from "../utils/dateFormatter";
 
 export function sendEmailVerification(data) {
   data.date = secondsToLongDate(data.date.seconds);
@@ -8,7 +12,10 @@ export function sendEmailVerification(data) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ data }),
   };
-  fetch("http://192.168.10.15/send-verification-email", requestOptions)
+  fetch(
+    "http://tordsyabe.pythonanywhere.com/send-verification-email",
+    requestOptions
+  )
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
@@ -17,12 +24,17 @@ export function sendEmailVerification(data) {
 export function sendApprovedEmail(data) {
   data.date = dateToLongDate(data.date);
 
+  console.log(JSON.stringify({ data }));
+
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ data }),
   };
-  fetch("http://192.168.10.15/send-approved-email", requestOptions)
+  fetch(
+    "http://tordsyabe.pythonanywhere.com/send-approved-email",
+    requestOptions
+  )
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
@@ -37,7 +49,10 @@ export function sendRejectedEmail(data) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ data }),
   };
-  fetch("http://192.168.10.15/send-rejected-email", requestOptions)
+  fetch(
+    "http://tordsyabe.pythonanywhere.com/send-rejected-email",
+    requestOptions
+  )
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
