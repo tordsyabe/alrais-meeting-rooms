@@ -23,7 +23,7 @@ import { MeetingCardContext } from "../../contexts/MeetingCardContext";
 import {
   approveMeeting,
   approveStatus,
-  deleteMeeting,
+  rejectMeeting,
 } from "../../services/MeetingService";
 import { TimerContext } from "../../contexts/TimerContext";
 import {
@@ -148,7 +148,7 @@ export default function Meeting({ meeting }) {
                 ></Typography>
               </Grid>
               <Grid item xs={9}>
-                {meeting.isApproved ? (
+                {meeting.isApproved || meeting.status === "REJECTED" ? (
                   <Typography>{meeting.status}</Typography>
                 ) : (
                   <>
@@ -180,28 +180,24 @@ export default function Meeting({ meeting }) {
                     </Button>
                     {"      "}
                     <Button
+                    startIcon={
+                      isRejecting ? (
+                        <CircularProgress size='0.9rem' />
+                      ) : undefined
+                    }
                       disabled={isRejecting}
                       variant='contained'
                       onClick={(event) => {
                         setIsRejecting(true);
                         event.stopPropagation();
                         event.preventDefault();
-                        setOpenPopperMeetingDetails(false);
-
-                        deleteMeeting(meeting.id)
-                          .then(() => {
-                            setSnackBarMessage("Successfully rejected meeting");
-                            setSnackBarOpen(true);
-                            setOpenDeleteDialog(false);
-                            setIsRejecting(false);
-                            sendRejectedEmail(meeting);
-                          })
-                          .catch(() => {
-                            setSnackBarMessage("Failed to reject meeting");
-                            setSnackBarOpen(true);
-                            setOpenDeleteDialog(false);
-                            setOpenPopperMeetingDetails(false);
-                          });
+                        rejectMeeting(meeting.id).then(() => {
+                          setIsRejecting(false);
+                          setOpenPopperMeetingDetails(false);
+                          sendRejectedEmail(meeting);
+                          setSnackBarMessage("Meeting has been rejected");
+                          setSnackBarOpen(true);
+                        });
                       }}
                     >
                       Reject

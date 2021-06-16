@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: ".9rem solid #dc4a4a",
     paddingLeft: "2rem",
     fontWeight: "bold",
+    color: "#ffffff"
   },
 
   inspire: {

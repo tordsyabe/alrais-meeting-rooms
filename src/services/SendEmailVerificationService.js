@@ -57,3 +57,21 @@ export function sendRejectedEmail(data) {
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
 }
+
+export function sendForApprovalEmail(data) {
+  console.log(data.date);
+  data.date = dateToLongDate(data.date);
+
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data }),
+  };
+  fetch(
+    "https://tordsyabe.pythonanywhere.com/send-for-approval-email",
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
+}

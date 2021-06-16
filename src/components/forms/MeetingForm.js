@@ -20,7 +20,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { RoomsContext } from "../../contexts/RoomsContext";
 import { getMeetingByDate, saveMeeting } from "../../services/MeetingService";
-import { sendEmailVerification } from "../../services/SendEmailVerificationService";
+import { sendForApprovalEmail } from "../../services/SendEmailVerificationService";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import CloseIcon from "@material-ui/icons/Close";
@@ -171,11 +171,8 @@ export default function MeetingForm(props) {
                   id: docRef.id,
                   ...doc.data(),
                 };
-                console.log("RETURNED", meeting);
+                sendForApprovalEmail(meetingToSave)
                 // sendEmailVerification(meeting);
-                // setSnackBarMessage(
-                //   "Please check your email to verify your booking"
-                // );
                 setSnackBarMessage("Your booking has been saved for approval.");
                 setSnackBarOpen(true);
 
